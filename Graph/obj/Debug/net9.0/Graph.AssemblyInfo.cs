@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("LivinParis")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Graph")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6e547add6b1fde104b44ce279d2445e44ef108f")]
-[assembly: System.Reflection.AssemblyProductAttribute("LivinParis")]
-[assembly: System.Reflection.AssemblyTitleAttribute("LivinParis")]
+[assembly: System.Reflection.AssemblyProductAttribute("Graph")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Graph")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Généré par la classe MSBuild WriteCodeFragment.
