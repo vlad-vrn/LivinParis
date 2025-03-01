@@ -20,8 +20,8 @@ static void AfficherFichier()
 
 //AfficherFichier();
 
-Graphe<string> g1 = new Graphe<string>("g1") { Titre = "g1" };
+Graphe<string> g1 = new Graphe<string>("g1") { Titre = "Karate" };
 
 g1.RemplirGraphe();
-
-
+g1.LiensGraphe();
+g1.AfficherListeAdjacense();

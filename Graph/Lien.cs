@@ -10,4 +10,19 @@ public class Lien<T>
         this._noeudDepart = noeudDepart;
         this._noeudArrive = noeudArrive;
     }
+
+    public Noeud<T> NoeudDepart
+    {
+        get => _noeudDepart;
+        set => _noeudDepart = value;
+    }
+
+    public Noeud<T> NoeudArrive
+    {
+        get => _noeudArrive;
+        set => _noeudArrive = value;
+    }
+    
+    
+    
 }
