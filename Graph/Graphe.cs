@@ -67,4 +67,46 @@ public class Graphe<T>
         }
         Console.WriteLine(str);
     }
+
+    public int[,] CreerMatriceAdjacense()
+    {
+        string lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(23).Take(1).First();
+        string[] tokens = lines.Split(" ");
+        int nbNoeuds = Int32.Parse(tokens[0]);
+        int[,] mat = new int[nbNoeuds+1, nbNoeuds+1];
+        for(int i = 0; i < nbNoeuds+1; i++)
+        {
+            for (int j = 0; j < nbNoeuds+1; j++)
+            {
+                if (i == 0) 
+                {
+                    mat[i, j] = j;
+                }
+                else if (j == 0)
+                {
+                    mat[i, j] = i;
+                }
+                else
+                {
+                    Noeud<T> noeudI = this._dicoNoeuds[i];
+                    Noeud<T> noeudJ = this._dicoNoeuds[j];
+                    if ((noeudI.isLinked(noeudJ)) == true || noeudJ.isLinked(noeudI) == true)
+                    {
+                        mat[i, j] = 1;
+                    }
+                    else
+                    {
+                        mat[i, j] = 0;
+                    }
+                }
+            }
+        }
+        return mat;
+    }
+
+
+    public void BFS()
+    {
+        
+    }
 }
