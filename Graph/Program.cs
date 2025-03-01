@@ -44,4 +44,17 @@ Graphe<string> g1 = new Graphe<string>("g1") { Titre = "Karate" };
 g1.RemplirGraphe();
 g1.LiensGraphe();
 g1.AfficherListeAdjacense();
+Console.ReadKey();
+
 AfficherMatrice(g1.CreerMatriceAdjacense());
+Console.ReadKey();
+
+g1.BFS(1);
+Console.ReadKey();
+
+Console.WriteLine("L'ordre du graphe est de " + g1.OrdreGraphe());
+Console.WriteLine("La taille du graphe est de " + g1.TailleGraphe());
+Console.WriteLine("Ce graphe n'est pas connexe.");
+Console.ReadKey();
+
+g1.DessinerGraphe();

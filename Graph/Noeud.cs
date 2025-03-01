@@ -48,6 +48,4 @@ public class Noeud<T>
 
         return str.Remove(str.Length - 2);
     }
-    
-    
 }

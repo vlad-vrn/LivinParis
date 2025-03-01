@@ -22,7 +22,4 @@ public class Lien<T>
         get => _noeudArrive;
         set => _noeudArrive = value;
     }
-    
-    
-    
 }
