@@ -25,7 +25,9 @@ public class Graphe<T>
     {
         get => this._dicoNoeuds;
     }
-    
+    /// <summary>
+    /// Initialise les noeuds du graphe d'après les valeurs du document texte.
+    /// </summary>
     public void RemplirGraphe()
     {
         string lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(23).Take(1).First();
@@ -41,6 +43,10 @@ public class Graphe<T>
         }
     }
 
+    /// <summary>
+    /// Récupère la valeur de la taille du graphe d'après les valeurs du document texte.
+    /// </summary>
+    /// <returns></returns>
     public int TailleGraphe()
     {
         string lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(23).Take(1).First();
@@ -48,6 +54,10 @@ public class Graphe<T>
         int tailleGraphe = Int32.Parse(tokens[2]);
         return tailleGraphe;
     }
+    /// <summary>
+    /// Récupère la valeur de l'ordre du graphe dans le document texte.
+    /// </summary>
+    /// <returns></returns>
 
     public int OrdreGraphe()
     {
@@ -56,6 +66,10 @@ public class Graphe<T>
         int ordreGraphe = Int32.Parse(tokens[0]);
         return ordreGraphe;
     }
+    
+    /// <summary>
+    /// Initialise les liens du graphe.
+    /// </summary>
     public void LiensGraphe()
     {
         string[] lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(24).ToArray();
@@ -65,9 +79,7 @@ public class Graphe<T>
             int numDepart = Int32.Parse(tokens[0]);
             int numArrive = Int32.Parse(tokens[1]);
             Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
-            //Console.WriteLine(noeudDepart.Titre);
             Noeud<T> noeudArrive = this._dicoNoeuds[numArrive];
-            //Console.WriteLine(noeudArrive.Titre);
             Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrive);
             if (_b == false)
             {
@@ -81,7 +93,10 @@ public class Graphe<T>
         }
     }
 
-    public void AfficherListeAdjacense()
+    /// <summary>
+    /// Affiche la liste d'adjacence du graphe, affichant les liens de chaque noeud.
+    /// </summary>
+    public void AfficherListeAdjacence()
     {
         string str = "";
         foreach (KeyValuePair<int, Noeud<T>> nodeKVP in this._dicoNoeuds)
@@ -91,7 +106,11 @@ public class Graphe<T>
         Console.WriteLine(str);
     }
 
-    public int[,] CreerMatriceAdjacense()
+    /// <summary>
+    /// Création d'une matrice d'adjacence, vérifiant si deux Noeuds sont liés.
+    /// </summary>
+    /// <returns></returns>
+    public int[,] CreerMatriceAdjacence()
     {
         string lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(23).Take(1).First();
         string[] tokens = lines.Split(" ");
@@ -163,14 +182,6 @@ public class Graphe<T>
             }
         }
         Console.WriteLine();
-    }
-
-    public bool hasCycles()
-    {
-        foreach (KeyValuePair<int, Noeud<T>> nodeKVP in this._dicoNoeuds)
-        {
-            
-        }
     }
 
     public void DessinerGraphe(string filePath = "graphe.png", int width = 600, int height = 600)
