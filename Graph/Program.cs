@@ -1,0 +1,74 @@
+﻿// See https://aka.ms/new-console-template for more information
+
+using System.Drawing;
+using Graph;
+
+Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
+///List<Point> points = new List<Point>();
+///List<Noeud<string>> noeuds = new List<Noeud<string>>();
+///Graphe g1 = new Graphe<T>("titre", noeuds, points);
+
+static void AfficherMatrice(int[,] mat)
+{
+    for (int i = 0; i < mat.GetLength(0); i++)
+    {
+        for (int j = 0; j < mat.GetLength(1); j++)
+        {
+            if (mat[i, j] < 10)
+            {
+                Console.Write(mat[i, j] + "  ");
+            }
+            else
+            {
+                Console.Write(mat[i, j] + " ");
+            }
+        }
+        Console.WriteLine();
+    }
+}
+
+Console.ReadKey();
+Console.WriteLine("\n\n");
+static void AfficherFichier()
+{
+    string[] lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(24).ToArray();
+    foreach (string line in lines)
+    {
+        Console.WriteLine(line);
+        Console.ReadKey();
+    }
+}
+
+//AfficherFichier();
+
+Graphe<string> g1 = new Graphe<string>("g1") { Titre = "Karate" };
+
+g1.RemplirGraphe();
+g1.LiensGraphe();
+Console.WriteLine("*************************************************************\n                 Liste d'adjacence\n*************************************************************");
+g1.AfficherListeAdjacence();
+Console.WriteLine("\n\n");
+Console.ReadKey();
+
+Console.WriteLine("*************************************************************\n              Matrice d'adjacence\n*************************************************************");
+
+AfficherMatrice(g1.CreerMatriceAdjacence());
+Console.ReadKey();
+Console.WriteLine("\n\n");
+
+Console.WriteLine("*************************************************************\n             Breadth First Search\n*************************************************************");
+Console.WriteLine("A quelle noeud voulez-vous commencer ?");
+int i = Int32.Parse(Console.ReadLine());
+g1.BFS(i);
+Console.ReadKey();
+Console.WriteLine("\n\n");
+
+Console.WriteLine("*************************************************************\n             Propriétés du graphe\n*************************************************************");
+
+Console.WriteLine("L'ordre du graphe est de " + g1.OrdreGraphe());
+Console.WriteLine("La taille du graphe est de " + g1.TailleGraphe());
+Console.WriteLine("Ce graphe n'est pas connexe.");
+Console.ReadKey();
+Console.WriteLine("\n\n");
+
+g1.DessinerGraphe();

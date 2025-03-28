@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivinParis", "LivinParis\LivinParis.csproj", "{35D72212-FD50-4355-A083-03D687698167}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph", "Graph\Graph.csproj", "{A1FB2452-18EF-4256-A98A-D7D19E61E61B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{35D72212-FD50-4355-A083-03D687698167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D72212-FD50-4355-A083-03D687698167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D72212-FD50-4355-A083-03D687698167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
