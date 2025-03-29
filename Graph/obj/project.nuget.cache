@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "8PuozyYBgTI=",
+  "dgSpecHash": "62cOoOkRiSY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\Graph\\Graph.csproj",
+  "projectFilePath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\Graph\\Graph.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\skiasharp\\3.118.0-preview.2.3\\skiasharp.3.118.0-preview.2.3.nupkg.sha512",
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\skiasharp.nativeassets.macos\\3.118.0-preview.2.3\\skiasharp.nativeassets.macos.3.118.0-preview.2.3.nupkg.sha512",
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\skiasharp.nativeassets.win32\\3.118.0-preview.2.3\\skiasharp.nativeassets.win32.3.118.0-preview.2.3.nupkg.sha512",
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\skiasharp.views.desktop.common\\3.118.0-preview.2.3\\skiasharp.views.desktop.common.3.118.0-preview.2.3.nupkg.sha512"
+    "C:\\Users\\varen\\.nuget\\packages\\skiasharp\\3.118.0-preview.2.3\\skiasharp.3.118.0-preview.2.3.nupkg.sha512",
+    "C:\\Users\\varen\\.nuget\\packages\\skiasharp.nativeassets.macos\\3.118.0-preview.2.3\\skiasharp.nativeassets.macos.3.118.0-preview.2.3.nupkg.sha512",
+    "C:\\Users\\varen\\.nuget\\packages\\skiasharp.nativeassets.win32\\3.118.0-preview.2.3\\skiasharp.nativeassets.win32.3.118.0-preview.2.3.nupkg.sha512",
+    "C:\\Users\\varen\\.nuget\\packages\\skiasharp.views.desktop.common\\3.118.0-preview.2.3\\skiasharp.views.desktop.common.3.118.0-preview.2.3.nupkg.sha512"
   ],
   "logs": []
 }
