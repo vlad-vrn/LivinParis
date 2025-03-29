@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PSI
+{
+
+internal class Station
+{
+
+    private int id;
+    private string nom;
+    private int[] lignes;
+    private Station stationPrecedente;
+    private Station stationSuivante;
+
+    public Station(int id, string nom, int[] lignes)
+    {
+        this.id = id;
+        this.nom = nom;
+        this.lignes = lignes;
+    }
+
+    public int Id
+    {
+        get { return id; }
+    }
+
+    public string Nom
+    {
+        get { return nom; }
+    }
+
+    public int[] Lignes
+    {
+        get { return lignes; }
+    }
+
+    public Station StationPrecedente
+    {
+        get { return stationPrecedente; }
+        set { stationPrecedente = value; }
+    }
+
+    public Station StationSuivante
+    {
+        get { return stationSuivante; }
+        set { stationSuivante = value; }
+    }
+
+    public void AfficherStation()
+    {
+        Console.WriteLine($"Station {Nom} (ID: {Id}) sur ligne(s) {string.Join(", ", Lignes)}");
+    }
+}
+}
