@@ -4,7 +4,7 @@ USE livin_paris_bdd;
 
 
 CREATE TABLE Utilisateur(
-   ID INT,
+   ID INT AUTO_INCREMENT,
    Nom VARCHAR(50) NOT NULL,
    Prénom VARCHAR(50) NOT NULL,
    Téléphone INT,
