@@ -1,0 +1,13 @@
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\bin\Debug\net9.0\DBConnectLibrary.deps.json
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\bin\Debug\net9.0\DBConnectLibrary.dll
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\bin\Debug\net9.0\DBConnectLibrary.pdb
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.csproj.AssemblyReference.cache
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.AssemblyInfoInputs.cache
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.AssemblyInfo.cs
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.sourcelink.json
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.dll
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\refint\DBConnectLibrary.dll
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\DBConnectLibrary.pdb
+C:\Users\Utilisateur\RiderProjects\LivinParis\DBConnectLibrary\obj\Debug\net9.0\ref\DBConnectLibrary.dll
