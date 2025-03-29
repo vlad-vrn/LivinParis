@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\varen\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj": {}
+    "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj": {}
   },
   "projects": {
-    "C:\\Users\\varen\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj": {
+    "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\varen\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj",
-        "projectName": "LivinParis",
-        "projectPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj",
-        "packagesPath": "C:\\Users\\varen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\LivinParis\\obj\\",
+        "projectUniqueName": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj",
+        "projectName": "DBConnectLibrary",
+        "projectPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj",
+        "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\varen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,9 +36,78 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Users\\Utilisateur\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj",
+        "projectName": "LivinParis",
+        "projectPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\LivinParis\\LivinParis.csproj",
+        "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\LivinParis\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {
+                "projectPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -61,7 +128,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\varen\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Utilisateur\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

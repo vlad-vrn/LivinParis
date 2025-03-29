@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivinParis", "LivinParis\Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graph", "Graph\Graph.csproj", "{A1FB2452-18EF-4256-A98A-D7D19E61E61B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBConnectLibrary", "DBConnectLibrary\DBConnectLibrary.csproj", "{83715FB8-57AA-477A-A51F-2548E6479FF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1FB2452-18EF-4256-A98A-D7D19E61E61B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83715FB8-57AA-477A-A51F-2548E6479FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83715FB8-57AA-477A-A51F-2548E6479FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83715FB8-57AA-477A-A51F-2548E6479FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83715FB8-57AA-477A-A51F-2548E6479FF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

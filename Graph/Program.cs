@@ -8,6 +8,7 @@ Console.WriteLine("*************************************************************
 ///List<Noeud<string>> noeuds = new List<Noeud<string>>();
 ///Graphe g1 = new Graphe<T>("titre", noeuds, points);
 
+
 static void AfficherMatrice(int[,] mat)
 {
     for (int i = 0; i < mat.GetLength(0); i++)
