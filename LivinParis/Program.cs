@@ -1,21 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Diagnostics.Tracing;
 using DBConnectLibrary;
 
 UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
-foreach (var Utilisateur in utilisateurDataAccess.getAllUtilisateurs())
-{
-    Console.WriteLine(Utilisateur.Id + " : " + Utilisateur.Nom);
-}
+PlatDataAccess platDataAccess = new PlatDataAccess();
+CommandeDataAccess commandeDataAccess = new CommandeDataAccess();
 
-foreach (var Utilisateur in utilisateurDataAccess.getUtilisateur(30))
-{
-    Console.WriteLine(Utilisateur.Prenom + " " + Utilisateur.Nom);
-}
-
-utilisateurDataAccess.delUtilisateur(31);
-utilisateurDataAccess.delUtilisateur(32);
-
+///Test UtilisateurDataAccess
 Utilisateur user1 = new Utilisateur();
 user1.Nom = "Varenne-Welnovski";
 user1.Prenom = "Vladimir";
@@ -32,4 +24,17 @@ utilisateurDataAccess.addUtilisateur(user1);
 foreach (var Utilisateur in utilisateurDataAccess.getAllUtilisateurs())
 {
     Console.WriteLine(Utilisateur.Id + " : " + Utilisateur.Nom);
+}
+
+
+///Test PlatDataAccess
+foreach (var Plat in platDataAccess.getAllPlats())
+{
+    Console.WriteLine(Plat.ID_Plat + " : " + Plat.Nom + " " + Plat.RegimeAlimentaire);
+}
+
+///Test CommandeDataAccess
+foreach (var Commande in commandeDataAccess.GetAllCommandes())
+{
+    Console.WriteLine(Commande.ID_Commande + " " + Commande.ID_Client + " " + Commande.Prix_Commande);
 }
