@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Tls;
+
+namespace DBConnectLibrary;
+
+public class CuisinierDataAccess : AccessBDD
+{
+    public List<Cuisinier> getAllCuisiniers()
+    {
+        List<Cuisinier> cuisiniers = new List<Cuisinier>();
+        string query = "SELECT * FROM cuisinier";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    cuisiniers.Add(new Cuisinier
+                    {
+                        ID_Cuisinier = Convert.ToInt32(reader["ID_Cuisinier"]),
+                        ID_Utilisateur = Convert.ToInt32(reader["ID"])
+                    });
+                }
+            }
+        }
+        return cuisiniers;
+    }
+
+    public void addCuisinier(Cuisinier cuisinier)
+    {
+        string query = "INSERT INTO cuisinier (ID_cuisinier, ID) VALUES (@ID_cuisinier, @ID)";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@ID_cuisinier", cuisinier.ID_Cuisinier);
+            command.Parameters.AddWithValue("@ID", cuisinier.ID_Utilisateur);
+            
+            connection.Open();
+            command.ExecuteNonQuery();
+        }    
+    }
+
+    public void delCuisinier(int cuisinierID)
+    {
+        string query = "DELETE FROM cuisinier WHERE ID_cuisinier = @ID_cuisinier";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@ID_cuisinier", cuisinierID);
+            connection.Open();
+            command.ExecuteNonQuery();
+        }    
+    }
+}

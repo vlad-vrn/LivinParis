@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DBConnectLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c68a1b9366466b0658f4addcfcf095bf6616bad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de3ed4cf0815daa70506ac42e0a622730bf7ab81")]
 [assembly: System.Reflection.AssemblyProductAttribute("DBConnectLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DBConnectLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
