@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DBConnectLibrary\DBConnectLibrary.csproj" />
+      <ProjectReference Include="..\Graph\Graph.csproj" />
     </ItemGroup>
 
 </Project>

@@ -70,7 +70,6 @@ public class UtilisateurDataAccess : AccessBDD
         }
         return utilisateurs;
     }
-    
     public void addUtilisateur(Utilisateur utilisateur)
     {
         string query = "INSERT INTO Utilisateur (Nom, Prénom, Téléphone, Mail, Rue, Numero_Rue, Ville, Code_Postal, Station_Plus_Proche) VALUES (@userNom, @userPrenom, @userTelephone, @userMail, @userRue, @userNumRue, @userVille, @userCodePostal, @userStationProche)";
@@ -104,4 +103,75 @@ public class UtilisateurDataAccess : AccessBDD
             command.ExecuteNonQuery();
         }
     }
+
+    public bool uniqueEmail(string email)
+    {
+        string query = "SELECT Count(*) FROM Utilisateur WHERE Mail = @email";
+        using (var connection = Connection())
+        {
+            connection.Open();
+            using (var command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@email", email);
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                if (count == 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+    }
+    
+    public bool existingEmail(string email)
+    {
+        string query = "SELECT Count(*) FROM Utilisateur WHERE Mail = @email";
+        using (var connection = Connection())
+        {
+            connection.Open();
+            using (var command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@email", email);
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                if (count == 1)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+    }
+    
+    public Utilisateur getUtilisateurFromMail(string mail)
+    {
+        Utilisateur user = new Utilisateur();
+        string query = "SELECT * FROM Utilisateur WHERE Mail=@userMail";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@userMail", mail);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    user.Id = Convert.ToInt32(reader["Id"]);
+                    user.Nom = reader["Nom"].ToString();
+                    user.Prenom = reader["Prénom"].ToString();
+                    user.Telephone = Convert.ToInt32(reader["Téléphone"]);
+                    user.Mail = reader["Mail"].ToString();
+                    user.Rue = reader["Rue"].ToString();
+                    user.NumeroRue = reader["Numero_Rue"].ToString();
+                    user.Ville = reader["Ville"].ToString();
+                    user.CodePostal = Convert.ToInt32(reader["Code_Postal"]);
+                    user.StationProche = reader["Station_Plus_Proche"].ToString();
+                }
+            }
+        }
+        return user;
+    }
+    
+    
 }

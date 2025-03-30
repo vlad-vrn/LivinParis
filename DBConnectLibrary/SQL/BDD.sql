@@ -18,7 +18,7 @@ CREATE TABLE Utilisateur(
 );
 
 CREATE TABLE Cuisinier(
-   ID_cuisinier INT,
+   ID_cuisinier INT AUTO_INCREMENT,
    ID INT NOT NULL,
    PRIMARY KEY(ID_cuisinier),
    UNIQUE(ID),
@@ -26,7 +26,7 @@ CREATE TABLE Cuisinier(
 );
 
 CREATE TABLE Client_(
-   ID_client INT,
+   ID_client INT AUTO_INCREMENT,
    Entreprise BOOL,
    ID INT NOT NULL,
    PRIMARY KEY(ID_client),
