@@ -140,6 +140,19 @@
           }
         }
       },
+      "Spectre.Console/0.49.2-preview.0.77": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -632,6 +645,25 @@
         "runtimes/win-x64/native/k5sprt64.dll",
         "runtimes/win-x64/native/krb5_64.dll",
         "runtimes/win-x64/native/krbcc64.dll"
+      ]
+    },
+    "Spectre.Console/0.49.2-preview.0.77": {
+      "sha512": "12+Z5SJlHyTfLKvxWgxqdItRyT5aD7j1c8IRcloYipwBe3Djyc82H1i0oecvmvBF6405iEEniy8N3ZB8hCnkxA==",
+      "type": "package",
+      "path": "spectre.console/0.49.2-preview.0.77",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net8.0/Spectre.Console.dll",
+        "lib/net8.0/Spectre.Console.xml",
+        "lib/net9.0/Spectre.Console.dll",
+        "lib/net9.0/Spectre.Console.xml",
+        "lib/netstandard2.0/Spectre.Console.dll",
+        "lib/netstandard2.0/Spectre.Console.xml",
+        "logo.png",
+        "spectre.console.0.49.2-preview.0.77.nupkg.sha512",
+        "spectre.console.nuspec"
       ]
     },
     "System.Buffers/4.5.1": {
@@ -1561,36 +1593,39 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "DBConnectLibrary >= 1.0.0"
+      "DBConnectLibrary >= 1.0.0",
+      "Spectre.Console >= 0.49.2-preview.0.77"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Utilisateur\\.nuget\\packages\\": {}
+    "C:\\Users\\varen\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\TestProgramme\\TestProgramme.csproj",
+      "projectUniqueName": "C:\\Users\\varen\\RiderProjects\\LivinParis\\TestProgramme\\TestProgramme.csproj",
       "projectName": "TestProgramme",
-      "projectPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\TestProgramme\\TestProgramme.csproj",
-      "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\TestProgramme\\obj\\",
+      "projectPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\TestProgramme\\TestProgramme.csproj",
+      "packagesPath": "C:\\Users\\varen\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\TestProgramme\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\varen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {
-              "projectPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj"
+            "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {
+              "projectPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj"
             }
           }
         }
@@ -1603,13 +1638,19 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "direct"
+        "auditMode": "all"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
         "targetAlias": "net9.0",
+        "dependencies": {
+          "Spectre.Console": {
+            "target": "Package",
+            "version": "[0.49.2-preview.0.77, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -1626,7 +1667,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\Utilisateur\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\varen\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

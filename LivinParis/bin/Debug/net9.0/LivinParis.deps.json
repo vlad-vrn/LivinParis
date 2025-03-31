@@ -9,7 +9,8 @@
       "LivinParis/1.0.0": {
         "dependencies": {
           "DBConnectLibrary": "1.0.0",
-          "Graph": "1.0.0"
+          "Graph": "1.0.0",
+          "Spectre.Console": "0.49.2-preview.0.77"
         },
         "runtime": {
           "LivinParis.dll": {}
@@ -163,6 +164,14 @@
           }
         }
       },
+      "Spectre.Console/0.49.2-preview.0.77": {
+        "runtime": {
+          "lib/net9.0/Spectre.Console.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.49.2.0"
+          }
+        }
+      },
       "System.Buffers/4.5.1": {},
       "System.Configuration.ConfigurationManager/8.0.0": {
         "dependencies": {
@@ -305,7 +314,7 @@
         },
         "runtime": {
           "DBConnectLibrary.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -317,7 +326,7 @@
         },
         "runtime": {
           "Graph.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -413,6 +422,13 @@
       "sha512": "sha512-l0ano8HvjuHXsukhciaqWv5Cn+GmN5wXZDga25M/bnialUSPA9BHuVENuYqf8gZuLYymzXExKffokDYVdc64iQ==",
       "path": "skiasharp.views.desktop.common/3.118.0-preview.2.3",
       "hashPath": "skiasharp.views.desktop.common.3.118.0-preview.2.3.nupkg.sha512"
+    },
+    "Spectre.Console/0.49.2-preview.0.77": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-12+Z5SJlHyTfLKvxWgxqdItRyT5aD7j1c8IRcloYipwBe3Djyc82H1i0oecvmvBF6405iEEniy8N3ZB8hCnkxA==",
+      "path": "spectre.console/0.49.2-preview.0.77",
+      "hashPath": "spectre.console.0.49.2-preview.0.77.nupkg.sha512"
     },
     "System.Buffers/4.5.1": {
       "type": "package",

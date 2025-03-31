@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {}
+    "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {
+    "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj",
         "projectName": "DBConnectLibrary",
-        "projectPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj",
-        "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Utilisateur\\RiderProjects\\LivinParis\\DBConnectLibrary\\obj\\",
+        "projectPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\DBConnectLibrary.csproj",
+        "packagesPath": "C:\\Users\\varen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\DBConnectLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\varen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -36,9 +38,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -65,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Utilisateur\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\varen\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

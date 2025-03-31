@@ -2,7 +2,26 @@
 
 using System.Diagnostics.Tracing;
 using DBConnectLibrary;
+using Spectre.Console;
 
+
+AnsiConsole.Write(new FigletText(FigletFont.Default, "Livin Paris").Color(Color.Blue));
+Console.ReadKey();
+/*var fruit = AnsiConsole.Prompt(
+    new SelectionPrompt<string>()
+        .Title("What's your [green]favorite fruit[/]?")
+        .PageSize(10)
+        .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+        .AddChoices(new[] {
+            "Apple", "Apricot", "Avocado", 
+            "Banana", "Blackcurrant", "Blueberry",
+            "Cherry", "Cloudberry", "Cocunut",
+        }));
+
+// Echo the fruit back to the terminal
+AnsiConsole.WriteLine($"I agree. {fruit} is tasty!");
+*/
+/*
 UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
 PlatDataAccess platDataAccess = new PlatDataAccess();
 CommandeDataAccess commandeDataAccess = new CommandeDataAccess();
@@ -51,4 +70,4 @@ foreach (var Client in clientDataAccess.getAllClients())
     Console.WriteLine(Client.ID_Client + " " + Client.ID_Utilisateur);
 }
 
-Console.WriteLine("*******************************");
+Console.WriteLine("*******************************");*/

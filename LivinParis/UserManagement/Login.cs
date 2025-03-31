@@ -10,18 +10,25 @@ public class Login
     {
         UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
         Utilisateur user = new Utilisateur();
-        Console.WriteLine("Connection : ");
+        List<Utilisateur> utilisateurs = new List<Utilisateur>();
+        List<string> emailUtilisés = new List<string>();
+        foreach (Utilisateur registeredUsers in utilisateurs)
+        {
+            emailUtilisés.Add(registeredUsers.Mail);
+        }
+        
+        Console.WriteLine("Connexion : ");
         Console.WriteLine("Veuillez entrer votre adresse mail : ");
         string mail = Console.ReadLine();
-        if (utilisateurDataAccess.existingEmail(mail) == false)
+        if (emailUtilisés.Contains(mail) == true)
         {
             Console.WriteLine("Cette adresse mail n'est pas renseignée : veuillez réessayer.");
-            return null;
+            return user; ///Return QUOI en vrai...
         }
         else
         {
-            Console.WriteLine("Vous êtes connecté.");
             user = utilisateurDataAccess.getUtilisateurFromMail(mail);
+            Console.WriteLine("Bienvenue " + user.Prenom + ", vous êtes connecté.");
         }
         return user;
     }

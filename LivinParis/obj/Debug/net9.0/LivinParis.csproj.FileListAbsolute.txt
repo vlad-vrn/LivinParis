@@ -87,3 +87,15 @@ C:\Users\Utilisateur\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtim
 C:\Users\Utilisateur\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtimes\win-x86\native\libSkiaSharp.dll
 C:\Users\Utilisateur\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.dll
 C:\Users\Utilisateur\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.pdb
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.deps.json
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.runtimeconfig.json
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.exe
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\SkiaSharp.dll
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\SkiaSharp.Views.Desktop.Common.dll
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtimes\osx\native\libSkiaSharp.dylib
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtimes\win-arm64\native\libSkiaSharp.dll
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtimes\win-x64\native\libSkiaSharp.dll
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtimes\win-x86\native\libSkiaSharp.dll
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.dll
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.pdb
+C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Spectre.Console.dll

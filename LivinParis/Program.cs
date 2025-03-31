@@ -4,15 +4,28 @@ using System.Diagnostics.Tracing;
 using DBConnectLibrary;
 using Graph;
 using LivinParis.Application;
+using LivinParis.Navigation;
+using Spectre.Console;
 
 UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
 ClientDataAccess clientDataAccess = new ClientDataAccess();
 CuisinierDataAccess cuisinierDataAccess = new CuisinierDataAccess();
 Login login = new Login();
+MenuPrincipal mainMenu = new MenuPrincipal();
+string output = mainMenu.initialStartup();
+switch (output)
+{
+    case "Liv'In Paris":
+        while (true)
+        {
+            mainMenu.menuLivinParis();
+        }
+        break;
+}
 
-
+/*
 CreateAcc.CreerCompteUser();
-CreateAcc.CreerCompteUser();
+//CreateAcc.CreerCompteUser();
 
 
 foreach (var Utilisateur in utilisateurDataAccess.getAllUtilisateurs())
@@ -29,7 +42,7 @@ try
 }
 catch (Exception ex)
 {
-    Console.WriteLine("Cette adresse mail n'est pas renseignée : veuillez réessayer.");
+    Console.WriteLine("Cette adresse mail n'est pas renseignée : veuillez réessayer TRYCATCH.");
 }
 
 
@@ -48,4 +61,4 @@ foreach (var Client in clientDataAccess.getAllClients())
     Console.WriteLine(Client.ID_Client + " " + Client.ID_Utilisateur);
 }
 
-
+*/

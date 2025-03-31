@@ -9,7 +9,15 @@ public static class CreateAcc
     public static void CreerCompteUser()
     {
         UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
+        
         Utilisateur newUser = new Utilisateur();
+        List<Utilisateur> utilisateurs = new List<Utilisateur>();
+        utilisateurs = utilisateurDataAccess.getAllUtilisateurs();
+        List<string> emailUtilisés = new List<string>();
+        foreach (Utilisateur registeredUser in utilisateurs)
+        {
+            emailUtilisés.Add(registeredUser.Mail.ToUpper());
+        }
         
         Console.WriteLine("\nEntrez votre nom de famille : ");
         string nom = Console.ReadLine();
@@ -23,7 +31,7 @@ public static class CreateAcc
         Console.WriteLine("\nEntrez votre adresse mail : ");
         string mail = Console.ReadLine();
         ///Liste de getall check
-        while (utilisateurDataAccess.uniqueEmail(mail) == false)
+        while (emailUtilisés.Contains(mail.ToUpper()) == true)
         {
             Console.WriteLine("\nCette adresse email est déjà utilisée : veuillez entrer une nouvelle adresse mail : ");
             mail = Console.ReadLine();
