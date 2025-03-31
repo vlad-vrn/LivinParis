@@ -80,7 +80,7 @@ public class Graphe<T>
             int numArrive = Int32.Parse(tokens[1]);
             Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
             Noeud<T> noeudArrive = this._dicoNoeuds[numArrive];
-            Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrive);
+            Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrive, 1);
             if (_b == false)
             {
                 noeudDepart.Liens.Add(newLien);

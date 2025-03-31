@@ -1,74 +1,75 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Graph;
 
-Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
-///List<Point> points = new List<Point>();
-///List<Noeud<string>> noeuds = new List<Noeud<string>>();
-///Graphe g1 = new Graphe<T>("titre", noeuds, points);
-
-static void AfficherMatrice(int[,] mat)
+class Program
 {
-    for (int i = 0; i < mat.GetLength(0); i++)
+    static void Main()
     {
-        for (int j = 0; j < mat.GetLength(1); j++)
-        {
-            if (mat[i, j] < 10)
-            {
-                Console.Write(mat[i, j] + "  ");
-            }
-            else
-            {
-                Console.Write(mat[i, j] + " ");
-            }
-        }
-        Console.WriteLine();
-    }
-}
+        Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
 
-Console.ReadKey();
-Console.WriteLine("\n\n");
-static void AfficherFichier()
-{
-    string[] lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(24).ToArray();
-    foreach (string line in lines)
-    {
-        Console.WriteLine(line);
+        Graphe<string> g1 = new Graphe<string>("g1") { Titre = "Karate" };
+        g1.RemplirGraphe();
+        g1.LiensGraphe();
+
+        Console.WriteLine("*************************************************************\n                 Liste d'adjacence\n*************************************************************");
+        g1.AfficherListeAdjacence();
         Console.ReadKey();
+
+        Console.WriteLine("*************************************************************\n              Matrice d'adjacence\n*************************************************************");
+        AfficherMatrice(g1.CreerMatriceAdjacence());
+        Console.ReadKey();
+
+        Console.WriteLine("*************************************************************\n             Breadth First Search\n*************************************************************");
+        Console.WriteLine("A quel noeud voulez-vous commencer ?");
+        int startNode = Int32.Parse(Console.ReadLine());
+        g1.BFS(startNode);
+        Console.ReadKey();
+
+        Console.WriteLine("*************************************************************\n             Propriétés du graphe\n*************************************************************");
+        Console.WriteLine("L'ordre du graphe est de " + g1.OrdreGraphe());
+        Console.WriteLine("La taille du graphe est de " + g1.TailleGraphe());
+        Console.WriteLine("Ce graphe n'est pas connexe.");
+        Console.ReadKey();
+
+        // Algorithmes de plus court chemin
+        Console.WriteLine("algo du plus court chemin");
+        Console.WriteLine("*************************************************************\n             Algorithme de Dijkstra\n*************************************************************");
+        var dijkstra = new dijkstra<string>(g1);
+        var distancesDijkstra = dijkstra.TrouverChemins(startNode);
+        AfficherDistances(distancesDijkstra);
+        Console.ReadKey();
+
+        Console.WriteLine("*************************************************************\n             Algorithme de Bellman-Ford\n*************************************************************");
+        var bellmanFord = new BellmanFord<string>(g1);
+        var distancesBellmanFord = bellmanFord.TrouverChemins(startNode);
+        AfficherDistances(distancesBellmanFord);
+        Console.ReadKey();
+
+        g1.DessinerGraphe();
+    }
+
+    static void AfficherMatrice(int[,] mat)
+    {
+        for (int i = 0; i < mat.GetLength(0); i++)
+        {
+            for (int j = 0; j < mat.GetLength(1); j++)
+            {
+                if (mat[i, j] == int.MaxValue / 2)
+                    Console.Write("INF ");
+                else
+                    Console.Write(mat[i, j] + "  ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    static void AfficherDistances(Dictionary<int, int> distances)
+    {
+        foreach (var (noeud, distance) in distances)
+        {
+            Console.WriteLine($"Distance de {noeud} : {distance}");
+        }
     }
 }
-
-//AfficherFichier();
-
-Graphe<string> g1 = new Graphe<string>("g1") { Titre = "Karate" };
-
-g1.RemplirGraphe();
-g1.LiensGraphe();
-Console.WriteLine("*************************************************************\n                 Liste d'adjacence\n*************************************************************");
-g1.AfficherListeAdjacence();
-Console.WriteLine("\n\n");
-Console.ReadKey();
-
-Console.WriteLine("*************************************************************\n              Matrice d'adjacence\n*************************************************************");
-
-AfficherMatrice(g1.CreerMatriceAdjacence());
-Console.ReadKey();
-Console.WriteLine("\n\n");
-
-Console.WriteLine("*************************************************************\n             Breadth First Search\n*************************************************************");
-Console.WriteLine("A quelle noeud voulez-vous commencer ?");
-int i = Int32.Parse(Console.ReadLine());
-g1.BFS(i);
-Console.ReadKey();
-Console.WriteLine("\n\n");
-
-Console.WriteLine("*************************************************************\n             Propriétés du graphe\n*************************************************************");
-
-Console.WriteLine("L'ordre du graphe est de " + g1.OrdreGraphe());
-Console.WriteLine("La taille du graphe est de " + g1.TailleGraphe());
-Console.WriteLine("Ce graphe n'est pas connexe.");
-Console.ReadKey();
-Console.WriteLine("\n\n");
-
-g1.DessinerGraphe();
