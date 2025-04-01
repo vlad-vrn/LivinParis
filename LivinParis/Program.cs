@@ -12,15 +12,29 @@ ClientDataAccess clientDataAccess = new ClientDataAccess();
 CuisinierDataAccess cuisinierDataAccess = new CuisinierDataAccess();
 Login login = new Login();
 MenuPrincipal mainMenu = new MenuPrincipal();
-string output = mainMenu.initialStartup();
-switch (output)
+mainMenu.initialStartup();
+while (mainMenu.output != "Quitter l'application")
 {
-    case "Liv'In Paris":
-        while (true)
-        {
-            mainMenu.menuLivinParis();
-        }
-        break;
+    while (mainMenu.output == "Liv'In Paris")
+    {
+        mainMenu.menuLivinParis();
+    }
+
+    while (mainMenu.output == "Rendu 1")
+    {
+        Console.WriteLine("Pas dispo pour l'instant");
+        mainMenu.output = "Retour";
+        Console.ReadKey();
+    }
+
+    while (mainMenu.output == "Modélisation du métro")
+    {
+        Console.WriteLine("Pas dispo pour l'instant");
+        mainMenu.output = "Retour";
+        Console.ReadKey();
+    }
+    
+    mainMenu.initialStartup();
 }
 
 /*
@@ -40,6 +54,7 @@ try
 {
     thisUser = login.userLogin();
 }
+//Catch ne marche pas
 catch (Exception ex)
 {
     Console.WriteLine("Cette adresse mail n'est pas renseignée : veuillez réessayer TRYCATCH.");

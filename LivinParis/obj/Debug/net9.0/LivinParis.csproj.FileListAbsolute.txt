@@ -99,3 +99,4 @@ C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\runtimes\win
 C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.dll
 C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Graph.pdb
 C:\Users\varen\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Spectre.Console.dll
+C:\Users\Utilisateur\RiderProjects\LivinParis\LivinParis\bin\Debug\net9.0\Spectre.Console.dll
