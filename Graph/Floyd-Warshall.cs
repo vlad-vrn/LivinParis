@@ -1,59 +1,53 @@
 namespace Graph;
 
-public class Floyd_Warshall <T>
+public class FloydWarshall <T>
 {
-    
-    private readonly Graphe<T> _graphe;
 
-    public Floyd_Warshall(Graphe<T> graphe)
+    public FloydWarshall(Graphe<T> graphe)
     {
         _graphe = graphe;
     }
-
-    public int[,] TrouverChemins()
+    private readonly Graphe<T> _graphe;
+    public Dictionary<(int, int), int> TrouverChemins(int startId)
     {
-        int nbNoeuds = _graphe.Noeuds.Count;
-        var indexMap = new Dictionary<int, int>(); // Map ID -> Index
+        var indexMap = new Dictionary<int, int>();
         var ids = new List<int>(_graphe.Noeuds.Keys);
-        
-        for (int i = 0; i < ids.Count; i++)
-            indexMap[ids[i]] = i;
-
-        int[,] distances = new int[nbNoeuds, nbNoeuds];
-
-        // Initialisation
-        for (int i = 0; i < nbNoeuds; i++)
+        int nbNoeuds = _graphe.Noeuds.Count;
+        var distances = new Dictionary<(int, int), int>();
+        foreach (var i in _graphe.Noeuds.Keys)
         {
-            for (int j = 0; j < nbNoeuds; j++)
+            foreach (var j in _graphe.Noeuds.Keys)
             {
                 if (i == j)
-                    distances[i, j] = 0;
+                    distances[(i, j)] = 0; // Distance d'un nœud à lui-même
                 else
-                    distances[i, j] = int.MaxValue / 2; // Evite les débordements
+                    distances[(i, j)] = int.MaxValue; // Distance infinie par défaut
             }
         }
-
-        // Remplissage avec les liens existants
-        foreach (var noeud in _graphe.Noeuds.Values)
+        foreach (var noeud in _graphe.Noeuds)
         {
-            foreach (var lien in noeud.Liens)
+            foreach (var lien in noeud.Value.Liens)
             {
-                int u = indexMap[_graphe.Noeuds.First(x => x.Value == lien.NoeudDepart).Key];
-                int v = indexMap[_graphe.Noeuds.First(x => x.Value == lien.NoeudArrive).Key];
-                distances[u, v] = lien.Poids;
+                int u = _graphe.Noeuds.First(x => x.Value == lien.NoeudDepart).Key;
+                int v = _graphe.Noeuds.First(x => x.Value == lien.NoeudArrive).Key;
+
+                distances[(u, v)] = lien.Poids;
+                distances[(v, u)] = lien.Poids; 
             }
         }
-
-        // Algorithme de Floyd-Warshall
-        for (int k = 0; k < nbNoeuds; k++)
+        foreach (var k in _graphe.Noeuds.Keys)
         {
-            for (int i = 0; i < nbNoeuds; i++)
+            foreach (var i in _graphe.Noeuds.Keys)
             {
-                for (int j = 0; j < nbNoeuds; j++)
+                foreach (var j in _graphe.Noeuds.Keys)
                 {
-                    if (distances[i, j] > distances[i, k] + distances[k, j])
+                    if (distances[(i, k)] != int.MaxValue && distances[(k, j)] != int.MaxValue)
                     {
-                        distances[i, j] = distances[i, k] + distances[k, j];
+                        int newDist = distances[(i, k)] + distances[(k, j)];
+                        if (newDist < distances[(i, j)])
+                        {
+                            distances[(i, j)] = newDist;
+                        }
                     }
                 }
             }

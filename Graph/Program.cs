@@ -31,7 +31,7 @@ class Program
         Console.WriteLine("L'ordre du graphe est de " + g1.OrdreGraphe());
         Console.WriteLine("La taille du graphe est de " + g1.TailleGraphe());
         Console.WriteLine("Ce graphe n'est pas connexe.");
-        Console.ReadKey();
+        Console.ReadKey(); 
 
         // Algorithmes de plus court chemin
         Console.WriteLine("algo du plus court chemin");
@@ -44,6 +44,12 @@ class Program
         Console.WriteLine("*************************************************************\n             Algorithme de Bellman-Ford\n*************************************************************");
         var bellmanFord = new BellmanFord<string>(g1);
         var distancesBellmanFord = bellmanFord.TrouverChemins(startNode);
+        AfficherDistances(distancesBellmanFord);
+        Console.ReadKey();
+        
+        Console.WriteLine("*************************************************************\n             Algorithme de Floyd-Warshall\n*************************************************************");
+        var FloydWarshall = new FloydWarshall<string>(g1);
+        var distancesFordWarshall = FloydWarshall.TrouverChemins(startNode);
         AfficherDistances(distancesBellmanFord);
         Console.ReadKey();
 

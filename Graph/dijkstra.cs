@@ -20,7 +20,6 @@ public class dijkstra <T>
         var precedent = new Dictionary<int, int>();
         var priorityQueue = new SortedSet<(int distance, int nodeId)>();
 
-        // Initialisation
         foreach (var node in _graphe.Noeuds.Keys)
         {
             distances[node] = int.MaxValue;
@@ -43,7 +42,7 @@ public class dijkstra <T>
 
                 if (newDistance < distances[voisinId])
                 {
-                    priorityQueue.Remove((distances[voisinId], voisinId)); // Supprime l'ancien
+                    priorityQueue.Remove((distances[voisinId], voisinId));
                     distances[voisinId] = newDistance;
                     precedent[voisinId] = currentNode;
                     priorityQueue.Add((newDistance, voisinId));
