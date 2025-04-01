@@ -41,6 +41,8 @@ while (mainMenu.output != "Quitter l'application")
 CreateAcc.CreerCompteUser();
 //CreateAcc.CreerCompteUser();
 
+//+ (clientUserID) => clientUserID.Contains(Utilisateur.ID) ? "Client" : "" 
++ (cuisinierUserID) => cuisinierUserID.Contains(Utilisateur.ID) ? "Cuisinier" : ""
 
 foreach (var Utilisateur in utilisateurDataAccess.getAllUtilisateurs())
 {
