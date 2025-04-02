@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Tls;
+
+namespace DBConnectLibrary;
+
+
+public class PlatDataAccess : AccessBDD
+{
+    
+    public List<Plat> getAllPlats()
+    {
+        List<Plat> plats = new List<Plat>();
+        string query = "SELECT * FROM Plat";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    plats.Add(new Plat
+                    {
+                        ID_Plat = Convert.ToInt32(reader["ID_Plat"]),
+                        Nom = reader["nom"].ToString(),
+                        Quantite = Convert.ToInt32(reader["quantité"]),
+                        Prix = Convert.ToDecimal(reader["prix"]),
+                        RegimeAlimentaire = (reader["régime_alimentaire"]).ToString(),
+                        Date_Fabrication = Convert.ToDateTime(reader["date_fabrication"]),
+                        Date_Peremption = Convert.ToDateTime(reader["date_péremption"]),
+                        NombrePortion = Convert.ToInt32(reader["nombre_portions_total"]),
+                        PlatDuJour = Convert.ToBoolean(reader["plat_du_jour"]),
+                        ID_Recette = Convert.ToInt32(reader["id_recette"]),
+                        ID_Cuisinier = Convert.ToInt32(reader["id_cuisinier"])
+                    });
+                }
+            }
+        }
+        return plats;
+    }
+    
+    public void addPlat(Plat plat)
+    {
+        string query = "INSERT INTO Plat (Nom, Quantité, Prix, Régime_alimentaire, Date_Fabrication, Date_Péremption, Nombre_Portions_Total, Plat_Du_Jour, ID_Recette, ID_cuisinier) VALUES (@platNom, @platQuantite, @platPrix, @platRegime, @platDateFab, @platDatePer, @platNbPortion, @platDuJour, @platIDRecette, @platIDCuisinier)";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@platNom", plat.Nom);
+            command.Parameters.AddWithValue("@platQuantite", plat.Quantite);
+            command.Parameters.AddWithValue("@platPrix", plat.Prix);
+            command.Parameters.AddWithValue("@platRegime", plat.RegimeAlimentaire);
+            command.Parameters.AddWithValue("@platDateFab", plat.Date_Fabrication);
+            command.Parameters.AddWithValue("@platDatePer", plat.Date_Peremption);
+            command.Parameters.AddWithValue("@platNbPortion", plat.NombrePortion);
+            command.Parameters.AddWithValue("@platDuJour", plat.PlatDuJour);
+            command.Parameters.AddWithValue("@platIDRecette", plat.ID_Recette);
+            command.Parameters.AddWithValue("@platIDCuisinier", plat.ID_Cuisinier);
+            
+            connection.Open();
+            
+            command.ExecuteNonQuery();
+        }
+    }
+
+    public void delPlat(int idPlat)
+    {
+        string query = "DELETE FROM Plat WHERE ID_Plat = @idPlat";
+        using(var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@idPlat", idPlat);
+            connection.Open();
+            command.ExecuteNonQuery();
+        }    
+    }
+}
