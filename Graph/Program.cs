@@ -3,12 +3,13 @@
 using System.Drawing;
 using Graph;
 
+/*
 Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
 ///List<Point> points = new List<Point>();
 ///List<Noeud<string>> noeuds = new List<Noeud<string>>();
 ///Graphe g1 = new Graphe<T>("titre", noeuds, points);
 
-/*static void AfficherMatrice(int[,] mat)
+static void AfficherMatrice(int[,] mat)
 {
     for (int i = 0; i < mat.GetLength(0); i++)
     {
@@ -72,38 +73,21 @@ Console.ReadKey();
 Console.WriteLine("\n\n");
 
 g1.DessinerGraphe();
-*/
-/*
-static void Main()
-{
-    //Graphe<string> metro = new Graphe<string>("Métro Paris");
-
-// Appel de la méthode ChargerStations
-    List<Station> stations = Graphe<string>.ChargerStations();
-
-// Affichage des stations chargées
-    Console.WriteLine("Stations chargées :");
-    foreach (var station in stations)
-    {
-        Console.WriteLine($"ID: {station.Id}, Nom: {station.Nom}, Lignes: {string.Join(", ", station.Lignes)}");
-    }
-}
+ 
 */
 
-    Graphe<Station> monGraphe = new Graphe<Station>("Métro Paris")
-    {
-        Titre = null
-    };
+Console.WriteLine("Chargement des stations...");
 
-// Chargement des stations
-    Console.WriteLine("Chargement des stations...");
-    monGraphe.ChargerStations();
+        // Charger les stations en appelant la méthode ChargerStations
+        List<Station> stations = Graphe<string>.ChargerStations();
 
+        // Afficher les stations chargées
+        Console.WriteLine("Stations chargées :");
+        foreach (var station in stations)
+        {
+            Console.WriteLine($"ID: {station.Id}, Nom: {station.Nom}, Lignes: {string.Join(", ", station.Lignes)}");
+        }
 
-// Affichage des stations chargées
-    Console.WriteLine("\nListe des stations chargées :");
-    //foreach (var station in monGraphe.Station.Values)
-    {
-    //    station.AfficherStation();
-    }
-
+        // Attente d'une touche pour fermer la console
+        Console.WriteLine("Appuyez sur une touche pour quitter...");
+        Console.ReadKey();

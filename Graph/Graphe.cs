@@ -176,7 +176,7 @@ public class Graphe<T>
         queue.Enqueue(startNode);
         visited.Add(startId);
 
-        Console.WriteLine("Parcours BFS à partir du nœud " + startNode.Titre + ":");
+        Console.WriteLine("Parcours BFS à partir du noeud " + startNode.Titre + ":");
 
         while (queue.Count > 0)
         {
@@ -273,6 +273,7 @@ public class Graphe<T>
 
         Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
     }
+
 /*
     public void ChargerStations()
     {
@@ -326,50 +327,62 @@ public class Graphe<T>
     {
         foreach (var station in _stations.Values)
         {
-            Console.WriteLine($"Station {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
+            Console.WriteLine(
+                $"Station {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
         }
     }
-}
 
 
-public static List<Station> ChargerStations()
-{
-    var stations = new List<Station>();
-    /* string cheminFichier = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MetroParis .csv");
 
-     if (!File.Exists(cheminFichier))
-     {
-         Console.WriteLine("Erreur : Le fichier stations.csv est introuvable.");
-         return stations;
-     }
-*/
-
-    string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis (1).xlsx").Skip(1).ToArray();
-    foreach (string ligne in lines)
-
+    public static List<Station> ChargerStations()
     {
-
-        string[] tokens = ligne.Split(',');
-
-
-        int id = Convert.ToInt32(tokens[0]);
-
-        string nom = tokens[1].Trim();
-
-        Console.WriteLine("mon cul");
-        int[] lignesMetro = Array.ConvertAll(tokens[6].Trim().Split('/'), int.Parse);
-        Console.WriteLine("mon cul");
-
-
-
-        // Ajout de la station à la liste
+        var stations = new List<Station>();
         
-        stations.Add(new Station(id, nom, lignesMetro));
+        string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
+        
+        if (lines.Length == 0)
+        {
+            Console.WriteLine("Le fichier CSV est vide.");
+        }
+        foreach (string ligne in lines)
+        {
+            
+            Console.WriteLine($"Traitement de la ligne: {ligne}"); 
+
+            string[] tokens = ligne.Split(',');
+
+            // On retire les guillemets pour chaque token
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                tokens[i] = tokens[i].Trim('"');
+            }
+
+            // Traitement de l'ID
+            /*
+            string idString = tokens[0].Trim();
+            if (!int.TryParse(idString, out int id))
+            {
+                Console.WriteLine($"Erreur : ID invalide ({idString})");
+                continue;
+            }
+*/
+            int id = Convert.ToInt32(tokens[0]);
+           
+            string nom = tokens[1].Trim();
+            
+        double[] lignesMetro=Array.ConvertAll(tokens[7].Split('/'), double.Parse);
+        
+
+            // Ajout de la station à la liste
+
+            stations.Add(new Station(id, nom, lignesMetro));
+        }
+
+        Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
+        return stations;
+
+        
     }
-
-    Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
-    return stations;
-
 }
 
 
