@@ -32,7 +32,7 @@ public class Graphe<T>
         get => this._dicoNoeuds;
     }
 
-    public object Station { get; set; }
+    //public object Station { get; set; }
 
 
     /// <summary>
@@ -273,56 +273,7 @@ public class Graphe<T>
 
         Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
     }
-
-/*
-    public void ChargerStations()
-    {
-        string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis (1).xlsx").Skip(1).ToArray();
-
-        foreach (string ligne in lines)
-        {
-            string[] tokens = ligne.Split('\t'); // Séparateur : tabulation
-
-            if (tokens.Length < 7)
-            {
-                Console.WriteLine("Erreur : Ligne invalide dans le fichier.");
-                continue;
-            }
-
-            int id;
-            if (!int.TryParse(tokens[0], out id))
-            {
-                Console.WriteLine($"Erreur : ID invalide ({tokens[0]}).");
-                continue;
-            }
-
-            string nom = tokens[1].Trim();
-
-            int[] lignesMetro;
-            try
-            {
-                lignesMetro = tokens[6].Split(',')
-                    .Where(x => !string.IsNullOrWhiteSpace(x)) // Filtre les vides
-                    .Select(int.Parse)
-                    .ToArray();
-            }
-            catch
-            {
-                Console.WriteLine($"Erreur : Lignes invalides ({tokens[6]}) pour la station {nom}.");
-                lignesMetro = Array.Empty<int>();
-            }
-
-            // Création et ajout de la station
-            Station station = new Station(id, nom, lignesMetro);
-            _stations[id] = station;
-
-            Console.WriteLine(
-                $"Station chargée : {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
-        }
-
-        Console.WriteLine($"Chargement terminé : {_stations.Count} stations ajoutées.");
-    }
-    */
+    
     public void AfficherStations()
     {
         foreach (var station in _stations.Values)
