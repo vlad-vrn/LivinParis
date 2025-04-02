@@ -13,18 +13,28 @@ public class Graphe<T>
 {
     public required string Titre;
     private Dictionary<int, Noeud<T>> _dicoNoeuds;
+    private Dictionary<int, Station> _stations;
     private bool _b;
+
+
+
 
     public Graphe(string titre, Dictionary<int, Noeud<T>>? noeuds = null, List<Lien<T>>? liens = null, bool _b = false)
     {
         this.Titre = titre;
         this._dicoNoeuds = noeuds ?? new Dictionary<int, Noeud<T>>();
+        this._stations = new Dictionary<int, Station>();
     }
+
 
     public Dictionary<int, Noeud<T>> Noeuds
     {
         get => this._dicoNoeuds;
     }
+
+    public object Station { get; set; }
+
+
     /// <summary>
     /// Initialise les noeuds du graphe d'après les valeurs du document texte.
     /// </summary>
@@ -35,7 +45,8 @@ public class Graphe<T>
         int nbNoeuds = Int32.Parse(tokens[0]);
         for (int i = 0; i < nbNoeuds; i++)
         {
-            Noeud<T> noeud = new Noeud<T>((i+1).ToString()) {Titre = (i+1).ToString() }; //Répétition : pertinence du required ?
+            Noeud<T> noeud = new Noeud<T>((i + 1).ToString())
+                { Titre = (i + 1).ToString() }; //Répétition : pertinence du required ?
             int id = i + 1;
             this._dicoNoeuds.Add(id, noeud);
             //Console.WriteLine(noeud.Titre);
@@ -54,6 +65,7 @@ public class Graphe<T>
         int tailleGraphe = Int32.Parse(tokens[2]);
         return tailleGraphe;
     }
+
     /// <summary>
     /// Récupère la valeur de l'ordre du graphe dans le document texte.
     /// </summary>
@@ -66,7 +78,7 @@ public class Graphe<T>
         int ordreGraphe = Int32.Parse(tokens[0]);
         return ordreGraphe;
     }
-    
+
     /// <summary>
     /// Initialise les liens du graphe.
     /// </summary>
@@ -103,6 +115,7 @@ public class Graphe<T>
         {
             str += nodeKVP.Value.AfficherLiens() + "\n";
         }
+
         Console.WriteLine(str);
     }
 
@@ -115,12 +128,12 @@ public class Graphe<T>
         string lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(23).Take(1).First();
         string[] tokens = lines.Split(" ");
         int nbNoeuds = Int32.Parse(tokens[0]);
-        int[,] mat = new int[nbNoeuds+1, nbNoeuds+1];
-        for(int i = 0; i < nbNoeuds+1; i++)
+        int[,] mat = new int[nbNoeuds + 1, nbNoeuds + 1];
+        for (int i = 0; i < nbNoeuds + 1; i++)
         {
-            for (int j = 0; j < nbNoeuds+1; j++)
+            for (int j = 0; j < nbNoeuds + 1; j++)
             {
-                if (i == 0) 
+                if (i == 0)
                 {
                     mat[i, j] = j;
                 }
@@ -143,6 +156,7 @@ public class Graphe<T>
                 }
             }
         }
+
         return mat;
     }
 
@@ -181,6 +195,7 @@ public class Graphe<T>
                 }
             }
         }
+
         Console.WriteLine();
     }
 
@@ -258,4 +273,106 @@ public class Graphe<T>
 
         Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
     }
+/*
+    public void ChargerStations()
+    {
+        string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis (1).xlsx").Skip(1).ToArray();
+
+        foreach (string ligne in lines)
+        {
+            string[] tokens = ligne.Split('\t'); // Séparateur : tabulation
+
+            if (tokens.Length < 7)
+            {
+                Console.WriteLine("Erreur : Ligne invalide dans le fichier.");
+                continue;
+            }
+
+            int id;
+            if (!int.TryParse(tokens[0], out id))
+            {
+                Console.WriteLine($"Erreur : ID invalide ({tokens[0]}).");
+                continue;
+            }
+
+            string nom = tokens[1].Trim();
+
+            int[] lignesMetro;
+            try
+            {
+                lignesMetro = tokens[6].Split(',')
+                    .Where(x => !string.IsNullOrWhiteSpace(x)) // Filtre les vides
+                    .Select(int.Parse)
+                    .ToArray();
+            }
+            catch
+            {
+                Console.WriteLine($"Erreur : Lignes invalides ({tokens[6]}) pour la station {nom}.");
+                lignesMetro = Array.Empty<int>();
+            }
+
+            // Création et ajout de la station
+            Station station = new Station(id, nom, lignesMetro);
+            _stations[id] = station;
+
+            Console.WriteLine(
+                $"Station chargée : {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
+        }
+
+        Console.WriteLine($"Chargement terminé : {_stations.Count} stations ajoutées.");
+    }
+    */
+    public void AfficherStations()
+    {
+        foreach (var station in _stations.Values)
+        {
+            Console.WriteLine($"Station {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
+        }
+    }
 }
+
+
+public static List<Station> ChargerStations()
+{
+    var stations = new List<Station>();
+    /* string cheminFichier = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MetroParis .csv");
+
+     if (!File.Exists(cheminFichier))
+     {
+         Console.WriteLine("Erreur : Le fichier stations.csv est introuvable.");
+         return stations;
+     }
+*/
+
+    string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis (1).xlsx").Skip(1).ToArray();
+    foreach (string ligne in lines)
+
+    {
+
+        string[] tokens = ligne.Split(',');
+
+
+        int id = Convert.ToInt32(tokens[0]);
+
+        string nom = tokens[1].Trim();
+
+        Console.WriteLine("mon cul");
+        int[] lignesMetro = Array.ConvertAll(tokens[6].Trim().Split('/'), int.Parse);
+        Console.WriteLine("mon cul");
+
+
+
+        // Ajout de la station à la liste
+        
+        stations.Add(new Station(id, nom, lignesMetro));
+    }
+
+    Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
+    return stations;
+
+}
+
+
+
+
+

@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\varen\\RiderProjects\\LivinParis\\Graph\\Graph.csproj": {}
+    "C:\\Users\\abelv\\RiderProjects\\LivinParis\\Graph\\Graph.csproj": {}
   },
   "projects": {
-    "C:\\Users\\varen\\RiderProjects\\LivinParis\\Graph\\Graph.csproj": {
+    "C:\\Users\\abelv\\RiderProjects\\LivinParis\\Graph\\Graph.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\varen\\RiderProjects\\LivinParis\\Graph\\Graph.csproj",
+        "projectUniqueName": "C:\\Users\\abelv\\RiderProjects\\LivinParis\\Graph\\Graph.csproj",
         "projectName": "Graph",
-        "projectPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\Graph\\Graph.csproj",
-        "packagesPath": "C:\\Users\\varen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\varen\\RiderProjects\\LivinParis\\Graph\\obj\\",
+        "projectPath": "C:\\Users\\abelv\\RiderProjects\\LivinParis\\Graph\\Graph.csproj",
+        "packagesPath": "C:\\Users\\abelv\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abelv\\RiderProjects\\LivinParis\\Graph\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\varen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\abelv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,9 +42,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -71,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\varen\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\abelv\\.dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

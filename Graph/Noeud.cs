@@ -5,6 +5,7 @@ public class Noeud<T>
     public required string Titre;
     private T _contenu; 
     public List<Lien<T>> Liens { get; set; } = new List<Lien<T>>();
+    public object Data { get; set; }
 
     public Noeud(string titre, T contenu = default!, List<Lien<T>>? liens = null)
     {
