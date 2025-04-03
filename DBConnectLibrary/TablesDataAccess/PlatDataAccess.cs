@@ -28,7 +28,6 @@ public class PlatDataAccess : AccessBDD
                         Nom = reader["nom"].ToString(),
                         Quantite = Convert.ToInt32(reader["quantité"]),
                         Prix = Convert.ToDecimal(reader["prix"]),
-                        RegimeAlimentaire = (reader["régime_alimentaire"]).ToString(),
                         Date_Fabrication = Convert.ToDateTime(reader["date_fabrication"]),
                         Date_Peremption = Convert.ToDateTime(reader["date_péremption"]),
                         NombrePortion = Convert.ToInt32(reader["nombre_portions_total"]),
@@ -44,14 +43,13 @@ public class PlatDataAccess : AccessBDD
     
     public void addPlat(Plat plat)
     {
-        string query = "INSERT INTO Plat (Nom, Quantité, Prix, Régime_alimentaire, Date_Fabrication, Date_Péremption, Nombre_Portions_Total, Plat_Du_Jour, ID_Recette, ID_cuisinier) VALUES (@platNom, @platQuantite, @platPrix, @platRegime, @platDateFab, @platDatePer, @platNbPortion, @platDuJour, @platIDRecette, @platIDCuisinier)";
+        string query = "INSERT INTO Plat (Nom, Quantité, Prix, Date_Fabrication, Date_Péremption, Nombre_Portions_Total, Plat_Du_Jour, ID_Recette, ID_cuisinier) VALUES (@platNom, @platQuantite, @platPrix, @platDateFab, @platDatePer, @platNbPortion, @platDuJour, @platIDRecette, @platIDCuisinier)";
         using (var connection = Connection())
         using (var command = new MySqlCommand(query, connection))
         {
             command.Parameters.AddWithValue("@platNom", plat.Nom);
             command.Parameters.AddWithValue("@platQuantite", plat.Quantite);
             command.Parameters.AddWithValue("@platPrix", plat.Prix);
-            command.Parameters.AddWithValue("@platRegime", plat.RegimeAlimentaire);
             command.Parameters.AddWithValue("@platDateFab", plat.Date_Fabrication);
             command.Parameters.AddWithValue("@platDatePer", plat.Date_Peremption);
             command.Parameters.AddWithValue("@platNbPortion", plat.NombrePortion);

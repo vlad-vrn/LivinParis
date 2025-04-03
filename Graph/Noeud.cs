@@ -3,6 +3,7 @@ namespace Graph;
 public class Noeud<T>
 {
     public required string Titre;
+    public int id {get;set;}
     private T _contenu; 
     public List<Lien<T>> Liens { get; set; } = new List<Lien<T>>();
 
