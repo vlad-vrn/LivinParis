@@ -107,29 +107,75 @@ Console.WriteLine("Chargement des stations...");
         g1.LiensMetro2();
         Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
-
-
-        /*void AfficherMatriceAdjacence(int[,] mat)
+        Console.Write("Entrez l'ID de la station de départ : ");
+        if (!int.TryParse(Console.ReadLine(), out int startId))
         {
-            int taille = mat.GetLength(0);
-
-            Console.WriteLine("Matrice d'adjacence du graphe :\n");
-
-            for (int i = 0; i < taille; i++)
-            {
-                for (int j = 0; j < taille; j++)
-                {
-                    Console.Write(mat[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
+            Console.WriteLine("ID de départ invalide.");
+            return;
         }
 
-        /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
-        Console.ReadKey();
-        Console.WriteLine("\n\n");
-        */
-        Console.ReadKey();
+        Console.Write("Entrez l'ID de la station d'arrivée : ");
+        if (!int.TryParse(Console.ReadLine(), out int endId))
+        {
+            Console.WriteLine("ID d'arrivée invalide.");
+            return;
+        }
+
+        // Vérification si les stations existent dans le graphe
+        if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
+        {
+            Console.WriteLine("Une ou plusieurs stations n'existent pas.");
+            return;
+        }
+
+        // Exécution de l'algorithme de Dijkstra
+        DijkstraAlgorithm<string> dijkstra = new DijkstraAlgorithm<string>(g1);
+        List<int> chemin = dijkstra.TrouverChemin(startId, endId);
+
+        // Affichage du résultat
+        if (chemin.Count == 0)
+        {
+            Console.WriteLine("Aucun chemin trouvé entre ces stations.");
+        }
+        else
+        {
+            double t = -2;
+           
+                Console.WriteLine("Chemin le plus court :");
+                foreach (var id in chemin)
+                {
+                    Console.WriteLine($"Station {id} ");
+                    t = t + 2;
+                }
+
+                Console.WriteLine("le temps de trajet est: "+t+"min");
+                
+            }
+
+
+            /*void AfficherMatriceAdjacence(int[,] mat)
+            {
+                int taille = mat.GetLength(0);
+
+                Console.WriteLine("Matrice d'adjacence du graphe :\n");
+
+                for (int i = 0; i < taille; i++)
+                {
+                    for (int j = 0; j < taille; j++)
+                    {
+                        Console.Write(mat[i, j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
+            Console.ReadKey();
+            Console.WriteLine("\n\n");
+            */
+            Console.ReadKey();
         
-      //  g1.DessinerGraphe();
+    
+
+        //  g1.DessinerGraphe();
         

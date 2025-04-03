@@ -63,11 +63,10 @@ public class Graphe<T>
         for (int i = 0; i < nbNoeuds; i++)
         {
             Noeud<T> noeud = new Noeud<T>((i + 1).ToString())
-                { Titre = (i + 1).ToString() }; //Répétition : pertinence du required ?
+                { Titre = (i + 1).ToString() }; 
             int id = i + 1;
             this._dicoNoeuds.Add(id, noeud);
-            //Console.WriteLine(noeud.Titre);
-            //Console.WriteLine(id);
+            
         }
     }
 
@@ -223,7 +222,12 @@ public class Graphe<T>
         stationsParNom[nomStation].Add((idStation, ligne));
 
         // Liaison avec la station précédente
-       
+        if (int.TryParse(tokens[2], out int idPrecedent) && idPrecedent > 0)
+        {
+            int temps = int.Parse(tokens[4]);
+            
+            CreerLien(idStation, idPrecedent, temps); // Lien actuelle -> précédent
+        }
 
         // Liaison avec la station suivante
         if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
