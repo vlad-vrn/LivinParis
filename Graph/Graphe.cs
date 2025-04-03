@@ -126,7 +126,7 @@ public class Graphe<T>
 
     public void LiensMetro()
     {
-        Dictionary<Station, List<int>> Stations = new Dictionary<Station, List<int>();
+        Dictionary<Station, List<int>> Stations = new Dictionary<Station, List<int>>();
         List<string> nomStations = new List<string>();
         string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
         foreach (string line in lines)
@@ -147,7 +147,6 @@ public class Graphe<T>
                 
                 int numArrive = Int32.Parse(tokens[2]);
                 Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
-                Noeud<T> noeudArrive = this._dicoNoeuds[numArrive1];
                 int poids = Int32.Parse(tokens[5]);
             }
             nomStations.Add(tokens[1]);
@@ -489,7 +488,7 @@ public class Graphe<T>
 
                 // Ajout de la station à la liste
 
-                stations.Add(new Station(id, nom, lignesMetro));
+               // stations.Add(new Station(id, nom, lignesMetro));
             }
 
             Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
