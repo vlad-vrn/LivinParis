@@ -62,15 +62,11 @@ public class CreateRecette
         
         foreach (var ingredient in ingredientUtilise)
         {
-            Console.WriteLine("problème PAS ICI");
             Contient newContient = new Contient();
-            Console.WriteLine("problème PAS LA");
             newContient.ID_Recette = newRecette.ID_Recette;
-            Console.WriteLine("le problème il est PAS la");
             newContient.Nom_Ingredient = ingredient;
-            Console.WriteLine("lil tecca fdp");
-            contientDataAccess.addContient(newContient);
             Console.WriteLine("?????");
+            contientDataAccess.addContient(newContient);
         }
         
         Console.WriteLine("Recette ajoutée !");
