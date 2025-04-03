@@ -123,105 +123,158 @@ public class Graphe<T>
         }
     }
     */
-
     public void LiensMetro()
+{
+    // Dictionnaire pour regrouper les stations par nom
+    Dictionary<string, List<(int id, string ligne)>> stationsParNom = new Dictionary<string, List<(int, string)>>();
+
+    string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
+    
+    // Première passe : créer les liaisons normales et indexer les stations
+    foreach (string line in lines)
     {
-        /*Dictionary<Station, List<int>> Stations = new Dictionary<Station, List<int>>();
-       List<string> nomStations = new List<string>();*/
-        string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
-        foreach (string line in lines)
+        string[] tokens = line.Split(',');
+        for (int i = 0; i < tokens.Length; i++)
         {
-            string[] tokens = line.Split(',');
-            // On retire les guillemets pour chaque token
-            for (int i = 0; i < tokens.Length; i++)
-            {
-                tokens[i] = tokens[i].Trim('"');
-            }
-            
-//            Station newStation = new Station(Int32.Parse(tokens[0]), tokens[1]);
-            
-            /*if (nomStations.Contains(tokens[1]))
-            {
-                int numDepart = Int32.Parse(tokens[0]);
-                //On doit trouver l'autre station du même nom
-                
-                int numArrive = Int32.Parse(tokens[2]);
-                Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
-                int poids = Int32.Parse(tokens[5]);
-            }
-            nomStations.Add(tokens[1]);*/
-            
-            if  (int.TryParse(tokens[2], out int numArrive1))
-            {
-                int numDepart = Int32.Parse(tokens[0]);
-                int numArrive = Int32.Parse(tokens[2]);
-                Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
-                Noeud<T> noeudArrive = this._dicoNoeuds[numArrive1];
-                int poids = Int32.Parse(tokens[4]);
-                Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrive,poids);
-                if (_b == false)
-                {
-                    noeudDepart.Liens.Add(newLien);
-                    noeudArrive.Liens.Add(newLien);
-                }
-                else
-                {
-                    noeudDepart.Liens.Add(newLien);
-                }
-            }
+            tokens[i] = tokens[i].Trim('"');
+        }
 
-            if (int.TryParse(tokens[3], out int numArrive2))
-            {
-                int numDepart = Int32.Parse(tokens[0]);
-                int numArrive = Int32.Parse(tokens[3]);
-                Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
-                Noeud<T> noeudArrive = this._dicoNoeuds[numArrive2];
-                int poids = Int32.Parse(tokens[4]);
-                Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrive,poids);
-                if (_b == false)
-                {
-                    noeudDepart.Liens.Add(newLien);
-                    noeudArrive.Liens.Add(newLien);
-                }
-                else
-                {
-                    noeudDepart.Liens.Add(newLien);
-                }
-                /*
-                //partie 2
-                string stationsParNom = tokens[1];
+        int idStation = int.Parse(tokens[0]);
+        string nomStation = tokens[1];
+        string ligne = tokens[7];
 
-                foreach (var stationPair in stationsParNom)
-                {
-                    List<Noeud<T>> noeudsAvecNomIdentique = stationPair.Value;
-                    if (noeudsAvecNomIdentique.Count > 1)
-                    {
-                        // Si plus d'une station a le même nom, on ajoute des liens entre elles
-                        for (int i = 0; i < noeudsAvecNomIdentique.Count; i++)
-                        {
-                            for (int j = i + 1; j < noeudsAvecNomIdentique.Count; j++)
-                            {
-                                Noeud<T> noeud1 = noeudsAvecNomIdentique[i];
-                                Noeud<T> noeud2 = noeudsAvecNomIdentique[j];
+        // Indexation des stations par nom
+        if (!stationsParNom.ContainsKey(nomStation))
+        {
+            stationsParNom[nomStation] = new List<(int, string)>();
+        }
+        stationsParNom[nomStation].Add((idStation, ligne));
 
-                                // Récupérer le poids du lien à partir du token 5 pour cette station
-                                int poidsChangement =
-                                    Int32.Parse(tokens[4]); // Poids de la station trouvé dans le token 5
+        // Création des liens PRÉCÉDENTS (dans les deux sens)
+        if (int.TryParse(tokens[2], out int idPrecedent) && idPrecedent > 0)
+        {
+            int temps = int.Parse(tokens[4]);
+            CreerLien(idPrecedent, idStation, temps); // Lien précédent -> actuelle
+            CreerLien(idStation, idPrecedent, temps); // Lien actuelle -> précédent
+        }
 
-                                // Créer le lien avec le poids spécifique
-                                Lien<T> lienChangement = new Lien<T>(noeud1, noeud2, poidsChangement);
-                                noeud1.Liens.Add(lienChangement);
-                                noeud2.Liens.Add(lienChangement);
-                            }
-                        }
-                    }
-                }
-                */
-            }
-            
+        // Création des liens SUIVANTS (dans les deux sens)
+        if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
+        {
+            int temps = int.Parse(tokens[4]);
+            CreerLien(idStation, idSuivant, temps); // Lien actuelle -> suivante
+            CreerLien(idSuivant, idStation, temps); // Lien suivante -> actuelle
         }
     }
-   
+
+    // Deuxième passe : créer les liaisons de correspondance
+    foreach (string line in lines)
+    {
+        string[] tokens = line.Split(',');
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            tokens[i] = tokens[i].Trim('"');
+        }
+
+        int idStation = int.Parse(tokens[0]);
+        string nomStation = tokens[1];
+        string ligne = tokens[7];
+
+        if (int.TryParse(tokens[5], out int tempsChangement) && tempsChangement > 0)
+        {
+            var stationsCorrespondantes = stationsParNom[nomStation]
+                .Where(x => x.ligne != ligne)
+                .ToList();
+
+            foreach (var correspondance in stationsCorrespondantes)
+            {
+                // Correspondances dans les deux sens
+                CreerLien(idStation, correspondance.id, tempsChangement);
+                CreerLien(correspondance.id, idStation, tempsChangement);
+            }
+        }
+    }
+}
+   public void LiensMetro2()
+{
+    // Dictionnaire pour regrouper les stations par nom (pour gérer les correspondances)
+    Dictionary<string, List<(int id, string ligne)>> stationsParNom = new Dictionary<string, List<(int, string)>>();
+
+    string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
+    
+    // Première passe : créer les liaisons normales et indexer les stations
+    foreach (string line in lines)
+    {
+        string[] tokens = line.Split(',');
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            tokens[i] = tokens[i].Trim('"');
+        }
+
+        int idStation = int.Parse(tokens[0]);
+        string nomStation = tokens[1];
+        string ligne = tokens[7];
+
+        // Indexation des stations par nom pour les correspondances
+        if (!stationsParNom.ContainsKey(nomStation))
+        {
+            stationsParNom[nomStation] = new List<(int, string)>();
+        }
+        stationsParNom[nomStation].Add((idStation, ligne));
+
+        // Liaison avec la station précédente
+       
+
+        // Liaison avec la station suivante
+        if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
+        {
+            int temps = int.Parse(tokens[4]);
+            CreerLien(idStation, idSuivant, temps);
+        }
+    }
+
+    // Deuxième passe : créer les liaisons de correspondance
+    foreach (string line in lines)
+    {
+        string[] tokens = line.Split(',');
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            tokens[i] = tokens[i].Trim('"');
+        }
+
+        int idStation = int.Parse(tokens[0]);
+        string nomStation = tokens[1];
+        string ligne = tokens[7];
+
+        // Vérifier s'il y a un temps de changement spécifié
+        if (int.TryParse(tokens[5], out int tempsChangement) && tempsChangement > 0)
+        {
+            // Trouver toutes les stations avec le même nom mais des lignes différentes
+            var stationsCorrespondantes = stationsParNom[nomStation]
+                .Where(x => x.ligne != ligne)
+                .ToList();
+
+            foreach (var correspondance in stationsCorrespondantes)
+            {
+                // Créer un lien de correspondance dans les deux sens
+                CreerLien(idStation, correspondance.id, tempsChangement);
+                if (!_b) // Si le graphe est non orienté
+                {
+                    CreerLien(correspondance.id, idStation, tempsChangement);
+                }
+            }
+        }
+    }
+}
+
+private void CreerLien(int idDepart, int idArrivee, int poids)
+{
+    Noeud<T> noeudDepart = this._dicoNoeuds[idDepart];
+    Noeud<T> noeudArrivee = this._dicoNoeuds[idArrivee];
+    
+    Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrivee, poids);
+    noeudDepart.Liens.Add(newLien);
+}
     
 
     /// <summary>
