@@ -8,6 +8,7 @@ public class Noeud<T>
     public int id {get;set;}
     private T _contenu; 
     public List<Lien<T>> Liens { get; set; } = new List<Lien<T>>();
+    public object Data { get; set; }
 
     public Noeud(string titre, T contenu = default!, List<Lien<T>>? liens = null)
     {
