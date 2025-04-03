@@ -55,8 +55,9 @@ CREATE TABLE Livraison(
 );
 
 CREATE TABLE Recette(
-   ID_Recette INT,
+   ID_Recette INT AUTO_INCREMENT,
    Nom VARCHAR(50),
+   Régime_alimentaire VARCHAR(50),
    PRIMARY KEY(ID_Recette)
 );
 
@@ -85,7 +86,6 @@ CREATE TABLE Plat(
    Nom VARCHAR(50) NOT NULL,
    Quantité INT,
    Prix DECIMAL(15,2),
-   Régime_alimentaire VARCHAR(50),
    Date_Fabrication DATETIME,
    Date_Péremption DATETIME,
    Nombre_Portions_Total INT,

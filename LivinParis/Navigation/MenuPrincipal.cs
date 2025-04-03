@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using DBConnectLibrary;
 using LivinParis.Application;
 using Spectre.Console;
@@ -7,10 +9,12 @@ namespace LivinParis.Navigation;
 public class MenuPrincipal
 {
     public string output { get; set; }
+    public string placement { get;set; }
     UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
     CuisinierDataAccess cuisinierDataAccess = new CuisinierDataAccess();
     ClientDataAccess clientDataAccess = new ClientDataAccess();
     Login login = new Login();
+    UserMenu userMenu = new UserMenu();
     public void initialStartup()
     {
         Console.Clear();
@@ -53,8 +57,12 @@ public class MenuPrincipal
         switch (rep)
         {
             case "Connexion":
-                thisUser = login.userLogin();
-                espaceUtilisateur(thisUser);
+                thisUser = login.userLogin(); //faut check si c'est bien un user
+                userMenu.placement = "userMenu";
+                while (userMenu.placement != "loginMenu")
+                {
+                    userMenu.espaceUtilisateur(thisUser); //tout se passe ici en ft...
+                }
                 Console.ReadKey();
                 break;
             case "Inscription":
@@ -76,93 +84,5 @@ public class MenuPrincipal
                 this.output = "Retour";
                 break;
         }
-    }
-
-    public void espaceUtilisateur(Utilisateur thisUser)
-    {
-        Console.Clear();
-        List<int> cuisinierUserID = new List<int>();
-        foreach (Cuisinier cuisinier in this.cuisinierDataAccess.getAllCuisiniers())
-        {
-            cuisinierUserID.Add(cuisinier.ID_Utilisateur);
-        }
-        List<int> clientUserID = new List<int>();
-        foreach (Client client in this.clientDataAccess.getAllClients()) //Recharge de la liste à chaque itération, opti possible.
-        {
-            clientUserID.Add(client.ID_Utilisateur);
-        }
-
-        string rep;
-
-        if (cuisinierUserID.Contains(thisUser.Id) == false && clientUserID.Contains(thisUser.Id) == false)
-        {
-            AnsiConsole.Markup("Bienvenue sur votre espace utilisateur, " + thisUser.Prenom + " !\n");
-            rep = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Que voulez vous faire ?")
-                    .PageSize(10)
-                    .AddChoices(new[]
-                    {
-                        "Devenir client", "Devenir cuisinier", "Retour"
-                    }));
-        }
-        else if (cuisinierUserID.Contains(thisUser.Id) == false && clientUserID.Contains(thisUser.Id) == true)
-        {
-            AnsiConsole.Markup("Bienvenue sur votre espace utilisateur, " + thisUser.Prenom + " !\n");
-            rep = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Que voulez vous faire ?")
-                    .PageSize(10)
-                    .AddChoices(new[]
-                    {
-                        "Accéder à votre espace client", "Devenir cuisinier", "Retour"
-                    }));
-        }
-        else if (cuisinierUserID.Contains(thisUser.Id) == true && clientUserID.Contains(thisUser.Id) == false)
-        {
-            AnsiConsole.Markup("Bienvenue sur votre espace utilisateur, " + thisUser.Prenom + " !\n");
-            rep = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Que voulez vous faire ?")
-                    .PageSize(10)
-                    .AddChoices(new[]
-                    {
-                        "Devenir client", "Accéder à votre espace cuisinier", "Retour"
-                    }));
-        }
-        else
-        {
-            AnsiConsole.Markup("Bienvenue sur votre espace utilisateur, " + thisUser.Prenom + " !\n");
-            rep = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                    .Title("Que voulez vous faire ?")
-                    .PageSize(10)
-                    .AddChoices(new[]
-                    {
-                        "Accéder à votre espace client", "Accéder à votre espace cuisinier", "Retour"
-                    }));
-        }
-
-        switch (rep)
-        {
-            case "Devenir client":
-                UpdateUser.becomeClient(thisUser);
-                Console.ReadKey();
-                break;
-            case "Devenir cuisinier":
-                UpdateUser.becomeCuisinier(thisUser);
-                Console.ReadKey();
-                break;
-            case "Retour":
-                this.output = "Retour";
-                break;
-        }
-        
-    }
-
-    public void espaceCuisi()
-    {
-        Console.Clear();
-        
     }
 }

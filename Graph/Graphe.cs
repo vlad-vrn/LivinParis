@@ -258,4 +258,18 @@ public class Graphe<T>
 
         Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
     }
+
+    /*public void RemplirMetro()
+    {
+        string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.xlsx").Skip(1).ToArray();
+        foreach (string line in lines)
+        {
+            string[] tokens = line.Split(',');
+            int id = Int32.Parse(tokens[0]);
+            string name = tokens[2];
+            Noeud<Station> station = new Noeud<Station>(name) {Titre = name};
+            this._dicoNoeuds.Add(id, station);
+        }
+
+    }*/
 }

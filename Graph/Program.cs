@@ -1,6 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using Graph;
 
 Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");

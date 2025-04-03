@@ -1,3 +1,5 @@
+using System;
+
 namespace DBConnectLibrary;
 
 public class Plat
@@ -6,7 +8,6 @@ public class Plat
     public string Nom {get;set;}
     public int Quantite {get;set;}
     public decimal Prix {get;set;}
-    public string RegimeAlimentaire {get;set;}
     public DateTime Date_Fabrication {get;set;}
     public DateTime Date_Peremption {get;set;}
     public int NombrePortion {get;set;}
