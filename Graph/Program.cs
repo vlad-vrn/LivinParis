@@ -76,18 +76,55 @@ g1.DessinerGraphe();
  
 */
 
+
 Console.WriteLine("Chargement des stations...");
 
         // Charger les stations en appelant la méthode ChargerStations
         List<Station> stations = Graphe<string>.ChargerStations();
-
+/*
         // Afficher les stations chargées
         Console.WriteLine("Stations chargées :");
         foreach (var station in stations)
         {
             Console.WriteLine($"ID: {station.Id}, Nom: {station.Nom}, Lignes: {string.Join(", ", station.Lignes)}");
         }
-
+*/
         // Attente d'une touche pour fermer la console
-        Console.WriteLine("Appuyez sur une touche pour quitter...");
+      //  Console.WriteLine("Appuyez sur une touche pour quitter...");
+       // Console.ReadKey();
+
+
+//AfficherFichier();
+
+        Graphe<string> g1 = new Graphe<string>("g1") { Titre = "MetroParis" };
+
+        g1.RemplirMetro();
+        g1.LiensMetro();
+        
+        g1.AfficherListeAdjacence();
+
+
+        void AfficherMatriceAdjacence(int[,] mat)
+        {
+            int taille = mat.GetLength(0);
+
+            Console.WriteLine("Matrice d'adjacence du graphe :\n");
+
+            for (int i = 0; i < taille; i++)
+            {
+                for (int j = 0; j < taille; j++)
+                {
+                    Console.Write(mat[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
         Console.ReadKey();
+        Console.WriteLine("\n\n");
+        
+        Console.ReadKey();
+        
+      //  g1.DessinerGraphe();
+        

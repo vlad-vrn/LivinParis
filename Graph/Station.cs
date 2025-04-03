@@ -14,11 +14,10 @@ public class Station
     public double[] lignes;
     
 
-    public Station(int id, string nom, double[] lignes)
+    public Station(int id, string nom)
     {
         this.id = id;
         this.nom = nom;
-        this.lignes = lignes;
        
 
     }
