@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Graph;
 
 public class Noeud<T>

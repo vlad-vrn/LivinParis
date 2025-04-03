@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using DBConnectLibrary;
 using Spectre.Console;
 
@@ -39,7 +41,7 @@ public class CreateRecette
         {
             var ingredient  = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Que voulez-vous faire ?")
+                    .Title("Ajoutez des ingrédients")
                     .PageSize(10)
                     .AddChoices(ingredientList));
             ingredientUtilise.Add(ingredient);
@@ -63,12 +65,13 @@ public class CreateRecette
         foreach (var ingredient in ingredientUtilise)
         {
             Contient newContient = new Contient();
-            newContient.ID_Recette = newRecette.ID_Recette;
-            newContient.Nom_Ingredient = ingredient;
-            Console.WriteLine("?????");
+            newContient.ID_Recette = recetteDataAccess.getIDFromName(newRecette.Nom_Recette);
+            Console.WriteLine(newContient.ID_Recette);
+            newContient.Nom = ingredient;
+            Console.WriteLine(newContient.Nom);
             contientDataAccess.addContient(newContient);
         }
-        
         Console.WriteLine("Recette ajoutée !");
+        
     }
 }

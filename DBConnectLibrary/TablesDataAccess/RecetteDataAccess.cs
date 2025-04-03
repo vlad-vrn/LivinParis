@@ -56,4 +56,24 @@ public class RecetteDataAccess : AccessBDD
             command.ExecuteNonQuery();
         }
     }
+    
+    public int getIDFromName(string nomRecette)
+    {
+        Recette recette = new Recette();
+        string query = "SELECT * FROM recette WHERE Nom=@nomRecette";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@nomRecette", nomRecette);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    recette.ID_Recette = Convert.ToInt32(reader["ID_Recette"]);
+                }
+            }
+        }
+        return recette.ID_Recette;
+    }
 }

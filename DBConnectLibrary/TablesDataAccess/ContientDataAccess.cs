@@ -23,7 +23,7 @@ public class ContientDataAccess : AccessBDD
                     contients.Add(new Contient
                     {
                         ID_Recette = Convert.ToInt32(reader["ID_Recette"]),
-                        Nom_Ingredient = reader["Nom"].ToString(),
+                        Nom = reader["Nom"].ToString(),
                     });
                 }
             }
@@ -38,7 +38,7 @@ public class ContientDataAccess : AccessBDD
         using (var command = new MySqlCommand(query, connection))
         {
             command.Parameters.AddWithValue("@IDRecette", contient.ID_Recette);
-            command.Parameters.AddWithValue("@nomIngredient", contient.Nom_Ingredient);
+            command.Parameters.AddWithValue("@nomIngredient", contient.Nom);
             connection.Open();
             command.ExecuteNonQuery();
         }    

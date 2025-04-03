@@ -1,9 +1,22 @@
+using DBConnectLibrary;
+using Spectre.Console;
+
 namespace LivinParis.PlatManagement;
 
-public class CreatePlat
+public class CreatePlat : GlobalDataAccess
 {
     public void publierPlat()
     {
-        //comme pour les ingédients, il faut avoir une séléction 
+        List<string> nomRecettes = new List<string>();
+        foreach (Recette registeredRecette in recetteDataAccess.getAllRecettes())
+        {
+            nomRecettes.Add(registeredRecette.Nom_Recette);
+        }
+        var choix  = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("Choix du plat :")
+                .PageSize(10)
+                .AddChoices(nomRecettes));
+        
     }
 }

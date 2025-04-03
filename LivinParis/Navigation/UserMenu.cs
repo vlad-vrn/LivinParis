@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using LivinParis.Application;
+using LivinParis.PlatManagement;
 using LivinParis.RecetteManagement;
 
 namespace LivinParis.Navigation;
@@ -102,6 +105,7 @@ public class UserMenu
     }
     public void espaceCuisi(Utilisateur thisUser)
     {
+        CreatePlat createPlat = new CreatePlat();
         CreateRecette createRecette = new CreateRecette();
         string rep;
         Console.Clear();
@@ -117,7 +121,7 @@ public class UserMenu
         switch (rep)
         {
             case "Ajouter un plat":
-                AnsiConsole.Markup("Plat creation...");
+                createPlat.publierPlat();
                 break;
             case "Ajouter une recette":
                 createRecette.CreerRecette();
