@@ -125,10 +125,10 @@ Console.WriteLine("Chargement des stations...");
             }
         }
 
-        AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
+        /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
         Console.ReadKey();
         Console.WriteLine("\n\n");
-        
+        */
         Console.ReadKey();
         
       //  g1.DessinerGraphe();
