@@ -103,8 +103,9 @@ Console.WriteLine("Chargement des stations...");
         Graphe<string> g1 = new Graphe<string>("g1") { Titre = "MetroParis" };
 
         g1.RemplirMetro();
+
         g1.LiensMetro();
-        
+        Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
 
 
