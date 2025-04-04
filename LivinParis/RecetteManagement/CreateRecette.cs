@@ -5,13 +5,9 @@ using Spectre.Console;
 
 namespace LivinParis.RecetteManagement;
 
-public class CreateRecette
+public class CreateRecette : GlobalDataAccess
 {
-    RecetteDataAccess recetteDataAccess = new RecetteDataAccess();
     List<string> recettesList = new List<string>();
-    IngredientDataAccess ingredientDataAccess = new IngredientDataAccess();
-    ContientDataAccess contientDataAccess = new ContientDataAccess();
-    
     public void CreerRecette()
     {
         Recette newRecette = new Recette();
@@ -43,6 +39,7 @@ public class CreateRecette
                 new SelectionPrompt<string>()
                     .Title("Ajoutez des ingrédients")
                     .PageSize(10)
+                    .MoreChoicesText("")
                     .AddChoices(ingredientList));
             ingredientUtilise.Add(ingredient);
             
@@ -71,7 +68,5 @@ public class CreateRecette
             Console.WriteLine(newContient.Nom);
             contientDataAccess.addContient(newContient);
         }
-        Console.WriteLine("Recette ajoutée !");
-        
     }
 }

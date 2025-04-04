@@ -82,7 +82,7 @@ CREATE TABLE Evaluation(
 );
 
 CREATE TABLE Plat(
-   ID_Plat INT,
+   ID_Plat INT AUTO_INCREMENT,
    Nom VARCHAR(50) NOT NULL,
    Quantité INT,
    Prix DECIMAL(15,2),

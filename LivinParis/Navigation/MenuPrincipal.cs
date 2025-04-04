@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DBConnectLibrary;
 using LivinParis.Application;
+using LivinParis.Modules;
 using Spectre.Console;
 
 namespace LivinParis.Navigation;
@@ -38,11 +39,12 @@ public class MenuPrincipal
             cuisinierUserID.Add(cuisinier.ID_Utilisateur);
         }
         List<int> clientUserID = new List<int>();
-        foreach (Client client in this.clientDataAccess.getAllClients()) //Recharge de la liste à chaque itération, opti possible.
+        foreach (Client client in this.clientDataAccess.getAllClients()) 
         {
             clientUserID.Add(client.ID_Utilisateur);
         }
-        
+        ModuleClient moduleClient = new ModuleClient();
+        ModuleCuisinier moduleCuisinier = new ModuleCuisinier();
         Console.Clear();
         Utilisateur thisUser = new Utilisateur();
         AnsiConsole.Markup(("Bienvenue sur Liv'In Paris !\n"));
@@ -52,23 +54,27 @@ public class MenuPrincipal
                 .PageSize(10)
                 .AddChoices(new[]
                 {
-                    "Connexion", "Inscription", "Liste des utilisateurs", "Retour"
+                    "Connexion", "Inscription", "Liste des utilisateurs", "Accès aux modules", "Retour"
                 }));
         switch (rep)
         {
             case "Connexion":
-                thisUser = login.userLogin(); //faut check si c'est bien un user
-                userMenu.placement = "userMenu";
-                while (userMenu.placement != "loginMenu")
+                thisUser = login.userLogin(); 
+                if (thisUser != null)
                 {
-                    userMenu.espaceUtilisateur(thisUser); //tout se passe ici en ft...
-                }
-                Console.ReadKey();
+                    userMenu.placement = "userMenu";
+                    while (userMenu.placement != "loginMenu")
+                    {
+                        userMenu.espaceUtilisateur(thisUser);
+                    }
+                } 
                 break;
+            
             case "Inscription":
                 CreateAcc.CreerCompteUser();
                 Console.ReadKey();
                 break;
+            
             case "Liste des utilisateurs":
                 foreach (var thisUtilisateur in utilisateurDataAccess.getAllUtilisateurs())
                 {
@@ -80,6 +86,34 @@ public class MenuPrincipal
                 }
                 Console.ReadKey();
                 break;
+            
+            case "Accès aux modules":
+                var outputing = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Que voulez-vous faire ?")
+                        .PageSize(10)
+                        .AddChoices(new[]
+                        {
+                            "Module Client", "Module Cuisinier", "Module Commande", "Module Statistiques", "Retour"
+                        }));
+                switch (outputing)
+                {
+                    case "Module Client":
+                        moduleClient.moduleClient();
+                        break;
+                    case "Module Cuisinier":
+                        moduleCuisinier.moduleCuisinier();
+                        Console.ReadKey();
+                        break;
+                    case "Module Commande":
+                        break;
+                    case "Module Statistiques":
+                        break;
+                    case "Retour":
+                        break;
+                }
+                break;
+            
             case "Retour":
                 this.output = "Retour";
                 break;

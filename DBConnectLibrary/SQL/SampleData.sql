@@ -98,22 +98,22 @@ INSERT INTO Livraison (ID_Livraison, adresse_client, adresse_cuisinier, Date_Liv
 (14, '29, Avenue des Oliviers, Paris', '14, Chemin des Vignes, Rennes', '2025-03-18 20:00:00', 14),
 (15, '30, Chemin des Cerisiers, Lyon', '15, Avenue des Tilleuls, Grenoble', '2025-03-19 13:00:00', 15);
 
-INSERT INTO Recette (ID_Recette, Nom) VALUES
-(1, 'Recette 1'),
-(2, 'Recette 2'),
-(3, 'Recette 3'),
-(4, 'Recette 4'),
-(5, 'Recette 5'),
-(6, 'Recette 6'),
-(7, 'Recette 7'),
-(8, 'Recette 8'),
-(9, 'Recette 9'),
-(10, 'Recette 10'),
-(11, 'Recette 11'),
-(12, 'Recette 12'),
-(13, 'Recette 13'),
-(14, 'Recette 14'),
-(15, 'Recette 15');
+INSERT INTO Recette (ID_Recette, Nom, Régime_alimentaire) VALUES
+(1, 'Recette 1', 'Omnivore'),
+(2, 'Recette 2', 'Omnivore'),
+(3, 'Recette 3', 'Omnivore'),
+(4, 'Recette 4', 'Omnivore'),
+(5, 'Recette 5', 'Omnivore'),
+(6, 'Recette 6', 'Omnivore'),
+(7, 'Recette 7', 'Omnivore'),
+(8, 'Recette 8', 'Omnivore'),
+(9, 'Recette 9', 'Omnivore'),
+(10, 'Recette 10', 'Omnivore'),
+(11, 'Recette 11', 'Omnivore'),
+(12, 'Recette 12', 'Omnivore'),
+(13, 'Recette 13', 'Omnivore'),
+(14, 'Recette 14', 'Omnivore'),
+(15, 'Recette 15', 'Omnivore');
 
 INSERT INTO Nationalité (Pays) VALUES
 ('France'),
@@ -136,6 +136,10 @@ INSERT INTO Ingrédient (Nom) VALUES
 ('Tomate'),
 ('Fromage'),
 ('Poulet'),
+('Pâtes'),
+('Oeuf'),
+('Farine'),
+('Lait'),
 ('Boeuf'),
 ('Carotte'),
 ('Pommes de terre'),
@@ -166,22 +170,22 @@ INSERT INTO Evaluation (ID_client, Note, commentaire, jour, ID_Commande) VALUES
 (14, 4, 'Bon', '2025-03-19', 14),
 (15, 3, 'Peut s''améliorer', '2025-03-20', 15);
 
-INSERT INTO Plat (ID_Plat, Nom, Quantité, Prix, Régime_alimentaire, Date_Fabrication, Date_Péremption, Nombre_Portions_Total, Plat_Du_Jour, ID_Recette, ID_cuisinier) VALUES
-(1, 'Plat 1', 10, 12.50, 'Omnivore', '2025-03-03 10:00:00', '2025-03-10 10:00:00', 5, TRUE, 1, 1),
-(2, 'Plat 2', 8, 10.00, 'Végétarien', '2025-03-03 11:00:00', '2025-03-10 11:00:00', 4, FALSE, 2, 2),
-(3, 'Plat 3', 12, 15.75, 'Vegan', '2025-03-03 12:00:00', '2025-03-10 12:00:00', 6, TRUE, 3, 3),
-(4, 'Plat 4', 9, 11.00, 'Sans gluten', '2025-03-03 13:00:00', '2025-03-10 13:00:00', 4, FALSE, 4, 4),
-(5, 'Plat 5', 15, 18.20, 'Omnivore', '2025-03-03 14:00:00', '2025-03-10 14:00:00', 7, TRUE, 5, 5),
-(6, 'Plat 6', 10, 13.30, 'Végétarien', '2025-03-03 15:00:00', '2025-03-10 15:00:00', 5, FALSE, 6, 6),
-(7, 'Plat 7', 8, 9.90, 'Vegan', '2025-03-03 16:00:00', '2025-03-10 16:00:00', 4, TRUE, 7, 7),
-(8, 'Plat 8', 11, 14.50, 'Sans gluten', '2025-03-03 17:00:00', '2025-03-10 17:00:00', 6, FALSE, 8, 8),
-(9, 'Plat 9', 7, 10.80, 'Omnivore', '2025-03-03 18:00:00', '2025-03-10 18:00:00', 4, TRUE, 9, 9),
-(10, 'Plat 10', 13, 16.00, 'Végétarien', '2025-03-03 19:00:00', '2025-03-10 19:00:00', 7, FALSE, 10, 10),
-(11, 'Plat 11', 10, 12.00, 'Vegan', '2025-03-03 20:00:00', '2025-03-10 20:00:00', 5, TRUE, 11, 11),
-(12, 'Plat 12', 9, 11.50, 'Sans gluten', '2025-03-03 21:00:00', '2025-03-10 21:00:00', 4, FALSE, 12, 12),
-(13, 'Plat 13', 14, 17.25, 'Omnivore', '2025-03-03 22:00:00', '2025-03-10 22:00:00', 7, TRUE, 13, 13),
-(14, 'Plat 14', 8, 10.50, 'Végétarien', '2025-03-03 23:00:00', '2025-03-10 23:00:00', 4, FALSE, 14, 14),
-(15, 'Plat 15', 12, 15.00, 'Vegan', '2025-03-04 00:00:00', '2025-03-11 00:00:00', 6, TRUE, 15, 15);
+INSERT INTO Plat (ID_Plat, Nom, Quantité, Prix, Date_Fabrication, Date_Péremption, Nombre_Portions_Total, Plat_Du_Jour, ID_Recette, ID_cuisinier) VALUES
+(1, 'Plat 1', 10, 12.50,  '2025-03-03 10:00:00', '2025-03-10 10:00:00', 5, TRUE, 1, 1),
+(2, 'Plat 2', 8, 10.00, '2025-03-03 11:00:00', '2025-03-10 11:00:00', 4, FALSE, 2, 2),
+(3, 'Plat 3', 12, 15.75, '2025-03-03 12:00:00', '2025-03-10 12:00:00', 6, TRUE, 3, 3),
+(4, 'Plat 4', 9, 11.00,  '2025-03-03 13:00:00', '2025-03-10 13:00:00', 4, FALSE, 4, 4),
+(5, 'Plat 5', 15, 18.20,  '2025-03-03 14:00:00', '2025-03-10 14:00:00', 7, TRUE, 5, 5),
+(6, 'Plat 6', 10, 13.30,  '2025-03-03 15:00:00', '2025-03-10 15:00:00', 5, FALSE, 6, 6),
+(7, 'Plat 7', 8, 9.90,  '2025-03-03 16:00:00', '2025-03-10 16:00:00', 4, TRUE, 7, 7),
+(8, 'Plat 8', 11, 14.50,  '2025-03-03 17:00:00', '2025-03-10 17:00:00', 6, FALSE, 8, 8),
+(9, 'Plat 9', 7, 10.80, '2025-03-03 18:00:00', '2025-03-10 18:00:00', 4, TRUE, 9, 9),
+(10, 'Plat 10', 13, 16.00, '2025-03-03 19:00:00', '2025-03-10 19:00:00', 7, FALSE, 10, 10),
+(11, 'Plat 11', 10, 12.00, '2025-03-03 20:00:00', '2025-03-10 20:00:00', 5, TRUE, 11, 11),
+(12, 'Plat 12', 9, 11.50, '2025-03-03 21:00:00', '2025-03-10 21:00:00', 4, FALSE, 12, 12),
+(13, 'Plat 13', 14, 17.25, '2025-03-03 22:00:00', '2025-03-10 22:00:00', 7, TRUE, 13, 13),
+(14, 'Plat 14', 8, 10.50, '2025-03-03 23:00:00', '2025-03-10 23:00:00', 4, FALSE, 14, 14),
+(15, 'Plat 15', 12, 15.00, '2025-03-04 00:00:00', '2025-03-11 00:00:00', 6, TRUE, 15, 15);
 
 INSERT INTO est_commandé (ID_Plat, ID_Commande) VALUES
 (1, 1),
