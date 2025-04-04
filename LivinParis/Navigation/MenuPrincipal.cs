@@ -80,7 +80,7 @@ public class MenuPrincipal
                 {
                     string str1 = thisUtilisateur.Prenom + " " + thisUtilisateur.Nom;
                     string str2(List<int> listClientID) => listClientID.Contains(thisUtilisateur.Id) ? "Client" : "";
-                    string str3(List<int> listCuisiID) => listCuisiID.Contains(thisUtilisateur.Id) ? "Cuisinier" : ""; //trans en null et ??- (une autre nuit)
+                    string str3(List<int> listCuisiID) => listCuisiID.Contains(thisUtilisateur.Id) ? "Cuisinier" : ""; 
                     
                     Console.WriteLine(str1 + " : " + str2(clientUserID) + " " +  str3(cuisinierUserID));
                 }

@@ -20,7 +20,6 @@ namespace TestUnitaires
 
         public string Titre { get; set; }
 
-        /// Méthode qui lit le fichier et retourne le premier nombre
         public int OrdreGraphe()
         {
             string[] lines = _fileWrapper.ReadAllLines("dummyPath"); 
@@ -30,10 +29,9 @@ namespace TestUnitaires
             }
 
             string[] tokens = lines[0].Split(' ');
-            return Int32.Parse(tokens[0]); /// Retourne le premier nombre
+            return Int32.Parse(tokens[0]); 
         }
 
-        /// Implémentation de la méthode RemplirMetro
         public void RemplirMetro()
         {
             string[] lines = _fileWrapper.ReadAllLines("dummyPath");
@@ -46,7 +44,7 @@ namespace TestUnitaires
             {
                 string[]
                     tokens = line
-                        .Split(','); /// Supposons que chaque ligne contient une liste de noeuds séparés par des virgules
+                        .Split(','); 
                 if (tokens.Length > 1)
                 {
                     int nodeId = int.Parse(tokens[0]);
@@ -54,8 +52,7 @@ namespace TestUnitaires
                 }
             }
         }
-
-        /// Méthode BFS (parcours en largeur) avec gestion des erreurs
+        
         public void BFS(int startNodeId)
         {
             if (!Noeuds.ContainsKey(startNodeId))
@@ -64,7 +61,7 @@ namespace TestUnitaires
                 return;
             }
 
-            HashSet<int> visited = new HashSet<int>(); /// Set pour suivre les noeuds visités
+            HashSet<int> visited = new HashSet<int>();
             Queue<int> queue = new Queue<int>(); 
             queue.Enqueue(startNodeId);
             visited.Add(startNodeId);
@@ -82,7 +79,6 @@ namespace TestUnitaires
                 var currentNode = Noeuds[currentNodeId];
                 Console.Write(currentNode.Value + " ");
 
-                /// Parcours des noeuds voisins
                 foreach (var lien in currentNode.Liens)
                 {
                     var neighbor = lien.GetOtherNode(currentNode);
@@ -98,7 +94,6 @@ namespace TestUnitaires
 
 
 
-        /// Création d'une matrice d'adjacence
         public int[,] CreerMatriceAdjacence()
         {
             int n = Noeuds.Count;
@@ -109,10 +104,8 @@ namespace TestUnitaires
                 int idNoeud = noeud.Id;
                 foreach (var lien in noeud.Liens)
                 {
-                    /// Ajoute le lien entre les deux noeuds
                     int voisinId = lien.GetOtherNode(noeud).Id;
 
-                    /// La matrice est symétrique, on ajoute le lien dans les deux directions
                     matrice[idNoeud - 1, voisinId - 1] = 1; 
                     matrice[voisinId - 1, idNoeud - 1] = 1;
                 }
@@ -124,7 +117,6 @@ namespace TestUnitaires
 
 
 
-   /// Classe Noeud représentant chaque noeud dans le graphe
     public class Noeud<T>
     {
         public int Id { get; set; }
@@ -141,7 +133,6 @@ namespace TestUnitaires
         
     }
 
-    /// Classe Lien représentant une connexion entre deux noeuds
     public class Lien<T>
     {
         public Noeud<T> Noeud1 { get; set; }
@@ -177,7 +168,6 @@ namespace TestUnitaires
         }
     }
 
-    /// Implémentation d'un Mock simple pour simuler le comportement d'IFileWrapper
     public class MockFileWrapper : IFileWrapper
     {
         public string[] ReadAllLines(string path)
@@ -191,7 +181,6 @@ namespace TestUnitaires
         }
     }
 
-    /// Test unitaire pour OrdreGraphe
     [TestFixture]
     public class GrapheTests
     {
@@ -209,7 +198,6 @@ namespace TestUnitaires
             Assert.AreEqual(10, ordre);  
         }
 
-        /// Test unitaire pour RemplirMetro
         [Test]
         public void RemplirMetro_ChargesNoeudsCorrectement()
         {
@@ -227,7 +215,6 @@ namespace TestUnitaires
             Assert.AreEqual("Station C", graphe.Noeuds[3].Value);
         }
 
-        /// Test unitaire pour BFS
         [Test]
         public void BFS_ParcourtGrapheCorrectement()
         {
@@ -252,7 +239,6 @@ namespace TestUnitaires
             Assert.IsTrue(output.ToString().Contains("Node2"));
         }
 
-        /// Test unitaire pour CreerMatriceAdjacence
         [Test]
         public void CreerMatriceAdjacence_CreeMatriceCorrectement()
         {

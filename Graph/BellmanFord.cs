@@ -45,9 +45,6 @@ public class BellmanFord
                 }
             }
         }
-        ///<summary>
-        /// Reconstruction du chemin
-        ///<summary>
         if (precedents[arrivee] == null && depart != arrivee)
             return (null, 0);
 

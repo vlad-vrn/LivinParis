@@ -33,7 +33,7 @@ public class ModuleClient : GlobalDataAccess
                 {
                     string str1 = utilisateur.Nom + " " + utilisateur.Prenom;
                     string str2(List<int> listClientID) => listClientID.Contains(utilisateur.Id) ? "Client" : "";
-                    string str3(List<int> listCuisiID) => listCuisiID.Contains(utilisateur.Id) ? "Cuisinier" : ""; //trans en null et ??- (une autre nuit)
+                    string str3(List<int> listCuisiID) => listCuisiID.Contains(utilisateur.Id) ? "Cuisinier" : ""; 
                     Console.WriteLine(str1 + " : " + str2(clientUserID) + " " +  str3(cuisinierUserID));
                 }
                 Console.ReadKey();
@@ -43,7 +43,7 @@ public class ModuleClient : GlobalDataAccess
                 {
                     string str1 = utilisateur.Prenom  + " " + utilisateur.Nom + " : " + utilisateur.NumeroRue + utilisateur.Rue;
                     string str2(List<int> listClientID) => listClientID.Contains(utilisateur.Id) ? "Client" : "";
-                    string str3(List<int> listCuisiID) => listCuisiID.Contains(utilisateur.Id) ? "Cuisinier" : ""; //trans en null et ??- (une autre nuit)
+                    string str3(List<int> listCuisiID) => listCuisiID.Contains(utilisateur.Id) ? "Cuisinier" : "";
                     Console.WriteLine(str1 + " : " + str2(clientUserID) + " " +  str3(cuisinierUserID));
                 }
                 Console.ReadKey();
