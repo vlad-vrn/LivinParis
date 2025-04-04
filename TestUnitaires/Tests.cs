@@ -13,26 +13,26 @@ namespace TestUnitaires
         public Graphe(string titre, IFileWrapper fileWrapper = null)
         {
             this.Titre = titre;
-            this._fileWrapper = fileWrapper ?? new FileWrapper(); // Utilisation d'une implémentation par défaut
-            this.Noeuds = new Dictionary<int, Noeud<T>>(); // Initialisation du dictionnaire des noeuds
+            this._fileWrapper = fileWrapper ?? new FileWrapper();
+            this.Noeuds = new Dictionary<int, Noeud<T>>(); 
         }
 
         public string Titre { get; set; }
 
-        // Méthode qui lit le fichier et retourne le premier nombre
+        /// Méthode qui lit le fichier et retourne le premier nombre
         public int OrdreGraphe()
         {
-            string[] lines = _fileWrapper.ReadAllLines("dummyPath"); // Lecture des lignes
+            string[] lines = _fileWrapper.ReadAllLines("dummyPath"); 
             if (lines == null || lines.Length == 0)
             {
                 throw new InvalidOperationException("Le fichier est vide ou non trouvé.");
             }
 
-            string[] tokens = lines[0].Split(' '); // Séparation des valeurs sur un espace
-            return Int32.Parse(tokens[0]); // Retourne le premier nombre
+            string[] tokens = lines[0].Split(' ');
+            return Int32.Parse(tokens[0]); /// Retourne le premier nombre
         }
 
-        // Implémentation de la méthode RemplirMetro
+        /// Implémentation de la méthode RemplirMetro
         public void RemplirMetro()
         {
             string[] lines = _fileWrapper.ReadAllLines("dummyPath");
@@ -45,16 +45,16 @@ namespace TestUnitaires
             {
                 string[]
                     tokens = line
-                        .Split(','); // Supposons que chaque ligne contient une liste de noeuds séparés par des virgules
+                        .Split(','); /// Supposons que chaque ligne contient une liste de noeuds séparés par des virgules
                 if (tokens.Length > 1)
                 {
                     int nodeId = int.Parse(tokens[0]);
-                    Noeuds.Add(nodeId, new Noeud<T>(tokens[1])); // Ajoute un noeud au dictionnaire
+                    Noeuds.Add(nodeId, new Noeud<T>(tokens[1])); 
                 }
             }
         }
 
-        // Méthode BFS (parcours en largeur) avec gestion des erreurs
+        /// Méthode BFS (parcours en largeur) avec gestion des erreurs
         public void BFS(int startNodeId)
         {
             if (!Noeuds.ContainsKey(startNodeId))
@@ -63,8 +63,8 @@ namespace TestUnitaires
                 return;
             }
 
-            var visited = new HashSet<int>(); // Set pour suivre les noeuds visités
-            var queue = new Queue<int>(); // Queue pour le BFS
+            var visited = new HashSet<int>(); /// Set pour suivre les noeuds visités
+            var queue = new Queue<int>(); 
             queue.Enqueue(startNodeId);
             visited.Add(startNodeId);
 
@@ -81,7 +81,7 @@ namespace TestUnitaires
                 var currentNode = Noeuds[currentNodeId];
                 Console.Write(currentNode.Value + " ");
 
-                // Parcours des noeuds voisins
+                /// Parcours des noeuds voisins
                 foreach (var lien in currentNode.Liens)
                 {
                     var neighbor = lien.GetOtherNode(currentNode);
@@ -97,22 +97,22 @@ namespace TestUnitaires
 
 
 
-        // Création d'une matrice d'adjacence
+        /// Création d'une matrice d'adjacence
         public int[,] CreerMatriceAdjacence()
         {
-            int n = Noeuds.Count; // Nombre de noeuds
-            int[,] matrice = new int[n, n]; // Matrice d'adjacence de taille n x n
+            int n = Noeuds.Count;
+            int[,] matrice = new int[n, n]; 
 
             foreach (var noeud in Noeuds.Values)
             {
-                int idNoeud = noeud.Id; // L'ID du noeud courant
+                int idNoeud = noeud.Id;
                 foreach (var lien in noeud.Liens)
                 {
-                    // Ajoute le lien entre les deux noeuds
+                    /// Ajoute le lien entre les deux noeuds
                     int voisinId = lien.GetOtherNode(noeud).Id;
 
-                    // La matrice est symétrique, on ajoute le lien dans les deux directions
-                    matrice[idNoeud - 1, voisinId - 1] = 1; // Nous supposons que les IDs des noeuds sont à partir de 1
+                    /// La matrice est symétrique, on ajoute le lien dans les deux directions
+                    matrice[idNoeud - 1, voisinId - 1] = 1; 
                     matrice[voisinId - 1, idNoeud - 1] = 1;
                 }
             }
@@ -176,7 +176,7 @@ namespace TestUnitaires
         }
     }
 
-    // Implémentation d'un Mock simple pour simuler le comportement d'IFileWrapper
+    /// Implémentation d'un Mock simple pour simuler le comportement d'IFileWrapper
     public class MockFileWrapper : IFileWrapper
     {
         public string[] ReadAllLines(string path)
@@ -186,76 +186,76 @@ namespace TestUnitaires
                 "\"1\",\"Station A\",\"ligne1\",\"ligne2\"",
                 "\"2\",\"Station B\",\"ligne3\",\"ligne4\"",
                 "\"3\",\"Station C\",\"ligne5\",\"ligne6\""
-            }; // Retourne une ligne simulée avec des stations et lignes
+            }; 
         }
     }
 
-    // Test unitaire pour OrdreGraphe
+    /// Test unitaire pour OrdreGraphe
     [TestFixture]
     public class GrapheTests
     {
         [Test]
         public void OrdreGraphe_RetourneOrdreCorrecte()
         {
-            // Arrange
+            
             var graphe = new Graphe<string>("Test Graphe");
-            var mockFile = new FileWrapper(); // Utilisation de la version factice de FileWrapper
+            var mockFile = new FileWrapper(); 
 
-            // Act
+           
             int ordre = graphe.OrdreGraphe();
 
-            // Assert
-            Assert.AreEqual(10, ordre);  // Ordre correspond au premier nombre du fichier simulé
+            
+            Assert.AreEqual(10, ordre);  
         }
 
-        // Test unitaire pour RemplirMetro
+        /// Test unitaire pour RemplirMetro
         [Test]
         public void RemplirMetro_ChargesNoeudsCorrectement()
         {
-            // Arrange
+            
             var graphe = new Graphe<string>("Test Graphe");
-            var mockFile = new MockFileWrapper(); // Utilisation du MockFileWrapper
+            var mockFile = new MockFileWrapper(); 
 
-            // Act
+            
             graphe.RemplirMetro();
 
-            // Assert
-            Assert.AreEqual(3, graphe.Noeuds.Count);  // Vérifie qu'on a bien ajouté 3 noeuds (stations)
+            
+            Assert.AreEqual(3, graphe.Noeuds.Count);  
             Assert.AreEqual("Station A", graphe.Noeuds[1].Value);
             Assert.AreEqual("Station B", graphe.Noeuds[2].Value);
             Assert.AreEqual("Station C", graphe.Noeuds[3].Value);
         }
 
-        // Test unitaire pour BFS
+        /// Test unitaire pour BFS
         [Test]
         public void BFS_ParcourtGrapheCorrectement()
         {
-            // Arrange
+            
             var graphe = new Graphe<string>("Test Graphe");
             graphe.Noeuds.Add(1, new Noeud<string>("Node1"));
             graphe.Noeuds.Add(2, new Noeud<string>("Node2"));
             
-            // Lien entre les deux noeuds
+            
             var lien = new Lien<string>(graphe.Noeuds[1], graphe.Noeuds[2], 1);
             graphe.Noeuds[1].Liens.Add(lien);
             graphe.Noeuds[2].Liens.Add(lien);
 
             var output = new StringWriter();
-            Console.SetOut(output);  // Redirige la sortie console
+            Console.SetOut(output); 
 
-            // Act
-            graphe.BFS(1); // Commence la recherche à partir du noeud avec l'ID 1
+            
+            graphe.BFS(1);
 
-            // Assert
+           
             Assert.IsTrue(output.ToString().Contains("Node1"));
             Assert.IsTrue(output.ToString().Contains("Node2"));
         }
 
-        // Test unitaire pour CreerMatriceAdjacence
+        /// Test unitaire pour CreerMatriceAdjacence
         [Test]
         public void CreerMatriceAdjacence_CreeMatriceCorrectement()
         {
-            // Arrange
+            
             var graphe = new Graphe<string>("Test Graphe");
             graphe.Noeuds.Add(1, new Noeud<string>("Node1"));
             graphe.Noeuds.Add(2, new Noeud<string>("Node2"));
@@ -263,11 +263,11 @@ namespace TestUnitaires
             graphe.Noeuds[1].Liens.Add(lien);
             graphe.Noeuds[2].Liens.Add(lien);
 
-            // Act
+            
             var matrice = graphe.CreerMatriceAdjacence();
 
-            // Assert
-            Assert.AreEqual(1, matrice[0, 1]);  // Vérifie qu'il y a un lien entre les noeuds 1 et 2
+            
+            Assert.AreEqual(1, matrice[0, 1]);  
         }
     }
 }
