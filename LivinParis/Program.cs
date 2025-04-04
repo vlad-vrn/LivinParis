@@ -8,12 +8,14 @@ using LivinParis.Application;
 using LivinParis.Navigation;
 using Spectre.Console;
 
+
 UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
 ClientDataAccess clientDataAccess = new ClientDataAccess();
 CuisinierDataAccess cuisinierDataAccess = new CuisinierDataAccess();
 Login login = new Login();
 MenuPrincipal mainMenu = new MenuPrincipal();
 mainMenu.initialStartup();
+
 while (mainMenu.output != "Quitter l'application")
 {
     while (mainMenu.output == "Liv'In Paris")
@@ -21,16 +23,8 @@ while (mainMenu.output != "Quitter l'application")
         mainMenu.menuLivinParis();
     }
 
-    while (mainMenu.output == "Rendu 1")
-    {
-        Console.WriteLine("Pas dispo pour l'instant");
-        mainMenu.output = "Retour";
-        Console.ReadKey();
-    }
-
     while (mainMenu.output == "Modélisation du métro")
     {
-        Console.WriteLine("Pas dispo pour l'instant");
         mainMenu.output = "Retour";
         Console.ReadKey();
     }
