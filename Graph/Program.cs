@@ -101,12 +101,12 @@ Console.WriteLine("Chargement des stations...");
 
         g1.RemplirMetro();
 
-        g1.LiensMetro();
+        g1.LiensMetro2();
         Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
 
 
-        void AfficherMatriceAdjacence(int[,] mat)
+        /*void AfficherMatriceAdjacence(int[,] mat)
         {
             int taille = mat.GetLength(0);
 
@@ -122,11 +122,11 @@ Console.WriteLine("Chargement des stations...");
             }
         }
 
-        AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
+        /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
         Console.ReadKey();
         Console.WriteLine("\n\n");
-        
+        */
         Console.ReadKey();
         
-      //  g1.DessinerGraphe();
+        g1.DessinerGraphe();
         
