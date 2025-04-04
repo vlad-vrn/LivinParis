@@ -338,130 +338,6 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
             Console.WriteLine();
         }
-        
-        public void DessinerGraphe(int width = 1000, int height = 1000)
-{
-    /// Déterminer le chemin du bureau pour sauvegarder l'image
-    string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-    string filePath = Path.Combine(desktopPath, "graphe_metro2.png");
-
-    /// Vérification : S'assurer que le dictionnaire des nœuds est bien initialisé
-    if (_dicoNoeuds == null || _dicoNoeuds.Count == 0)
-    {
-        Console.WriteLine("Erreur : Le dictionnaire des nœuds est vide ou non initialisé.");
-        return;
-    }
-
-    using (var bitmap = new SKBitmap(width, height))
-    using (var canvas = new SKCanvas(bitmap))
-    {
-        canvas.Clear(SKColors.White);
-
-        int rayon = Math.Min(width, height) / 2 - 100; // Rayon ajusté
-        int centerX = width / 2, centerY = height / 2;
-        double angleStep = (2 * Math.PI) / _dicoNoeuds.Count;
-        Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
-
-        /// Générer les positions des nœuds en cercle
-        int index = 0;
-        foreach (var kvp in _dicoNoeuds)
-        {
-            int nodeId = kvp.Key;
-            double angle = index * angleStep;
-            float x = centerX + (float)(rayon * Math.Cos(angle));
-            float y = centerY + (float)(rayon * Math.Sin(angle));
-            positions[nodeId] = new SKPoint(x, y);
-            index++;
-        }
-
-        /// Dessiner les liens (arêtes entre stations)
-        using (var paint = new SKPaint { Color = SKColors.Gray, StrokeWidth = 2, IsAntialias = true })
-        using (var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 20, IsAntialias = true })
-        {
-            foreach (var kvp in _dicoNoeuds)
-            {
-                if (kvp.Value == null)
-                {
-                    Console.WriteLine($"Erreur : Noeud {kvp.Key} est null.");
-                    continue;
-                }
-                Noeud<T> noeud = kvp.Value;
-
-                foreach (Lien<T> lien in noeud.Liens)
-                {
-                    Noeud<T> autreNoeud = lien.NoeudDepart == noeud ? lien.NoeudArrive : lien.NoeudDepart;
-
-                    if (!_dicoNoeuds.ContainsValue(autreNoeud))
-                    {
-                        Console.WriteLine($"Erreur : Le lien vers le nœud {autreNoeud.id} est invalide.");
-                        continue;
-                    }
-
-                    int id1 = _dicoNoeuds.First(x => x.Value == noeud).Key;
-                    int id2 = _dicoNoeuds.First(x => x.Value == autreNoeud).Key;
-
-                    if (positions.ContainsKey(id1) && positions.ContainsKey(id2))
-                    {
-                        /// Dessiner l'arête
-                        canvas.DrawLine(positions[id1], positions[id2], paint);
-
-                        /// Afficher la pondération (temps entre stations) au milieu du segment
-                        SKPoint midPoint = new SKPoint((positions[id1].X + positions[id2].X) / 2,
-                                                       (positions[id1].Y + positions[id2].Y) / 2);
-                        canvas.DrawText(lien.Poids.ToString(), midPoint.X, midPoint.Y, textPaint);
-                    }
-                }
-            }
-        }
-
-        /// Dessiner les nœuds et afficher le nom de la station
-        using (var nodePaint = new SKPaint { Color = SKColors.Blue, IsAntialias = true })
-        using (var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 18, IsAntialias = true })
-        {
-            foreach (var kvp in positions)
-            {
-                int nodeId = kvp.Key;
-                SKPoint pos = kvp.Value;
-
-                /// Vérifier que le nœud existe
-                if (!_dicoNoeuds.ContainsKey(nodeId) || _dicoNoeuds[nodeId] == null)
-                {
-                    Console.WriteLine($"Erreur : Noeud {nodeId} est null ou introuvable.");
-                    continue;
-                }
-
-                /// Récupérer le contenu (_contenu) en toute sécurité
-                var contenu = _dicoNoeuds[nodeId]._contenu;
-                string stationName = contenu != null ? contenu.ToString() : "Inconnu";
-
-                /// Dessiner le nœud (cercle)
-                canvas.DrawCircle(pos, 10, nodePaint);
-
-                /// Afficher le nom de la station à côté du nœud
-                canvas.DrawText(stationName, pos.X + 15, pos.Y + 5, textPaint);
-            }
-        }
-
-        /// Sauvegarde en image sur le bureau
-        using (var image = SKImage.FromBitmap(bitmap))
-        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
-        using (var stream = File.OpenWrite(filePath))
-        {
-            data.SaveTo(stream);
-        }
-    }
-
-    Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
-}
-
-        public void AfficherStations()
-        {
-            foreach (var station in _stations.Values)
-            {
-                Console.WriteLine(
-                    $"Station {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
-            }
-        }
 
 
 
@@ -516,7 +392,124 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
 
         }
-    }
+
+
+        public void DessinerGraphe(int width = 1000, int height = 1000)
+        {
+            /// Déterminer le chemin du bureau pour sauvegarder l'image
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = Path.Combine(desktopPath, "graphe_metro.png");
+
+            /// Vérification : S'assurer que le dictionnaire des nœuds est bien initialisé
+            if (_dicoNoeuds == null || _dicoNoeuds.Count == 0)
+            {
+                Console.WriteLine("Erreur : Le dictionnaire des nœuds est vide ou non initialisé.");
+                return;
+            }
+
+            using (var bitmap = new SKBitmap(width, height))
+            using (var canvas = new SKCanvas(bitmap))
+            {
+                canvas.Clear(SKColors.White);
+
+                int rayon = Math.Min(width, height) / 2 - 100; // Rayon ajusté
+                int centerX = width / 2, centerY = height / 2;
+                double angleStep = (2 * Math.PI) / _dicoNoeuds.Count;
+                Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
+
+                /// Générer les positions des nœuds en cercle
+                int index = 0;
+                foreach (var kvp in _dicoNoeuds)
+                {
+                    int nodeId = kvp.Key;
+                    double angle = index * angleStep;
+                    float x = centerX + (float)(rayon * Math.Cos(angle));
+                    float y = centerY + (float)(rayon * Math.Sin(angle));
+                    positions[nodeId] = new SKPoint(x, y);
+                    index++;
+                }
+
+                /// Dessiner les liens (arêtes entre stations)
+                using (var paint = new SKPaint { Color = SKColors.Gray, StrokeWidth = 2, IsAntialias = true })
+                using (var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 20, IsAntialias = true })
+                {
+                    foreach (var kvp in _dicoNoeuds)
+                    {
+                        if (kvp.Value == null)
+                        {
+                            Console.WriteLine($"Erreur : Noeud {kvp.Key} est null.");
+                            continue;
+                        }
+
+                        Noeud<T> noeud = kvp.Value;
+
+                        foreach (Lien<T> lien in noeud.Liens)
+                        {
+                            Noeud<T> autreNoeud = lien.NoeudDepart == noeud ? lien.NoeudArrive : lien.NoeudDepart;
+
+                            if (!_dicoNoeuds.ContainsValue(autreNoeud))
+                            {
+                                Console.WriteLine($"Erreur : Le lien vers le nœud {autreNoeud.id} est invalide.");
+                                continue;
+                            }
+
+                            int id1 = _dicoNoeuds.First(x => x.Value == noeud).Key;
+                            int id2 = _dicoNoeuds.First(x => x.Value == autreNoeud).Key;
+
+                            if (positions.ContainsKey(id1) && positions.ContainsKey(id2))
+                            {
+                                /// Dessiner l'arête
+                                canvas.DrawLine(positions[id1], positions[id2], paint);
+
+                                /// Afficher la pondération (temps entre stations) au milieu du segment
+                                SKPoint midPoint = new SKPoint((positions[id1].X + positions[id2].X) / 2,
+                                    (positions[id1].Y + positions[id2].Y) / 2);
+                                canvas.DrawText(lien.Poids.ToString(), midPoint.X, midPoint.Y, textPaint);
+                            }
+                        }
+                    }
+                }
+
+                /// Dessiner les nœuds et afficher le nom de la station
+                using (var nodePaint = new SKPaint { Color = SKColors.Blue, IsAntialias = true })
+                using (var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 18, IsAntialias = true })
+                {
+                    foreach (var kvp in positions)
+                    {
+                        int nodeId = kvp.Key;
+                        SKPoint pos = kvp.Value;
+
+                        /// Vérifier que le nœud existe
+                        if (!_dicoNoeuds.ContainsKey(nodeId) || _dicoNoeuds[nodeId] == null)
+                        {
+                            Console.WriteLine($"Erreur : Noeud {nodeId} est null ou introuvable.");
+                            continue;
+                        }
+
+                        /// Récupérer le contenu (_contenu) en toute sécurité
+                        var contenu = _dicoNoeuds[nodeId]._contenu;
+                        string stationName = contenu != null ? contenu.ToString() : "Inconnu";
+
+                        /// Dessiner le nœud (cercle)
+                        canvas.DrawCircle(pos, 10, nodePaint);
+
+                        /// Afficher le nom de la station à côté du nœud
+                        canvas.DrawText(stationName, pos.X + 15, pos.Y + 5, textPaint);
+                    }
+                }
+
+                /// Sauvegarde en image sur le bureau
+                using (var image = SKImage.FromBitmap(bitmap))
+                using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                using (var stream = File.OpenWrite(filePath))
+                {
+                    data.SaveTo(stream);
+                }
+            }
+
+            Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
+        }
+}
 
  
 

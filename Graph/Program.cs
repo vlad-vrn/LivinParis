@@ -144,16 +144,7 @@ Console.WriteLine("Chargement des stations...");
             Console.WriteLine($"{resultat.idsStations[i]}");
         }
 
-        Console.Write("Station de départ (ID) : ");
-        int startId2 = int.Parse(Console.ReadLine());
-
-        Console.Write("Station d’arrivée (ID) : ");
-        int endId2 = int.Parse(Console.ReadLine());
-        if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
-        {
-            Console.WriteLine("Stations invalides.");
-            return;
-        }
+        g1.DessinerGraphe();
         
 
             void AfficherMatriceAdjacence(int[,] mat)
