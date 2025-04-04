@@ -123,24 +123,24 @@ namespace TestUnitaires
 
 
 
-    // Classe Noeud représentant chaque noeud dans le graphe
+   /// Classe Noeud représentant chaque noeud dans le graphe
     public class Noeud<T>
     {
         public int Id { get; set; }
         public string Value { get; set; }
         public List<Lien<T>> Liens { get; set; }
 
-        // Constructeur du noeud, initialisant avec un nom et une ID fictive
+        
         public Noeud(string value)
         {
             this.Value = value;
-            this.Liens = new List<Lien<T>>(); // Initialisation de la liste des liens
+            this.Liens = new List<Lien<T>>(); 
         }
 
         
     }
 
-    // Classe Lien représentant une connexion entre deux noeuds
+    /// Classe Lien représentant une connexion entre deux noeuds
     public class Lien<T>
     {
         public Noeud<T> Noeud1 { get; set; }
@@ -160,19 +160,19 @@ namespace TestUnitaires
         }
     }
 
-    // Interface pour la lecture du fichier
+    
     public interface IFileWrapper
     {
         string[] ReadAllLines(string path);
     }
 
-    // Implémentation factice pour simuler la lecture du fichier
+    
     public class FileWrapper : IFileWrapper
     {
         public string[] ReadAllLines(string path)
         {
-            // Simuler la lecture d'un fichier avec des données fictives
-            return new string[] { "10 20 30" }; // Exemple de données simulées pour OrdreGraphe
+            
+            return new string[] { "10 20 30" };
         }
     }
 

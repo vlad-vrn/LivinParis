@@ -528,164 +528,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
     Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
 }
        
-        /*
-         //deuxieme version
-        public void DessinerGraphe(int width = 600, int height = 600)
-{
-    // Récupérer le chemin du bureau
-    string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-    string filePath = Path.Combine(desktopPath, "graphe.png");
-
-    using (var bitmap = new SKBitmap(width, height))
-    using (var canvas = new SKCanvas(bitmap))
-    {
-        canvas.Clear(SKColors.White);
-
-        int rayon = Math.Min(width, height) / 3; // Rayon du cercle des nœuds
-        int centerX = width / 2, centerY = height / 2;
-        int totalNodes = _dicoNoeuds.Count;
-        double angleStep = (2 * Math.PI) / totalNodes;
-        Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
-
-        // Générer les positions des nœuds
-        int index = 0;
-        foreach (var kvp in _dicoNoeuds)
-        {
-            int nodeId = kvp.Key;
-            double angle = index * angleStep;
-            float x = centerX + (float)(rayon * Math.Cos(angle));
-            float y = centerY + (float)(rayon * Math.Sin(angle));
-            positions[nodeId] = new SKPoint(x, y);
-            index++;
-        }
-
-        // Dessiner les liens (arêtes)
-        using (var paint = new SKPaint { Color = SKColors.Gray, StrokeWidth = 2 })
-        {
-            foreach (var kvp in _dicoNoeuds)
-            {
-                Noeud<T> noeud = kvp.Value;
-                foreach (Lien<T> lien in noeud.Liens)
-                {
-                    Noeud<T> autreNoeud = lien.NoeudDepart == noeud ? lien.NoeudArrive : lien.NoeudDepart;
-                    int id1 = _dicoNoeuds.First(x => x.Value == noeud).Key;
-                    int id2 = _dicoNoeuds.First(x => x.Value == autreNoeud).Key;
-
-                    if (positions.ContainsKey(id1) && positions.ContainsKey(id2))
-                    {
-                        canvas.DrawLine(positions[id1], positions[id2], paint);
-                    }
-                }
-            }
-        }
-
-        // Dessiner les nœuds
-        using (var nodePaint = new SKPaint { Color = SKColors.Blue, IsAntialias = true })
-        using (var textPaint = new SKPaint { Color = SKColors.White, TextSize = 20, IsAntialias = true })
-        {
-            foreach (var kvp in positions)
-            {
-                SKPoint pos = kvp.Value;
-                canvas.DrawCircle(pos, 20, nodePaint); // Dessiner le nœud
-
-                // Dessiner le texte au centre du cercle
-                var textBounds = new SKRect();
-                textPaint.MeasureText(kvp.Key.ToString(), ref textBounds);
-                float textX = pos.X - textBounds.MidX;
-                float textY = pos.Y - textBounds.MidY;
-                canvas.DrawText(kvp.Key.ToString(), textX, textY, textPaint);
-            }
-        }
-
-        // Sauvegarde en image
-        using (var image = SKImage.FromBitmap(bitmap))
-        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
-        using (var stream = File.OpenWrite(filePath))
-        {
-            data.SaveTo(stream);
-        }
-    }
-
-    Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
-}
-        
-        //Version originale
-        public void DessinerGraphe(string filePath = "graphe.png", int width = 600, int height = 600)
-        {
-            using (var bitmap = new SKBitmap(width, height))
-            using (var canvas = new SKCanvas(bitmap))
-            {
-                canvas.Clear(SKColors.White);
-
-                int rayon = Math.Min(width, height) / 3; // Rayon du cercle des nœuds
-                int centerX = width / 2, centerY = height / 2;
-                int totalNodes = _dicoNoeuds.Count;
-                double angleStep = (2 * Math.PI) / totalNodes;
-                Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
-
-                // Générer les positions des nœuds
-                int index = 0;
-                foreach (var kvp in _dicoNoeuds)
-                {
-                    int nodeId = kvp.Key;
-                    double angle = index * angleStep;
-                    float x = centerX + (float)(rayon * Math.Cos(angle));
-                    float y = centerY + (float)(rayon * Math.Sin(angle));
-                    positions[nodeId] = new SKPoint(x, y);
-                    index++;
-                }
-
-                // Dessiner les liens (arêtes)
-                using (var paint = new SKPaint { Color = SKColors.Gray, StrokeWidth = 2 })
-                {
-                    foreach (var kvp in _dicoNoeuds)
-                    {
-                        Noeud<T> noeud = kvp.Value;
-                        foreach (Lien<T> lien in noeud.Liens)
-                        {
-                            Noeud<T> autreNoeud = lien.NoeudDepart == noeud ? lien.NoeudArrive : lien.NoeudDepart;
-                            int id1 = _dicoNoeuds.First(x => x.Value == noeud).Key;
-                            int id2 = _dicoNoeuds.First(x => x.Value == autreNoeud).Key;
-
-                            if (positions.ContainsKey(id1) && positions.ContainsKey(id2))
-                            {
-                                canvas.DrawLine(positions[id1], positions[id2], paint);
-                            }
-                        }
-                    }
-                }
-
-                // Dessiner les nœuds
-                using (var nodePaint = new SKPaint { Color = SKColors.Blue, IsAntialias = true })
-                using (var textPaint = new SKPaint { Color = SKColors.White, TextSize = 20, IsAntialias = true })
-                {
-                    foreach (var kvp in positions)
-                    {
-                        SKPoint pos = kvp.Value;
-                        canvas.DrawCircle(pos, 20, nodePaint); // Dessiner le nœud
-
-                        // Dessiner le texte au centre du cercle
-                        var textBounds = new SKRect();
-                        textPaint.MeasureText(kvp.Key.ToString(), ref textBounds);
-                        float textX = pos.X - textBounds.MidX;
-                        float textY = pos.Y - textBounds.MidY;
-                        canvas.DrawText(kvp.Key.ToString(), textX, textY, textPaint);
-                    }
-                }
-
-                // Sauvegarde en image
-                using (var image = SKImage.FromBitmap(bitmap))
-                using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
-                using (var stream = System.IO.File.OpenWrite(filePath))
-                {
-                    data.SaveTo(stream);
-                }
-            }
-
-            Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
-        }
-        */
-
+       
         public void AfficherStations()
         {
             foreach (var station in _stations.Values)
@@ -721,15 +564,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
                     tokens[i] = tokens[i].Trim('"');
                 }
 
-                // Traitement de l'ID
-                /*
-                string idString = tokens[0].Trim();
-                if (!int.TryParse(idString, out int id))
-                {
-                    Console.WriteLine($"Erreur : ID invalide ({idString})");
-                    continue;
-                }
-    */
+                
                 int id = Convert.ToInt32(tokens[0]);
 
                 string nom = tokens[1].Trim();
@@ -744,8 +579,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
             Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
             return stations;
-
-
+            
         }
     }
 
