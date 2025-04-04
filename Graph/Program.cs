@@ -131,5 +131,5 @@ Console.WriteLine("Chargement des stations...");
         */
         Console.ReadKey();
         
-      //  g1.DessinerGraphe();
+        g1.DessinerGraphe();
         
