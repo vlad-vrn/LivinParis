@@ -8,6 +8,9 @@ using Graph;
 
 /*
 Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
+///List<Point> points = new List<Point>();
+///List<Noeud<string>> noeuds = new List<Noeud<string>>();
+///Graphe g1 = new Graphe<T>("titre", noeuds, points);
 
 
 static void AfficherMatrice(int[,] mat)
@@ -104,29 +107,75 @@ Console.WriteLine("Chargement des stations...");
         g1.LiensMetro();
         Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
-
-
-        /*void AfficherMatriceAdjacence(int[,] mat)
+        Console.Write("Entrez l'ID de la station de départ : ");
+        if (!int.TryParse(Console.ReadLine(), out int startId))
         {
-            int taille = mat.GetLength(0);
-
-            Console.WriteLine("Matrice d'adjacence du graphe :\n");
-
-            for (int i = 0; i < taille; i++)
-            {
-                for (int j = 0; j < taille; j++)
-                {
-                    Console.Write(mat[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
+            Console.WriteLine("ID de départ invalide.");
+            return;
         }
 
-        /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
-        Console.ReadKey();
-        Console.WriteLine("\n\n");
-        */
-        Console.ReadKey();
+        Console.Write("Entrez l'ID de la station d'arrivée : ");
+        if (!int.TryParse(Console.ReadLine(), out int endId))
+        {
+            Console.WriteLine("ID d'arrivée invalide.");
+            return;
+        }
+        /// <summary>
+        /// Vérification si les stations existent dans le graphe
+        /// <summary>
+        if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
+        {
+            Console.WriteLine("Une ou plusieurs stations n'existent pas.");
+            return;
+        }
+        /// <summary>
+        /// Exécution de l'algorithme de Dijkstra
+        /// <summary>
+        DijkstraAlgorithm<string> dijkstra = new DijkstraAlgorithm<string>(g1);
+        var resultat = dijkstra.TrouverChemin(startId, endId);
+        /// <summary>
+        /// Affichage du résultat
+        /// <summary>
+        Console.WriteLine($"Distance totale: {resultat.distanceTotale} minutes");
+        Console.WriteLine("Itinéraire:");
+        for (int i = 0; i < resultat.idsStations.Count; i++)
+        {
+            Console.WriteLine($"{resultat.idsStations[i]}");
+        }
+
+        Console.Write("Station de départ (ID) : ");
+        int startId2 = int.Parse(Console.ReadLine());
+
+        Console.Write("Station d’arrivée (ID) : ");
+        int endId2 = int.Parse(Console.ReadLine());
+        if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
+        {
+            Console.WriteLine("Stations invalides.");
+            return;
+        }
         
-        g1.DessinerGraphe();
+
+            void AfficherMatriceAdjacence(int[,] mat)
+            {
+                int taille = mat.GetLength(0);
+
+                Console.WriteLine("Matrice d'adjacence du graphe :\n");
+
+                for (int i = 0; i < taille; i++)
+                {
+                    for (int j = 0; j < taille; j++)
+                    {
+                        Console.Write(mat[i, j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
+            Console.ReadKey();
+            Console.WriteLine("\n\n");
+            */
+            Console.ReadKey();
+        
+      //  g1.DessinerGraphe();
         

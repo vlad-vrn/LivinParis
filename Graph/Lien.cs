@@ -4,7 +4,7 @@ public class Lien<T>
 {
     private Noeud<T> _noeudDepart;
     private Noeud<T> _noeudArrive;
-    private int _poids;
+    public int _poids;
 
     public Lien(Noeud<T> noeudDepart, Noeud<T> noeudArrive,int poids)
     {
