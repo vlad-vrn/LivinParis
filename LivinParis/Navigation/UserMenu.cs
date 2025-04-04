@@ -9,7 +9,7 @@ namespace LivinParis.Navigation;
 using DBConnectLibrary;
 using Spectre.Console;
 
-public class UserMenu
+public class UserMenu : GlobalDataAccess
 {
     public string placement { get; set; }
     MenuPrincipal menuPrincipal { get; set; }
@@ -26,7 +26,7 @@ public class UserMenu
             cuisinierUserID.Add(cuisinier.ID_Utilisateur);
         }
         List<int> clientUserID = new List<int>();
-        foreach (Client client in this.clientDataAccess.getAllClients()) //Recharge de la liste à chaque itération, opti possible.
+        foreach (Client client in this.clientDataAccess.getAllClients()) 
         {
             clientUserID.Add(client.ID_Utilisateur);
         }
@@ -99,8 +99,8 @@ public class UserMenu
                 userMenu.espaceClient(thisUser);
                 break;
             case "Retour":
-                this.placement = "loginMenu"; //Inutile pr l'instant mais améliore la clarté de la navigation
-                break;                      //Peut être dégager les switch case et plutôt en boucle while(placement != Retour), if(placement =....)) pr tout le temps revenir au choix sans reload
+                this.placement = "loginMenu";
+                break;
         }
     }
     public void espaceCuisi(Utilisateur thisUser)
@@ -131,7 +131,11 @@ public class UserMenu
                 Console.ReadKey();
                 break;
             case "Voir mes plats en ligne":
-                AnsiConsole.Markup("plat en ligne...");
+                foreach (Plat plats in platDataAccess.getAllPlatFromCuisi(cuisinierDataAccess.getCuisiFromUserID(thisUser.Id).ID_Cuisinier))
+                {
+                    Console.WriteLine(plats.Nom);
+                }
+                Console.ReadKey();
                 break;
             case "Historique des commandes":
                 AnsiConsole.Markup("Historique des commandes...");
@@ -153,12 +157,11 @@ public class UserMenu
                 .AddChoices(new[]
                 {
                     "Commander un plat", "Voir mes commandes", "Historique des commandes", "Retour"
-                    //Il sera possible de noter les cuisiniers dans "Historique des commandes"
                 }));
         switch (rep)
         {
             case "Commander un plat":
-                
+                AnsiConsole.Markup("**Dans une mise à jour future**");
                 break;
             case "Voir mes commandes":
                 break;

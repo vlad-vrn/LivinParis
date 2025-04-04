@@ -7,9 +7,6 @@ using System.Linq;
 using Graph;
 
 Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
-///List<Point> points = new List<Point>();
-///List<Noeud<string>> noeuds = new List<Noeud<string>>();
-///Graphe g1 = new Graphe<T>("titre", noeuds, points);
 
 
 static void AfficherMatrice(int[,] mat)

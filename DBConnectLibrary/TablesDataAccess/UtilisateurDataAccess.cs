@@ -100,9 +100,9 @@ public class UtilisateurDataAccess : AccessBDD
         }
         return utilisateurs;
     }
-    public List<Utilisateur> getUtilisateur(int userId)
+    public Utilisateur getUtilisateur(int userId)
     {
-        List<Utilisateur> utilisateurs = new List<Utilisateur>();
+        Utilisateur utilisateur = new Utilisateur();
         string query = "SELECT * FROM Utilisateur WHERE Id=@userId";
         using (var connection = Connection())
         using (var command = new MySqlCommand(query, connection))
@@ -111,9 +111,9 @@ public class UtilisateurDataAccess : AccessBDD
             connection.Open();
             using (var reader = command.ExecuteReader())
             {
-                while (reader.Read())
-                {
-                    utilisateurs.Add(new Utilisateur
+                while (reader.Read()){
+                
+                    utilisateur = new Utilisateur
                     {
                         Id = Convert.ToInt32(reader["Id"]),
                         Nom = reader["Nom"].ToString(),
@@ -125,12 +125,13 @@ public class UtilisateurDataAccess : AccessBDD
                         Ville = reader["Ville"].ToString(),
                         CodePostal = Convert.ToInt32(reader["Code_Postal"]),
                         StationProche = reader["Station_Plus_Proche"].ToString()
-                    });
+                    };
                 }
             }
         }
-        return utilisateurs;
+        return utilisateur;
     }
+
     public void addUtilisateur(Utilisateur utilisateur)
     {
         string query = "INSERT INTO Utilisateur (Nom, Prénom, Téléphone, Mail, Rue, Numero_Rue, Ville, Code_Postal, Station_Plus_Proche) VALUES (@userNom, @userPrenom, @userTelephone, @userMail, @userRue, @userNumRue, @userVille, @userCodePostal, @userStationProche)";

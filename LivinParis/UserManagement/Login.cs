@@ -14,7 +14,7 @@ public class Login
         Utilisateur user = new Utilisateur();
         List<Utilisateur> utilisateurs = new List<Utilisateur>();
         List<string> emailUtilisés = new List<string>();
-        foreach (Utilisateur registeredUsers in utilisateurs)
+        foreach (Utilisateur registeredUsers in utilisateurDataAccess.getAllUtilisateurs())
         {
             emailUtilisés.Add(registeredUsers.Mail);
         }
@@ -22,10 +22,11 @@ public class Login
         Console.WriteLine("Connexion : ");
         Console.WriteLine("Veuillez entrer votre adresse mail : ");
         string mail = Console.ReadLine();
-        if (emailUtilisés.Contains(mail) == true)
+        if (emailUtilisés.Contains(mail) == false)
         {
             Console.WriteLine("Cette adresse mail n'est pas renseignée : veuillez réessayer.");
-            return user; ///Return QUOI en vrai...
+            Console.ReadKey();
+            return null; ///Return QUOI en vrai...
         }
         else
         {

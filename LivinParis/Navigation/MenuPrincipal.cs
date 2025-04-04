@@ -39,11 +39,12 @@ public class MenuPrincipal
             cuisinierUserID.Add(cuisinier.ID_Utilisateur);
         }
         List<int> clientUserID = new List<int>();
-        foreach (Client client in this.clientDataAccess.getAllClients()) //Recharge de la liste à chaque itération, opti possible.
+        foreach (Client client in this.clientDataAccess.getAllClients()) 
         {
             clientUserID.Add(client.ID_Utilisateur);
         }
         ModuleClient moduleClient = new ModuleClient();
+        ModuleCuisinier moduleCuisinier = new ModuleCuisinier();
         Console.Clear();
         Utilisateur thisUser = new Utilisateur();
         AnsiConsole.Markup(("Bienvenue sur Liv'In Paris !\n"));
@@ -58,13 +59,15 @@ public class MenuPrincipal
         switch (rep)
         {
             case "Connexion":
-                thisUser = login.userLogin(); //faut check si c'est bien un user
-                userMenu.placement = "userMenu";
-                while (userMenu.placement != "loginMenu")
+                thisUser = login.userLogin(); 
+                if (thisUser != null)
                 {
-                    userMenu.espaceUtilisateur(thisUser); //tout se passe ici en ft...
-                }
-                Console.ReadKey();
+                    userMenu.placement = "userMenu";
+                    while (userMenu.placement != "loginMenu")
+                    {
+                        userMenu.espaceUtilisateur(thisUser);
+                    }
+                } 
                 break;
             
             case "Inscription":
@@ -99,6 +102,8 @@ public class MenuPrincipal
                         moduleClient.moduleClient();
                         break;
                     case "Module Cuisinier":
+                        moduleCuisinier.moduleCuisinier();
+                        Console.ReadKey();
                         break;
                     case "Module Commande":
                         break;

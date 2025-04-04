@@ -13,7 +13,7 @@ public class ModuleClient : GlobalDataAccess
             cuisinierUserID.Add(cuisinier.ID_Utilisateur);
         }
         List<int> clientUserID = new List<int>();
-        foreach (Client client in this.clientDataAccess.getAllClients()) //Recharge de la liste à chaque itération, opti possible.
+        foreach (Client client in this.clientDataAccess.getAllClients()) 
         {
             clientUserID.Add(client.ID_Utilisateur);
         }

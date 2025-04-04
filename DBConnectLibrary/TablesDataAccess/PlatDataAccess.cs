@@ -74,4 +74,67 @@ public class PlatDataAccess : AccessBDD
             command.ExecuteNonQuery();
         }    
     }
+    
+    public List<Plat> getAllPlatFromCuisi(int ID_Cuisinier)
+    {
+        List<Plat> plats = new List<Plat>();
+        string query = "SELECT * FROM plat WHERE ID_cuisinier=@ID_Cuisinier";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@ID_Cuisinier", ID_Cuisinier);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    plats.Add(new Plat
+                    {
+                        ID_Plat = Convert.ToInt32(reader["ID_Plat"]),
+                        Nom = reader["nom"].ToString(),
+                        Quantite = Convert.ToInt32(reader["quantité"]),
+                        Prix = Convert.ToDecimal(reader["prix"]),
+                        Date_Fabrication = Convert.ToDateTime(reader["date_fabrication"]),
+                        Date_Peremption = Convert.ToDateTime(reader["date_péremption"]),
+                        NombrePortion = Convert.ToInt32(reader["nombre_portions_total"]),
+                        PlatDuJour = Convert.ToBoolean(reader["plat_du_jour"]),
+                        ID_Recette = Convert.ToInt32(reader["id_recette"]),
+                        ID_Cuisinier = Convert.ToInt32(reader["id_cuisinier"])
+                    });
+                }
+            }
+        }
+        return plats;
+    }
+    
+    public List<Plat> getPlatDuJour(Cuisinier thisCuisinier)
+    {
+        List<Plat> plats = new List<Plat>();
+        string query = "SELECT * FROM plat WHERE Plat_Du_Jour = TRUE";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    plats.Add(new Plat
+                    {
+                        ID_Plat = Convert.ToInt32(reader["ID_Plat"]),
+                        Nom = reader["Nom"].ToString(),
+                        Quantite = Convert.ToInt32(reader["quantité"]),
+                        Prix = Convert.ToDecimal(reader["prix"]),
+                        Date_Fabrication = Convert.ToDateTime(reader["date_fabrication"]),
+                        Date_Peremption = Convert.ToDateTime(reader["date_péremption"]),
+                        NombrePortion = Convert.ToInt32(reader["nombre_portions_total"]),
+                        PlatDuJour = Convert.ToBoolean(reader["plat_du_jour"]),
+                        ID_Recette = Convert.ToInt32(reader["id_recette"]),
+                        ID_Cuisinier = Convert.ToInt32(reader["id_cuisinier"])
+                    });
+                }
+            }
+        }
+        return plats;
+    }
 }

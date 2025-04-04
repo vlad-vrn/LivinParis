@@ -76,4 +76,29 @@ public class CuisinierDataAccess : AccessBDD
         }
         return cuisinier.ID_Cuisinier;
     }
+    
+    public Cuisinier getCuisiFromUserID(int userID)
+    {
+        Cuisinier cuisinier = new Cuisinier();
+        string query = "SELECT * FROM cuisinier WHERE ID=@userID";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@userID", userID);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    cuisinier = new Cuisinier
+                    {
+                        ID_Cuisinier = Convert.ToInt32(reader["ID_cuisinier"]),
+                        ID_Utilisateur = Convert.ToInt32(reader["ID"]),
+                    };
+                }
+            }
+        }
+        return cuisinier;
+    }
+    
 }
