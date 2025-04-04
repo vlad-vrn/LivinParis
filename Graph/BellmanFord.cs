@@ -21,7 +21,6 @@ public class BellmanFord
         string depart, 
         string arrivee)
     {
-        // Initialisation
         var temps = new Dictionary<string, int>();
         var precedents = new Dictionary<string, string>();
         
@@ -31,8 +30,6 @@ public class BellmanFord
             precedents[station.Nom] = null;
         }
         temps[depart] = 0;
-
-        // Relâchement des arcs
         for (int i = 1; i < reseau.Count; i++)
         {
             foreach (var station in reseau)
@@ -48,21 +45,9 @@ public class BellmanFord
                 }
             }
         }
-
-        // Détection de circuit absorbant (non nécessaire pour le métro)
-        foreach (var station in reseau)
-        {
-            foreach (var connexion in station.Connexions)
-            {
-                if (temps[station.Nom] != int.MaxValue && 
-                    temps[connexion.Destination] > temps[station.Nom] + connexion.Temps)
-                {
-                    throw new Exception("Circuit absorbant détecté");
-                }
-            }
-        }
-
-        // Reconstruction du chemin
+        ///<summary>
+        /// Reconstruction du chemin
+        ///<summary>
         if (precedents[arrivee] == null && depart != arrivee)
             return (null, 0);
 

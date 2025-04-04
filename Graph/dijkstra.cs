@@ -9,12 +9,12 @@ public class DijkstraAlgorithm<T>
         _graphe = graphe;
     }
 
-    public List<int> TrouverChemin(int startId, int endId)
+    public (List<string> nomsStations, List<int> idsStations, int distanceTotale) TrouverChemin(int startId, int endId)
     {
         if (!_graphe.Noeuds.ContainsKey(startId) || !_graphe.Noeuds.ContainsKey(endId))
         {
             Console.WriteLine("Un des noeuds spécifiés n'existe pas.");
-            return new List<int>();
+            return (new List<string>(), new List<int>(), 0);
         }
 
         var distances = new Dictionary<int, int>();
@@ -54,7 +54,11 @@ public class DijkstraAlgorithm<T>
             }
         }
 
-        return ReconstruireChemin(precedent, startId, endId);
+        var idsChemin = ReconstruireChemin(precedent, startId, endId);
+        var nomsChemin = idsChemin.Select(id => _graphe.Noeuds[id].Titre).ToList();
+        int distanceTotale = distances[endId];
+
+        return (nomsChemin, idsChemin, distanceTotale);
     }
 
     private List<int> ReconstruireChemin(Dictionary<int, int> precedent, int startId, int endId)
@@ -70,7 +74,7 @@ public class DijkstraAlgorithm<T>
 
         chemin.Reverse();
 
-        if (chemin[0] != startId)
+        if (chemin.Count == 0 || chemin[0] != startId)
         {
             Console.WriteLine("Aucun chemin trouvé.");
             return new List<int>();

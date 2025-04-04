@@ -1,4 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
 
 using System;
 using System.Drawing;
@@ -104,7 +104,7 @@ Console.WriteLine("Chargement des stations...");
 
         g1.RemplirMetro();
 
-        g1.LiensMetro2();
+        g1.LiensMetro();
         Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
         Console.Write("Entrez l'ID de la station de départ : ");
@@ -120,40 +120,42 @@ Console.WriteLine("Chargement des stations...");
             Console.WriteLine("ID d'arrivée invalide.");
             return;
         }
-
-        // Vérification si les stations existent dans le graphe
+        /// <summary>
+        /// Vérification si les stations existent dans le graphe
+        /// <summary>
         if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
         {
             Console.WriteLine("Une ou plusieurs stations n'existent pas.");
             return;
         }
-
-        // Exécution de l'algorithme de Dijkstra
+        /// <summary>
+        /// Exécution de l'algorithme de Dijkstra
+        /// <summary>
         DijkstraAlgorithm<string> dijkstra = new DijkstraAlgorithm<string>(g1);
-        List<int> chemin = dijkstra.TrouverChemin(startId, endId);
-
-        // Affichage du résultat
-        if (chemin.Count == 0)
+        var resultat = dijkstra.TrouverChemin(startId, endId);
+        /// <summary>
+        /// Affichage du résultat
+        /// <summary>
+        Console.WriteLine($"Distance totale: {resultat.distanceTotale} minutes");
+        Console.WriteLine("Itinéraire:");
+        for (int i = 0; i < resultat.idsStations.Count; i++)
         {
-            Console.WriteLine("Aucun chemin trouvé entre ces stations.");
+            Console.WriteLine($"{resultat.idsStations[i]}");
         }
-        else
+
+        Console.Write("Station de départ (ID) : ");
+        int startId2 = int.Parse(Console.ReadLine());
+
+        Console.Write("Station d’arrivée (ID) : ");
+        int endId2 = int.Parse(Console.ReadLine());
+        if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
         {
-            double t = -2;
-           
-                Console.WriteLine("Chemin le plus court :");
-                foreach (var id in chemin)
-                {
-                    Console.WriteLine($"Station {id} ");
-                    t = t + 2;
-                }
+            Console.WriteLine("Stations invalides.");
+            return;
+        }
+        
 
-                Console.WriteLine("le temps de trajet est: "+t+"min");
-                
-            }
-
-
-            /*void AfficherMatriceAdjacence(int[,] mat)
+            void AfficherMatriceAdjacence(int[,] mat)
             {
                 int taille = mat.GetLength(0);
 

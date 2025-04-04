@@ -13,12 +13,11 @@ public class Floyd_Warshall
         string depart,
         string arrivee)
     {
-        // Initialisation des matrices
+
         int n = nomsStations.Count;
         int[,] dist = new int[n, n];
         string[,] next = new string[n, n];
 
-        // Création d'un dictionnaire pour les indices
         var indices = new Dictionary<string, int>();
         for (int i = 0; i < n; i++)
         {
@@ -30,7 +29,6 @@ public class Floyd_Warshall
             }
         }
 
-        // Remplissage des connexions directes
         foreach (var c in connexions)
         {
             int i = indices[c.Item1];
@@ -38,8 +36,7 @@ public class Floyd_Warshall
             dist[i, j] = c.Item3;
             next[i, j] = c.Item2;
         }
-
-        // Algorithme principal
+        
         for (int k = 0; k < n; k++)
         {
             for (int i = 0; i < n; i++)
@@ -55,8 +52,7 @@ public class Floyd_Warshall
                 }
             }
         }
-
-        // Reconstruction du chemin
+        
         if (next[indices[depart], indices[arrivee]] == null)
             return (null, 0);
 

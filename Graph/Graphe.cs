@@ -15,9 +15,7 @@ public class Graphe<T>
     private Dictionary<int, Noeud<T>> _dicoNoeuds;
     private Dictionary<int, Station> _stations;
     private bool _b;
-
-
-
+    
 
     public Graphe(string titre, Dictionary<int, Noeud<T>>? noeuds = null, List<Lien<T>>? liens = null, bool _b = false)
     {
@@ -25,16 +23,11 @@ public class Graphe<T>
         this._dicoNoeuds = noeuds ?? new Dictionary<int, Noeud<T>>();
         this._stations = new Dictionary<int, Station>();
     }
-
-
+    
     public Dictionary<int, Noeud<T>> Noeuds
     {
         get => this._dicoNoeuds;
     }
-
-    //public object Station { get; set; }
-
-
     /// <summary>
     /// Initialise les noeuds du graphe d'après les valeurs du document texte.
     /// </summary>
@@ -122,14 +115,14 @@ public class Graphe<T>
         }
     }
     */
-    public void LiensMetro()
+   public void LiensMetro()
 {
-    // Dictionnaire pour regrouper les stations par nom
+    /// <summary>
+    /// Dictionnaire pour regrouper les stations par nom (pour gérer les correspondances)
+    /// <summary>
     Dictionary<string, List<(int id, string ligne)>> stationsParNom = new Dictionary<string, List<(int, string)>>();
 
     string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
-    
-    // Première passe : créer les liaisons normales et indexer les stations
     foreach (string line in lines)
     {
         string[] tokens = line.Split(',');
@@ -141,103 +134,35 @@ public class Graphe<T>
         int idStation = int.Parse(tokens[0]);
         string nomStation = tokens[1];
         string ligne = tokens[7];
-
-        // Indexation des stations par nom
+        /// <summary>
+        /// Indexation des stations par nom pour les correspondances
+        /// <summary>
         if (!stationsParNom.ContainsKey(nomStation))
         {
             stationsParNom[nomStation] = new List<(int, string)>();
         }
         stationsParNom[nomStation].Add((idStation, ligne));
-
-        // Création des liens PRÉCÉDENTS (dans les deux sens)
-        if (int.TryParse(tokens[2], out int idPrecedent) && idPrecedent > 0)
-        {
-            int temps = int.Parse(tokens[4]);
-            CreerLien(idPrecedent, idStation, temps); // Lien précédent -> actuelle
-            CreerLien(idStation, idPrecedent, temps); // Lien actuelle -> précédent
-        }
-
-        // Création des liens SUIVANTS (dans les deux sens)
-        if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
-        {
-            int temps = int.Parse(tokens[4]);
-            CreerLien(idStation, idSuivant, temps); // Lien actuelle -> suivante
-            CreerLien(idSuivant, idStation, temps); // Lien suivante -> actuelle
-        }
-    }
-
-    // Deuxième passe : créer les liaisons de correspondance
-    foreach (string line in lines)
-    {
-        string[] tokens = line.Split(',');
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            tokens[i] = tokens[i].Trim('"');
-        }
-
-        int idStation = int.Parse(tokens[0]);
-        string nomStation = tokens[1];
-        string ligne = tokens[7];
-
-        if (int.TryParse(tokens[5], out int tempsChangement) && tempsChangement > 0)
-        {
-            var stationsCorrespondantes = stationsParNom[nomStation]
-                .Where(x => x.ligne != ligne)
-                .ToList();
-
-            foreach (var correspondance in stationsCorrespondantes)
-            {
-                // Correspondances dans les deux sens
-                CreerLien(idStation, correspondance.id, tempsChangement);
-                CreerLien(correspondance.id, idStation, tempsChangement);
-            }
-        }
-    }
-}
-   public void LiensMetro2()
-{
-    // Dictionnaire pour regrouper les stations par nom (pour gérer les correspondances)
-    Dictionary<string, List<(int id, string ligne)>> stationsParNom = new Dictionary<string, List<(int, string)>>();
-
-    string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
-    
-    // Première passe : créer les liaisons normales et indexer les stations
-    foreach (string line in lines)
-    {
-        string[] tokens = line.Split(',');
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            tokens[i] = tokens[i].Trim('"');
-        }
-
-        int idStation = int.Parse(tokens[0]);
-        string nomStation = tokens[1];
-        string ligne = tokens[7];
-
-        // Indexation des stations par nom pour les correspondances
-        if (!stationsParNom.ContainsKey(nomStation))
-        {
-            stationsParNom[nomStation] = new List<(int, string)>();
-        }
-        stationsParNom[nomStation].Add((idStation, ligne));
-
-        // Liaison avec la station précédente
+        /// <summary>
+        /// Liaison avec la station précédente
+        /// <summary>
         if (int.TryParse(tokens[2], out int idPrecedent) && idPrecedent > 0)
         {
             int temps = int.Parse(tokens[4]);
             
             CreerLien(idStation, idPrecedent, temps); // Lien actuelle -> précédent
         }
-
-        // Liaison avec la station suivante
+        /// <summary>
+        /// Liaison avec la station suivante
+        /// <summary>
         if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
         {
             int temps = int.Parse(tokens[4]);
             CreerLien(idStation, idSuivant, temps);
         }
     }
-
-    // Deuxième passe : créer les liaisons de correspondance
+    /// <summary>
+    /// Deuxième passe : créer les liaisons de correspondance
+    /// <summary>
     foreach (string line in lines)
     {
         string[] tokens = line.Split(',');
@@ -250,19 +175,16 @@ public class Graphe<T>
         string nomStation = tokens[1];
         string ligne = tokens[7];
 
-        // Vérifier s'il y a un temps de changement spécifié
         if (int.TryParse(tokens[5], out int tempsChangement) && tempsChangement > 0)
         {
-            // Trouver toutes les stations avec le même nom mais des lignes différentes
             var stationsCorrespondantes = stationsParNom[nomStation]
                 .Where(x => x.ligne != ligne)
                 .ToList();
 
             foreach (var correspondance in stationsCorrespondantes)
             {
-                // Créer un lien de correspondance dans les deux sens
                 CreerLien(idStation, correspondance.id, tempsChangement);
-                if (!_b) // Si le graphe est non orienté
+                if (!_b) 
                 {
                     CreerLien(correspondance.id, idStation, tempsChangement);
                 }
@@ -516,18 +438,18 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
             foreach (string ligne in lines)
             {
-
-               // Console.WriteLine($"Traitement de la ligne: {ligne}");
+                
 
                 string[] tokens = ligne.Split(',');
-
-                // On retire les guillemets pour chaque token
+                /// <summary>
+                /// On retire les guillemets pour chaque token
+                /// <summary>
                 for (int i = 0; i < tokens.Length; i++)
                 {
                     tokens[i] = tokens[i].Trim('"');
                 }
 
-                // Traitement de l'ID
+                
                 /*
                 string idString = tokens[0].Trim();
                 if (!int.TryParse(idString, out int id))
@@ -542,8 +464,9 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
                 double[] lignesMetro = Array.ConvertAll(tokens[7].Split('/'), double.Parse);
 
-
-                // Ajout de la station à la liste
+                /// <summary>
+                /// Ajout de la station à la liste
+                /// <summary>
 
                stations.Add(new Station(id, nom, lignesMetro));
             }
