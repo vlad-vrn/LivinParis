@@ -63,8 +63,8 @@ namespace TestUnitaires
                 return;
             }
 
-            var visited = new HashSet<int>(); /// Set pour suivre les noeuds visités
-            var queue = new Queue<int>(); 
+            HashSet<int> visited = new HashSet<int>(); /// Set pour suivre les noeuds visités
+            Queue<int> queue = new Queue<int>(); 
             queue.Enqueue(startNodeId);
             visited.Add(startNodeId);
 
