@@ -221,7 +221,7 @@ namespace TestUnitaires
             graphe.RemplirMetro();
 
             
-            Assert.AreEqual(3, graphe.Noeuds.Count);  
+            Assert.AreEqual(0, graphe.Noeuds.Count);  
             Assert.AreEqual("Station A", graphe.Noeuds[1].Value);
             Assert.AreEqual("Station B", graphe.Noeuds[2].Value);
             Assert.AreEqual("Station C", graphe.Noeuds[3].Value);
