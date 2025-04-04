@@ -133,6 +133,7 @@ Console.WriteLine("Chargement des stations...");
         /// <summary>
         DijkstraAlgorithm<string> dijkstra = new DijkstraAlgorithm<string>(g1);
         var resultat = dijkstra.TrouverChemin(startId, endId);
+
         /// <summary>
         /// Affichage du résultat
         /// <summary>
@@ -177,5 +178,5 @@ Console.WriteLine("Chargement des stations...");
             */
             Console.ReadKey();
         
-      //  g1.DessinerGraphe();
+       // g1.DessinerGraphe();
         
