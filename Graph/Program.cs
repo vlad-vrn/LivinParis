@@ -101,7 +101,7 @@ Console.WriteLine("Chargement des stations...");
 
         g1.RemplirMetro();
 
-        g1.LiensMetro2();
+        g1.LiensMetro();
         Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
 

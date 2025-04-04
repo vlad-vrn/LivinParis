@@ -15,9 +15,7 @@ public class Graphe<T>
     private Dictionary<int, Noeud<T>> _dicoNoeuds;
     private Dictionary<int, Station> _stations;
     private bool _b;
-
-
-
+    
 
     public Graphe(string titre, Dictionary<int, Noeud<T>>? noeuds = null, List<Lien<T>>? liens = null, bool _b = false)
     {
@@ -25,16 +23,11 @@ public class Graphe<T>
         this._dicoNoeuds = noeuds ?? new Dictionary<int, Noeud<T>>();
         this._stations = new Dictionary<int, Station>();
     }
-
-
+    
     public Dictionary<int, Noeud<T>> Noeuds
     {
         get => this._dicoNoeuds;
     }
-
-    //public object Station { get; set; }
-
-
     /// <summary>
     /// Initialise les noeuds du graphe d'après les valeurs du document texte.
     /// </summary>
@@ -63,11 +56,10 @@ public class Graphe<T>
         for (int i = 0; i < nbNoeuds; i++)
         {
             Noeud<T> noeud = new Noeud<T>((i + 1).ToString())
-                { Titre = (i + 1).ToString() }; //Répétition : pertinence du required ?
+                { Titre = (i + 1).ToString() }; 
             int id = i + 1;
             this._dicoNoeuds.Add(id, noeud);
-            //Console.WriteLine(noeud.Titre);
-            //Console.WriteLine(id);
+            
         }
     }
 
@@ -123,14 +115,14 @@ public class Graphe<T>
         }
     }
     */
-    public void LiensMetro()
+   public void LiensMetro()
 {
-    // Dictionnaire pour regrouper les stations par nom
+    /// <summary>
+    /// Dictionnaire pour regrouper les stations par nom (pour gérer les correspondances)
+    /// <summary>
     Dictionary<string, List<(int id, string ligne)>> stationsParNom = new Dictionary<string, List<(int, string)>>();
 
     string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
-    
-    // Première passe : créer les liaisons normales et indexer les stations
     foreach (string line in lines)
     {
         string[] tokens = line.Split(',');
@@ -142,98 +134,35 @@ public class Graphe<T>
         int idStation = int.Parse(tokens[0]);
         string nomStation = tokens[1];
         string ligne = tokens[7];
-
-        // Indexation des stations par nom
+        /// <summary>
+        /// Indexation des stations par nom pour les correspondances
+        /// <summary>
         if (!stationsParNom.ContainsKey(nomStation))
         {
             stationsParNom[nomStation] = new List<(int, string)>();
         }
         stationsParNom[nomStation].Add((idStation, ligne));
-
-        // Création des liens PRÉCÉDENTS (dans les deux sens)
+        /// <summary>
+        /// Liaison avec la station précédente
+        /// <summary>
         if (int.TryParse(tokens[2], out int idPrecedent) && idPrecedent > 0)
         {
             int temps = int.Parse(tokens[4]);
-            CreerLien(idPrecedent, idStation, temps); // Lien précédent -> actuelle
+            
             CreerLien(idStation, idPrecedent, temps); // Lien actuelle -> précédent
         }
-
-        // Création des liens SUIVANTS (dans les deux sens)
-        if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
-        {
-            int temps = int.Parse(tokens[4]);
-            CreerLien(idStation, idSuivant, temps); // Lien actuelle -> suivante
-            CreerLien(idSuivant, idStation, temps); // Lien suivante -> actuelle
-        }
-    }
-
-    // Deuxième passe : créer les liaisons de correspondance
-    foreach (string line in lines)
-    {
-        string[] tokens = line.Split(',');
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            tokens[i] = tokens[i].Trim('"');
-        }
-
-        int idStation = int.Parse(tokens[0]);
-        string nomStation = tokens[1];
-        string ligne = tokens[7];
-
-        if (int.TryParse(tokens[5], out int tempsChangement) && tempsChangement > 0)
-        {
-            var stationsCorrespondantes = stationsParNom[nomStation]
-                .Where(x => x.ligne != ligne)
-                .ToList();
-
-            foreach (var correspondance in stationsCorrespondantes)
-            {
-                // Correspondances dans les deux sens
-                CreerLien(idStation, correspondance.id, tempsChangement);
-                CreerLien(correspondance.id, idStation, tempsChangement);
-            }
-        }
-    }
-}
-   public void LiensMetro2()
-{
-    // Dictionnaire pour regrouper les stations par nom (pour gérer les correspondances)
-    Dictionary<string, List<(int id, string ligne)>> stationsParNom = new Dictionary<string, List<(int, string)>>();
-
-    string[] lines = File.ReadAllLines("..\\..\\..\\MetroParis.csv").Skip(1).ToArray();
-    
-    // Première passe : créer les liaisons normales et indexer les stations
-    foreach (string line in lines)
-    {
-        string[] tokens = line.Split(',');
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            tokens[i] = tokens[i].Trim('"');
-        }
-
-        int idStation = int.Parse(tokens[0]);
-        string nomStation = tokens[1];
-        string ligne = tokens[7];
-
-        // Indexation des stations par nom pour les correspondances
-        if (!stationsParNom.ContainsKey(nomStation))
-        {
-            stationsParNom[nomStation] = new List<(int, string)>();
-        }
-        stationsParNom[nomStation].Add((idStation, ligne));
-
-        // Liaison avec la station précédente
-       
-
-        // Liaison avec la station suivante
+        /// <summary>
+        /// Liaison avec la station suivante
+        /// <summary>
         if (int.TryParse(tokens[3], out int idSuivant) && idSuivant > 0)
         {
             int temps = int.Parse(tokens[4]);
             CreerLien(idStation, idSuivant, temps);
         }
     }
-
-    // Deuxième passe : créer les liaisons de correspondance
+    /// <summary>
+    /// Deuxième passe : créer les liaisons de correspondance
+    /// <summary>
     foreach (string line in lines)
     {
         string[] tokens = line.Split(',');
@@ -246,19 +175,16 @@ public class Graphe<T>
         string nomStation = tokens[1];
         string ligne = tokens[7];
 
-        // Vérifier s'il y a un temps de changement spécifié
         if (int.TryParse(tokens[5], out int tempsChangement) && tempsChangement > 0)
         {
-            // Trouver toutes les stations avec le même nom mais des lignes différentes
             var stationsCorrespondantes = stationsParNom[nomStation]
                 .Where(x => x.ligne != ligne)
                 .ToList();
 
             foreach (var correspondance in stationsCorrespondantes)
             {
-                // Créer un lien de correspondance dans les deux sens
                 CreerLien(idStation, correspondance.id, tempsChangement);
-                if (!_b) // Si le graphe est non orienté
+                if (!_b) 
                 {
                     CreerLien(correspondance.id, idStation, tempsChangement);
                 }
@@ -415,11 +341,11 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
         
         public void DessinerGraphe(int width = 1000, int height = 1000)
 {
-    // Déterminer le chemin du bureau pour sauvegarder l'image
+    /// Déterminer le chemin du bureau pour sauvegarder l'image
     string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-    string filePath = Path.Combine(desktopPath, "graphe_metro.png");
+    string filePath = Path.Combine(desktopPath, "graphe_metro2.png");
 
-    // Vérification : S'assurer que le dictionnaire des nœuds est bien initialisé
+    /// Vérification : S'assurer que le dictionnaire des nœuds est bien initialisé
     if (_dicoNoeuds == null || _dicoNoeuds.Count == 0)
     {
         Console.WriteLine("Erreur : Le dictionnaire des nœuds est vide ou non initialisé.");
@@ -436,7 +362,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
         double angleStep = (2 * Math.PI) / _dicoNoeuds.Count;
         Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
 
-        // Générer les positions des nœuds en cercle
+        /// Générer les positions des nœuds en cercle
         int index = 0;
         foreach (var kvp in _dicoNoeuds)
         {
@@ -448,7 +374,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
             index++;
         }
 
-        // Dessiner les liens (arêtes entre stations)
+        /// Dessiner les liens (arêtes entre stations)
         using (var paint = new SKPaint { Color = SKColors.Gray, StrokeWidth = 2, IsAntialias = true })
         using (var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 20, IsAntialias = true })
         {
@@ -476,10 +402,10 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
                     if (positions.ContainsKey(id1) && positions.ContainsKey(id2))
                     {
-                        // Dessiner l'arête
+                        /// Dessiner l'arête
                         canvas.DrawLine(positions[id1], positions[id2], paint);
 
-                        // Afficher la pondération (temps entre stations) au milieu du segment
+                        /// Afficher la pondération (temps entre stations) au milieu du segment
                         SKPoint midPoint = new SKPoint((positions[id1].X + positions[id2].X) / 2,
                                                        (positions[id1].Y + positions[id2].Y) / 2);
                         canvas.DrawText(lien.Poids.ToString(), midPoint.X, midPoint.Y, textPaint);
@@ -488,7 +414,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
             }
         }
 
-        // Dessiner les nœuds et afficher le nom de la station
+        /// Dessiner les nœuds et afficher le nom de la station
         using (var nodePaint = new SKPaint { Color = SKColors.Blue, IsAntialias = true })
         using (var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 18, IsAntialias = true })
         {
@@ -497,26 +423,26 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
                 int nodeId = kvp.Key;
                 SKPoint pos = kvp.Value;
 
-                // Vérifier que le nœud existe
+                /// Vérifier que le nœud existe
                 if (!_dicoNoeuds.ContainsKey(nodeId) || _dicoNoeuds[nodeId] == null)
                 {
                     Console.WriteLine($"Erreur : Noeud {nodeId} est null ou introuvable.");
                     continue;
                 }
 
-                // Récupérer le contenu (_contenu) en toute sécurité
+                /// Récupérer le contenu (_contenu) en toute sécurité
                 var contenu = _dicoNoeuds[nodeId]._contenu;
                 string stationName = contenu != null ? contenu.ToString() : "Inconnu";
 
-                // Dessiner le nœud (cercle)
+                /// Dessiner le nœud (cercle)
                 canvas.DrawCircle(pos, 10, nodePaint);
 
-                // Afficher le nom de la station à côté du nœud
+                /// Afficher le nom de la station à côté du nœud
                 canvas.DrawText(stationName, pos.X + 15, pos.Y + 5, textPaint);
             }
         }
 
-        // Sauvegarde en image sur le bureau
+        /// Sauvegarde en image sur le bureau
         using (var image = SKImage.FromBitmap(bitmap))
         using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
         using (var stream = File.OpenWrite(filePath))
@@ -527,8 +453,7 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
     Console.WriteLine($"Graphe dessiné et enregistré sous {filePath}");
 }
-       
-       
+
         public void AfficherStations()
         {
             foreach (var station in _stations.Values)
@@ -553,33 +478,43 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
 
             foreach (string ligne in lines)
             {
-
-               // Console.WriteLine($"Traitement de la ligne: {ligne}");
+                
 
                 string[] tokens = ligne.Split(',');
-
-                // On retire les guillemets pour chaque token
+                /// <summary>
+                /// On retire les guillemets pour chaque token
+                /// <summary>
                 for (int i = 0; i < tokens.Length; i++)
                 {
                     tokens[i] = tokens[i].Trim('"');
                 }
 
                 
+                /*
+                string idString = tokens[0].Trim();
+                if (!int.TryParse(idString, out int id))
+                {
+                    Console.WriteLine($"Erreur : ID invalide ({idString})");
+                    continue;
+                }
+    */
                 int id = Convert.ToInt32(tokens[0]);
 
                 string nom = tokens[1].Trim();
 
                 double[] lignesMetro = Array.ConvertAll(tokens[7].Split('/'), double.Parse);
 
-
-                // Ajout de la station à la liste
+                /// <summary>
+                /// Ajout de la station à la liste
+                /// <summary>
 
                stations.Add(new Station(id, nom, lignesMetro));
             }
 
             Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
             return stations;
-            
+
+
         }
     }
 
