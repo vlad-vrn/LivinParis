@@ -63,9 +63,7 @@ public class CreateRecette : GlobalDataAccess
         {
             Contient newContient = new Contient();
             newContient.ID_Recette = recetteDataAccess.getIDFromName(newRecette.Nom_Recette);
-            Console.WriteLine(newContient.ID_Recette);
             newContient.Nom = ingredient;
-            Console.WriteLine(newContient.Nom);
             contientDataAccess.addContient(newContient);
         }
     }
