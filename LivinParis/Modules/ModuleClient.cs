@@ -41,7 +41,7 @@ public class ModuleClient : GlobalDataAccess
             case "Liste des utilisateurs (par rues)":
                 foreach (var utilisateur in utilisateurDataAccess.getAllUtilisateursOrderByRues())
                 {
-                    string str1 = utilisateur.Prenom  + " " + utilisateur.Nom + " : " + utilisateur.NumeroRue + " rue " + utilisateur.Rue;
+                    string str1 = utilisateur.Prenom  + " " + utilisateur.Nom + " : " + utilisateur.NumeroRue + utilisateur.Rue;
                     string str2(List<int> listClientID) => listClientID.Contains(utilisateur.Id) ? "Client" : "";
                     string str3(List<int> listCuisiID) => listCuisiID.Contains(utilisateur.Id) ? "Cuisinier" : ""; //trans en null et ??- (une autre nuit)
                     Console.WriteLine(str1 + " : " + str2(clientUserID) + " " +  str3(cuisinierUserID));
