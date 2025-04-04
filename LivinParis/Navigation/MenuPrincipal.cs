@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DBConnectLibrary;
 using LivinParis.Application;
+using LivinParis.Modules;
 using Spectre.Console;
 
 namespace LivinParis.Navigation;
@@ -42,7 +43,7 @@ public class MenuPrincipal
         {
             clientUserID.Add(client.ID_Utilisateur);
         }
-        
+        ModuleClient moduleClient = new ModuleClient();
         Console.Clear();
         Utilisateur thisUser = new Utilisateur();
         AnsiConsole.Markup(("Bienvenue sur Liv'In Paris !\n"));
@@ -52,7 +53,7 @@ public class MenuPrincipal
                 .PageSize(10)
                 .AddChoices(new[]
                 {
-                    "Connexion", "Inscription", "Liste des utilisateurs", "Retour"
+                    "Connexion", "Inscription", "Liste des utilisateurs", "Accès aux modules", "Retour"
                 }));
         switch (rep)
         {
@@ -65,10 +66,12 @@ public class MenuPrincipal
                 }
                 Console.ReadKey();
                 break;
+            
             case "Inscription":
                 CreateAcc.CreerCompteUser();
                 Console.ReadKey();
                 break;
+            
             case "Liste des utilisateurs":
                 foreach (var thisUtilisateur in utilisateurDataAccess.getAllUtilisateurs())
                 {
@@ -80,6 +83,32 @@ public class MenuPrincipal
                 }
                 Console.ReadKey();
                 break;
+            
+            case "Accès aux modules":
+                var outputing = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Que voulez-vous faire ?")
+                        .PageSize(10)
+                        .AddChoices(new[]
+                        {
+                            "Module Client", "Module Cuisinier", "Module Commande", "Module Statistiques", "Retour"
+                        }));
+                switch (outputing)
+                {
+                    case "Module Client":
+                        moduleClient.moduleClient();
+                        break;
+                    case "Module Cuisinier":
+                        break;
+                    case "Module Commande":
+                        break;
+                    case "Module Statistiques":
+                        break;
+                    case "Retour":
+                        break;
+                }
+                break;
+            
             case "Retour":
                 this.output = "Retour";
                 break;

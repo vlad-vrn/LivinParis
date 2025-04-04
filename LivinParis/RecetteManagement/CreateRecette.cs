@@ -43,6 +43,7 @@ public class CreateRecette
                 new SelectionPrompt<string>()
                     .Title("Ajoutez des ingrédients")
                     .PageSize(10)
+                    .MoreChoicesText("")
                     .AddChoices(ingredientList));
             ingredientUtilise.Add(ingredient);
             

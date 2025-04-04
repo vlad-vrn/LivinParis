@@ -121,10 +121,14 @@ public class UserMenu
         switch (rep)
         {
             case "Ajouter un plat":
-                createPlat.publierPlat();
+                createPlat.publierPlat(cuisinierDataAccess.getCuisiIDFromUserID(thisUser.Id));
+                AnsiConsole.Markup("**Plat ajouté**");
+                Console.ReadKey();
                 break;
             case "Ajouter une recette":
                 createRecette.CreerRecette();
+                AnsiConsole.Markup("**Recette ajoutée**");
+                Console.ReadKey();
                 break;
             case "Voir mes plats en ligne":
                 AnsiConsole.Markup("plat en ligne...");
