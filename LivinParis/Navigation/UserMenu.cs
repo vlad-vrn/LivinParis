@@ -166,6 +166,7 @@ public class UserMenu : GlobalDataAccess
                 createCommande.choisirPlat(thisUser.Id);
                 break;
             case "Voir mes commandes":
+                createCommande.voirCommandes(thisUser.Id);
                 break;
             case "Historique des commandes":
                 break;

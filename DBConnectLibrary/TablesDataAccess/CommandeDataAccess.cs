@@ -65,4 +65,32 @@ public class CommandeDataAccess : AccessBDD
             command.ExecuteNonQuery();
         }    
     }
+    
+    public List<Commande> getAllCommandeFromClient(int ID_Client)
+    {
+        List<Commande> commandes = new List<Commande>();
+        string query = "SELECT * FROM commande WHERE ID_client = @ID_Client";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@ID_Client", ID_Client);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    commandes.Add(new Commande
+                    {
+                        ID_Commande = Convert.ToInt32(reader["ID_Commande"]),
+                        Prix_Commande = Convert.ToDecimal(reader["Prix_Commande"]),
+                        Nombre_Portion = Convert.ToInt32(reader["Nombre_Portions"]),
+                        Date_Heure_Livraison = Convert.ToDateTime(reader["Date_Heure_Livraison"]),
+                        ID_Client = Convert.ToInt32(reader["ID_client"])
+                    });
+                }
+            }
+        }
+        return commandes;
+    }
+    
 }

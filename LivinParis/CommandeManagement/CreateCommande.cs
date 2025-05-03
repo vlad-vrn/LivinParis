@@ -5,7 +5,7 @@ namespace LivinParis.CommandeManagement;
 
 public class CreateCommande : GlobalDataAccess
 {
-    public void choisirPlat(int idClient)
+    public void choisirPlat(int idUser)
     {
         Commande newCommande = new Commande();
         Dictionary<string, Plat> infosPlats = new Dictionary<string, Plat>();
@@ -56,16 +56,35 @@ public class CreateCommande : GlobalDataAccess
         {
             newCommande.Prix_Commande = prixTot;
             newCommande.Nombre_Portion = platsCommandes.Count;
-            newCommande.ID_Client = clientDataAccess.getClientIDFromUserID(idClient);
+            newCommande.ID_Client = clientDataAccess.getClientIDFromUserID(idUser);
             newCommande.Date_Heure_Livraison = DateTime.Now;
             
             commandeDataAccess.addCommande(newCommande);
         }
-        Console.WriteLine("Le renoi est compétement fou");
         //Dictionnaire 1 1 avec string en key et Plat en value pour pouvoir target le plat en particulier et le réduire
         //Console.WriteLine("Vous avez commandé le plat suivant : " + infosPlats[choix].Nom);
         //Console.ReadKey(); 10XXXXXXXXXXXXXXXXX
+    }
 
+    public void voirCommandes(int idUser)
+    {
+        Console.WriteLine(clientDataAccess.getClientIDFromUserID(idUser));
+        Dictionary<string, Commande> titreCommandes = new Dictionary<string, Commande>();
+        foreach (Commande commande in commandeDataAccess.getAllCommandeFromClient(clientDataAccess.getClientIDFromUserID(idUser)))
+        {
+            string s = "Commande d'ID " + commande.ID_Commande;
+            titreCommandes.Add(s, commande);
+        }
         
+        Console.ReadKey();
+        var choix  = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("Sur quelle commande souhaitez vous avoir des informations ? :\n")
+                .PageSize(10)
+                .AddChoices(titreCommandes.Keys));
+        Console.WriteLine("Nombre de portions : " + titreCommandes[choix].Nombre_Portion);
+        Console.WriteLine("Prix de la commande : " + titreCommandes[choix].Prix_Commande);
+        Console.WriteLine("Heure de commande : " + titreCommandes[choix].Date_Heure_Livraison);
+        Console.ReadKey();
     }
 }
