@@ -35,7 +35,7 @@ CREATE TABLE Client_(
 );
 
 CREATE TABLE Commande(
-   ID_Commande INT,
+   ID_Commande INT AUTO_INCREMENT,
    Prix_Commande DECIMAL(15,2),
    Nombre_Portions INT,
    Date_Heure_Livraison DATETIME,

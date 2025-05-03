@@ -59,4 +59,25 @@ public class ClientDataAccess : AccessBDD
             command.ExecuteNonQuery();
         }    
     }
+    
+    public int getClientIDFromUserID(int userID)
+    {
+        Client client = new Client();
+        string query = "SELECT * FROM client_ WHERE ID=@userID";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@userID", userID);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    client.ID_Client = Convert.ToInt32(reader["ID_client"]);
+                }
+            }
+        }
+        return client.ID_Client;
+    }
+
 }
