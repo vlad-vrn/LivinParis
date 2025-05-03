@@ -159,7 +159,7 @@ public class UserMenu : GlobalDataAccess
                 .AddChoices(new[]
                 {
                     "Commander un plat", "Voir mes commandes", "Historique des commandes", "Retour"
-                }));
+                }));    
         switch (rep)
         {
             case "Commander un plat":
