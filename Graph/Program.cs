@@ -107,6 +107,10 @@ Console.WriteLine("Chargement des stations...");
         g1.LiensMetro();
         Console.WriteLine("LienMetro ok");
         g1.AfficherListeAdjacence();
+        Console.WriteLine("COLORATION DU GRAPHE (Algorithme Welsh-Powell)");
+
+        
+
         Console.Write("Entrez l'ID de la station de départ : ");
         if (!int.TryParse(Console.ReadLine(), out int startId))
         {
