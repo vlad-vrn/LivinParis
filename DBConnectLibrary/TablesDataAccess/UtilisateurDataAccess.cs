@@ -31,8 +31,7 @@ public class UtilisateurDataAccess : AccessBDD
                         NumeroRue = reader["Numero_Rue"].ToString(),
                         Ville = reader["Ville"].ToString(),
                         CodePostal = Convert.ToInt32(reader["Code_Postal"]),
-                        StationProche = reader["Station_Plus_Proche"].ToString()
-                    });
+                        StationProche = Convert.ToInt32(reader["Station_Plus_Proche"])                    });
                 }
             }
         }
@@ -62,8 +61,7 @@ public class UtilisateurDataAccess : AccessBDD
                         NumeroRue = reader["Numero_Rue"].ToString(),
                         Ville = reader["Ville"].ToString(),
                         CodePostal = Convert.ToInt32(reader["Code_Postal"]),
-                        StationProche = reader["Station_Plus_Proche"].ToString()
-                    });
+                        StationProche = Convert.ToInt32(reader["Station_Plus_Proche"])                    });
                 }
             }
         }
@@ -93,8 +91,7 @@ public class UtilisateurDataAccess : AccessBDD
                         NumeroRue = reader["Numero_Rue"].ToString(),
                         Ville = reader["Ville"].ToString(),
                         CodePostal = Convert.ToInt32(reader["Code_Postal"]),
-                        StationProche = reader["Station_Plus_Proche"].ToString()
-                    });
+                        StationProche = Convert.ToInt32(reader["Station_Plus_Proche"])                    });
                 }
             }
         }
@@ -124,7 +121,7 @@ public class UtilisateurDataAccess : AccessBDD
                         NumeroRue = reader["Numero_Rue"].ToString(),
                         Ville = reader["Ville"].ToString(),
                         CodePostal = Convert.ToInt32(reader["Code_Postal"]),
-                        StationProche = reader["Station_Plus_Proche"].ToString()
+                        StationProche = Convert.ToInt32(reader["Station_Plus_Proche"])
                     };
                 }
             }
@@ -228,7 +225,7 @@ public class UtilisateurDataAccess : AccessBDD
                     user.NumeroRue = reader["Numero_Rue"].ToString();
                     user.Ville = reader["Ville"].ToString();
                     user.CodePostal = Convert.ToInt32(reader["Code_Postal"]);
-                    user.StationProche = reader["Station_Plus_Proche"].ToString();
+                    user.StationProche = Convert.ToInt32(reader["Station_Plus_Proche"]);
                 }
             }
         }

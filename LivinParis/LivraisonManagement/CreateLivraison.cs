@@ -1,4 +1,5 @@
 using DBConnectLibrary;
+using LivinParis.StationManagement;
 using Org.BouncyCastle.Math.EC;
 using Spectre.Console;
 
@@ -25,6 +26,8 @@ public class CreateLivraison : GlobalDataAccess
 
     public void voirLivraisons(int idUser)
     {
+        StationSelector selector = new StationSelector();
+        StationManager stationManager = new StationManager();
         Dictionary<string, Livraison> titreLivraisons = new Dictionary<string, Livraison>();
         foreach (Livraison livraison in livraisonDataAccess.getAllLivraisonsFromClient(clientDataAccess.getClientIDFromUserID(idUser)))
         {
@@ -39,8 +42,9 @@ public class CreateLivraison : GlobalDataAccess
                 .AddChoices(titreLivraisons.Keys));
         
         Console.WriteLine("Livraison de la commande " + titreLivraisons[choix].ID_Commande);
-        Console.WriteLine("Partant de " + titreLivraisons[choix].station_cuisinier);
-        Console.WriteLine("jusqu'a " + titreLivraisons[choix].station_client);
+        Console.WriteLine("Partant de " + selector.nomStationFromID(titreLivraisons[choix].station_cuisinier));
+        Console.WriteLine("jusqu'a " + selector.nomStationFromID(titreLivraisons[choix].station_client));
+        Console.WriteLine(stationManager.CheminMetro(titreLivraisons[choix].station_cuisinier, titreLivraisons[choix].station_client));
         if (titreLivraisons[choix].est_livre == false)
         {
             Console.WriteLine("Cette commande n'est pas arrivée à notre connaissance.");

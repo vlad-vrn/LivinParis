@@ -13,7 +13,7 @@ CREATE TABLE Utilisateur(
    Numero_Rue VARCHAR(50),
    Ville VARCHAR(50),
    Code_Postal INT,
-   Station_Plus_Proche VARCHAR(50),
+   Station_Plus_Proche INT,
    PRIMARY KEY(ID)
 );
 

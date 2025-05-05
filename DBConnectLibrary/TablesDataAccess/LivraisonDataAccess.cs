@@ -23,8 +23,8 @@ public class LivraisonDataAccess : AccessBDD
                     livraisons.Add(new Livraison
                     {
                         ID_Livraison = Convert.ToInt32(reader["ID_Livraison"]),
-                        station_client = reader["station_client"].ToString(),
-                        station_cuisinier = reader["station_cuisinier"].ToString(),
+                        station_client = Convert.ToInt32(reader["station_client"]),
+                        station_cuisinier = Convert.ToInt32(reader["station_cuisinier"]),
                         Date_Livraison = Convert.ToDateTime(reader["Date_Livraison"]),
                         est_livre = Convert.ToBoolean(reader["est_livre"]),
                         ID_Commande = Convert.ToInt32(reader["ID_Commande"]),
@@ -73,8 +73,8 @@ public class LivraisonDataAccess : AccessBDD
                     livraisons.Add(new Livraison
                     {
                         ID_Livraison = Convert.ToInt32(reader["ID_Livraison"]),
-                        station_client = reader["station_client"].ToString(),
-                        station_cuisinier = reader["station_cuisinier"].ToString(),
+                        station_client = Convert.ToInt32(reader["station_client"]),
+                        station_cuisinier = Convert.ToInt32(reader["station_cuisinier"]),
                         Date_Livraison = Convert.ToDateTime(reader["Date_Livraison"]),
                         est_livre = Convert.ToBoolean(reader["est_livre"]),
                         ID_Commande = Convert.ToInt32(reader["ID_Commande"]),

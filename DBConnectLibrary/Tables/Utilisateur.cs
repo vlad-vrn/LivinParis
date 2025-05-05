@@ -11,5 +11,5 @@ public class Utilisateur
     public string NumeroRue {get;set;}
     public string Ville {get;set;}
     public int CodePostal {get;set;}
-    public string StationProche {get;set;}
+    public int StationProche {get;set;}
 }
