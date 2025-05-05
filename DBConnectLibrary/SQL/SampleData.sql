@@ -7,7 +7,7 @@ INSERT INTO Utilisateur (ID, Nom, Prénom, Téléphone, Mail, Rue, Numero_Rue, V
 (6, 'Belloc', 'Arthur', 600000006, 'abelloc@gmail.com', 'PH', '6', 'Paris', 75007, 187),
 (7, 'Bellegarde', 'Gaspar', 600000007, 'gbellegarde@gmail.com', 'PH', '33', 'Paris', 75018, 73),
 (8, 'Bossuet', 'Felix', 600000008, 'fbossuet@gmail.com', 'PH', '42', 'Paris', 75004, 13),
-(9, 'Dougui', 'Malik', 600000009, 'mdoughi@gmail.com', 'PH', '9', 'Paris', 75018, 320);
+(9, 'Dougui', 'Malik', 600000009, 'mdougui@gmail.com', 'PH', '9', 'Paris', 75018, 320);
 
 INSERT INTO Cuisinier (ID_cuisinier, ID) VALUES
 (1, 1),
@@ -35,11 +35,11 @@ INSERT INTO Livraison (ID_Livraison, station_client, station_cuisinier, Date_Liv
 (4, '19, Impasse du Soleil, Nantes', '4, Rue Victor Hugo, Lyon', '2025-03-08 13:00:00', false,4, 1);
 
 INSERT INTO Recette (ID_Recette, Nom, Régime_alimentaire) VALUES
-(1, 'Recette 1', 'Omnivore'),
-(2, 'Recette 2', 'Omnivore'),
-(3, 'Recette 3', 'Omnivore'),
-(4, 'Recette 4', 'Omnivore'),
-(5, 'Recette 5', 'Omnivore');
+(1, 'Pâtes au pesto', 'Omnivore'),
+(2, 'Boeuf bourgignon', 'Omnivore'),
+(3, 'Couscous brochettes', 'Omnivore'),
+(4, 'Salade de fruits', 'Omnivore'),
+(5, 'Curry vert', 'Omnivore');
 
 INSERT INTO Nationalité (Pays) VALUES
 ('France'),

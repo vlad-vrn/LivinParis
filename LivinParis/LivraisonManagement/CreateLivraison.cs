@@ -7,11 +7,13 @@ namespace LivinParis.LivraisonManagement;
 
 public class CreateLivraison : GlobalDataAccess
 {
-    public void initLivraison(int userIDFromCuisi, int userIDFromClient, int idCommande)
+    public void initLivraison(int cuisiIDFromCuisi, int userIDFromClient, int idCommande) //yserUDFrilCkuebt est l'id client
     {
         Livraison newLivraison = new Livraison();
-        Utilisateur thisCuisinier = utilisateurDataAccess.getUtilisateur(userIDFromCuisi);
+        Utilisateur thisCuisinier = utilisateurDataAccess.getUtilisateur(cuisinierDataAccess.getUserIDFromCuisiID(cuisiIDFromCuisi));
+        Console.WriteLine("Votre cuisinier est il bien " + thisCuisinier.Nom);
         Utilisateur thisClient = utilisateurDataAccess.getUtilisateur(userIDFromClient);
+        Console.WriteLine("Votre ID user est bien " + thisClient.Id);
         bool status = false;
 
 
@@ -20,8 +22,12 @@ public class CreateLivraison : GlobalDataAccess
         newLivraison.est_livre = status;
         newLivraison.Date_Livraison = DateTime.Now;
         newLivraison.ID_Commande = idCommande;
-        newLivraison.ID_Client = thisClient.Id;
+        newLivraison.ID_Client = clientDataAccess.getClientIDFromUserID(thisClient.Id);
+        Console.WriteLine("L'id de station est elle bien " + thisClient.StationProche);
+        Console.ReadKey();
         livraisonDataAccess.addLivraison(newLivraison);
+        Console.WriteLine("Livraison ajoutée ?");
+        Console.ReadKey();
     }
 
     public void voirLivraisons(int idUser)
