@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Security.Cryptography;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Tls;
 
@@ -75,6 +76,26 @@ public class CuisinierDataAccess : AccessBDD
             }
         }
         return cuisinier.ID_Cuisinier;
+    }
+    
+    public int getUserIDFromCuisiID(int cuisiID)
+    {
+        Cuisinier cuisinier = new Cuisinier();
+        string query = "SELECT * FROM cuisinier WHERE ID_cuisinier=@cuisiID";
+        using (var connection = Connection())
+        using (var command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@cuisiID", cuisiID);
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    cuisinier.ID_Utilisateur = Convert.ToInt32(reader["ID"]);
+                }
+            }
+        }
+        return cuisinier.ID_Utilisateur;
     }
     
     public Cuisinier getCuisiFromUserID(int userID)

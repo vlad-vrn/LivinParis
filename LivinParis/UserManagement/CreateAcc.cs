@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DBConnectLibrary;
+using LivinParis.StationManagement;
 
 namespace LivinParis.Application;
 
@@ -11,7 +12,7 @@ public static class CreateAcc
     public static void CreerCompteUser()
     {
         UtilisateurDataAccess utilisateurDataAccess = new UtilisateurDataAccess();
-        
+        StationSelector stationSelector = new StationSelector();
         Utilisateur newUser = new Utilisateur();
         List<Utilisateur> utilisateurs = new List<Utilisateur>();
         utilisateurs = utilisateurDataAccess.getAllUtilisateurs();
@@ -32,7 +33,7 @@ public static class CreateAcc
         
         Console.WriteLine("\nEntrez votre adresse mail : ");
         string mail = Console.ReadLine();
-        ///Liste de getall check
+        
         while (emailUtilisés.Contains(mail.ToUpper()) == true)
         {
             Console.WriteLine("\nCette adresse email est déjà utilisée : veuillez entrer une nouvelle adresse mail : ");
@@ -68,7 +69,7 @@ public static class CreateAcc
         }
         
         Console.WriteLine("\nQuel est la station de métro la plus proche : ");
-        string station = Console.ReadLine();
+        int station = stationSelector.choisirStation();
         newUser.StationProche = station;
         
         utilisateurDataAccess.addUtilisateur(newUser);
