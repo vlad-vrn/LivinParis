@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using Graph;
 
+Fonctions fonction = new Fonctions();
+
 Console.WriteLine("Chargement des stations...");
 
         List<Station> stations = Graphe<string>.ChargerStations();
@@ -14,14 +16,10 @@ Console.WriteLine("Chargement des stations...");
 
         g1.RemplirMetro();
         g1.LiensMetro();
+        
+        fonction.voirStations(g1, stations);
 
-
-        Console.WriteLine("Stations chargées :");
-        foreach (var station in stations)
-        {
-            Console.WriteLine($"ID: {station.Id}, Nom: {station.Nom}, Lignes: {string.Join(", ", station.Lignes)}");
-        }
-
+        Console.ReadKey();
 
         g1.AfficherListeAdjacence();
 
