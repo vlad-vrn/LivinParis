@@ -70,6 +70,9 @@ public class Graphe<T>
         }
     }
     */
+    /// <summary>
+    /// 
+    /// </summary>
     public void RemplirMetro()
     {
         // Charger d'abord les stations
