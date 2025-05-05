@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace Graph;
 using System;
 using System.IO;
@@ -8,6 +6,7 @@ using System.Linq;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using System.Globalization;
+
 
 public class Graphe<T>
 {
@@ -483,24 +482,14 @@ private void CreerLien(int idDepart, int idArrivee, int poids)
     
 }
 */
-
-public void DessinerGraphe(int width = 1200, int height = 1000)
+/*
+    public void DessinerGraphe(int width = 1200, int height = 1000)
 {
     if (_stations == null || _stations.Count == 0)
     {
         Console.WriteLine("Erreur : aucune station à dessiner. Avez-vous appelé RemplirMetro() ?");
         return;
     }
-
-    // Welsh-Powell : Calcul de la coloration des sommets
-    Dictionary<int, int> couleurParStation = WelshPowellColoration();
-
-    // Palette de couleurs (à élargir si plus de 10 groupes)
-    List<SKColor> palette = new List<SKColor>
-    {
-        SKColors.Red, SKColors.Blue, SKColors.Green, SKColors.Orange, SKColors.Purple,
-        SKColors.Brown, SKColors.Magenta, SKColors.Teal, SKColors.Yellow, SKColors.Gray
-    };
 
     // Créer un dictionnaire pour stocker les positions des stations
     Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
@@ -511,6 +500,7 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
     double minLat = _stations.Values.Min(s => s.Latitude);
     double maxLat = _stations.Values.Max(s => s.Latitude);
 
+    // Marge pour ne pas coller les stations aux bords
     float margin = 50;
     float plotWidth = width - 2 * margin;
     float plotHeight = height - 2 * margin;
@@ -518,8 +508,10 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
     using (var bitmap = new SKBitmap(width, height))
     using (var canvas = new SKCanvas(bitmap))
     {
+        // Fond blanc
         canvas.Clear(SKColors.White);
 
+        // Calcul des positions
         foreach (var station in _stations.Values)
         {
             float x = margin + (float)((station.Longitude - minLong) / (maxLong - minLong) * plotWidth);
@@ -527,18 +519,26 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
             positions[station.Id] = new SKPoint(x, y);
         }
 
-        // Couleurs des lignes de métro
+        // Dictionnaire pour les couleurs des lignes
         var lineColors = new Dictionary<string, SKColor>
         {
-            {"1", new SKColor(255, 20, 147)}, {"2", new SKColor(0, 155, 58)},
-            {"3", new SKColor(153, 102, 51)}, {"4", new SKColor(187, 0, 187)},
-            {"5", new SKColor(255, 127, 0)}, {"6", new SKColor(0, 190, 255)},
-            {"7", new SKColor(255, 255, 0)}, {"8", new SKColor(200, 200, 200)},
-            {"9", new SKColor(200, 100, 0)}, {"10", new SKColor(220, 180, 0)},
-            {"11", new SKColor(100, 200, 100)}, {"12", new SKColor(0, 100, 255)},
-            {"13", new SKColor(100, 100, 255)}, {"14", new SKColor(100, 0, 100)}
+            {"1", new SKColor(255, 20, 147)},   // Rose
+            {"2", new SKColor(0, 155, 58)},     // Vert
+            {"3", new SKColor(153, 102, 51)},    // Marron
+            {"4", new SKColor(187, 0, 187)},     // Violet
+            {"5", new SKColor(255, 127, 0)},     // Orange
+            {"6", new SKColor(0, 190, 255)},     // Bleu clair
+            {"7", new SKColor(255, 255, 0)},     // Jaune
+            {"8", new SKColor(200, 200, 200)},   // Gris
+            {"9", new SKColor(200, 100, 0)},     // Ocre
+            {"10", new SKColor(220, 180, 0)},    // Or
+            {"11", new SKColor(100, 200, 100)},  // Vert clair
+            {"12", new SKColor(0, 100, 255)},    // Bleu marine
+            {"13", new SKColor(100, 100, 255)},  // Bleu lavande
+            {"14", new SKColor(100, 0, 100)}      // Pourpre
         };
 
+        // Dessiner les lignes de métro en premier
         var lignesDessinees = new HashSet<string>();
         foreach (var kvp in _dicoNoeuds)
         {
@@ -551,18 +551,21 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
 
                 if (positions.ContainsKey(id1) && positions.ContainsKey(id2))
                 {
+                    // Trouver la ligne commune entre les deux stations
                     var station1 = _stations[id1];
                     var station2 = _stations[id2];
                     var lignesCommune = station1.Lignes.Intersect(station2.Lignes).FirstOrDefault();
 
                     if (lignesCommune != null && !lignesDessinees.Contains($"{id1}-{id2}"))
                     {
-                        SKColor lineColor = lineColors.ContainsKey(lignesCommune) ? lineColors[lignesCommune] : SKColors.Gray;
+                        SKColor lineColor = lineColors.ContainsKey(lignesCommune) ? 
+                                           lineColors[lignesCommune] : 
+                                           SKColors.Gray;
 
-                        using (var linePaint = new SKPaint
-                        {
-                            Color = lineColor,
-                            StrokeWidth = 6,
+                        using (var linePaint = new SKPaint 
+                        { 
+                            Color = lineColor, 
+                            StrokeWidth = 6, 
                             IsAntialias = true,
                             Style = SKPaintStyle.Stroke
                         })
@@ -576,7 +579,8 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
             }
         }
 
-        // Dessiner les stations colorées selon leur groupe
+        // Dessiner les stations (cercles blancs avec bordure)
+        using (var nodePaint = new SKPaint { Color = SKColors.White, IsAntialias = true })
         using (var borderPaint = new SKPaint { Color = SKColors.Black, StrokeWidth = 2, IsAntialias = true, Style = SKPaintStyle.Stroke })
         {
             foreach (var kvp in positions)
@@ -584,29 +588,24 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
                 int nodeId = kvp.Key;
                 SKPoint pos = kvp.Value;
 
-                int couleurId = couleurParStation.ContainsKey(nodeId) ? couleurParStation[nodeId] : 0;
-                var fillColor = couleurId < palette.Count ? palette[couleurId] : SKColors.DarkSlateGray;
-
-                using (var nodePaint = new SKPaint { Color = fillColor, IsAntialias = true })
-                {
-                    canvas.DrawCircle(pos, 8, nodePaint);
-                    canvas.DrawCircle(pos, 8, borderPaint);
-                }
+                // Dessiner le cercle blanc avec bordure noire
+                canvas.DrawCircle(pos, 8, nodePaint);
+                canvas.DrawCircle(pos, 8, borderPaint);
             }
         }
 
         // Dessiner les noms des stations importantes
-        using (var textPaint = new SKPaint
-        {
-            Color = SKColors.Black,
-            TextSize = 14,
+        using (var textPaint = new SKPaint 
+        { 
+            Color = SKColors.Black, 
+            TextSize = 14, 
             IsAntialias = true,
-            Typeface = SKTypeface.FromFamilyName("Arial")
+            Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright)
         })
         {
-            var stationsImportantes = new List<string>
-            {
-                "Châtelet", "Gare du Nord", "Montparnasse", "Saint-Lazare",
+            var stationsImportantes = new List<string> 
+            { 
+                "Châtelet", "Gare du Nord", "Montparnasse", "Saint-Lazare", 
                 "La Défense", "Charles de Gaulle - Étoile", "Bastille", "République"
             };
 
@@ -618,13 +617,18 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
 
                 if (stationsImportantes.Contains(station.Nom))
                 {
-                    canvas.DrawText(station.Nom, pos.X + 12, pos.Y - 12, textPaint);
+                    // Positionner le texte intelligemment pour éviter les chevauchements
+                    float textX = pos.X + 12;
+                    float textY = pos.Y - 12;
+
+                    canvas.DrawText(station.Nom, textX, textY, textPaint);
                 }
             }
         }
 
+        // Sauvegarder l'image
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        string filePath = Path.Combine(desktopPath, "metro_paris_colorie.png");
+        string filePath = Path.Combine(desktopPath, "metro_paris.png");
 
         using (var image = SKImage.FromBitmap(bitmap))
         using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
@@ -634,46 +638,195 @@ public void DessinerGraphe(int width = 1200, int height = 1000)
         }
     }
 
-    Console.WriteLine($"Carte colorée du métro enregistrée sous: metro_paris_colorie.png");
+    Console.WriteLine($"Carte du métro enregistrée sous: metro_paris.png");
 }
-private Dictionary<int, int> WelshPowellColoration()
+*/
+public void DessinerGraphe(int width = 1500, int height = 1200)
 {
-    // Trie des sommets par ordre décroissant de degré
-    var sommetsTries = _dicoNoeuds
-        .OrderByDescending(kvp => kvp.Value.Liens.Count)
-        .Select(kvp => kvp.Key)
-        .ToList();
-
-    var couleurParSommet = new Dictionary<int, int>();
-
-    foreach (var sommet in sommetsTries)
+    if (_stations == null || _stations.Count == 0)
     {
-        var couleursUtiliséesParVoisins = new HashSet<int>();
+        Console.WriteLine("Erreur : Aucune station chargée. Appelez d'abord RemplirMetro().");
+        return;
+    }
 
-        foreach (var lien in _dicoNoeuds[sommet].Liens)
+    // 1. Préparation des données
+    Dictionary<int, SKPoint> positions = new Dictionary<int, SKPoint>();
+    var lineColors = new Dictionary<string, SKColor>
+    {
+        {"1", new SKColor(255, 20, 147)}, {"2", new SKColor(0, 155, 58)},
+        {"3", new SKColor(153, 102, 51)}, {"4", new SKColor(187, 0, 187)},
+        {"5", new SKColor(255, 127, 0)}, {"6", new SKColor(0, 190, 255)},
+        {"7", new SKColor(255, 255, 0)}, {"8", new SKColor(200, 200, 200)},
+        {"9", new SKColor(200, 100, 0)}, {"10", new SKColor(220, 180, 0)},
+        {"11", new SKColor(100, 200, 100)}, {"12", new SKColor(0, 100, 255)},
+        {"13", new SKColor(100, 100, 255)}, {"14", new SKColor(100, 0, 100)}
+    };
+
+    // 2. Calcul des positions
+    double minLong = _stations.Values.Min(s => s.Longitude);
+    double maxLong = _stations.Values.Max(s => s.Longitude);
+    double minLat = _stations.Values.Min(s => s.Latitude);
+    double maxLat = _stations.Values.Max(s => s.Latitude);
+
+    foreach (var station in _stations.Values)
+    {
+        float x = 50 + (float)((station.Longitude - minLong) / (maxLong - minLong) * (width - 100));
+        float y = height - 50 - (float)((station.Latitude - minLat) / (maxLat - minLat) * (height - 100));
+        positions[station.Id] = new SKPoint(x, y);
+    }
+
+    // 3. Création de l'image
+    using (var bitmap = new SKBitmap(width, height))
+    using (var canvas = new SKCanvas(bitmap))
+    {
+        canvas.Clear(SKColors.White);
+        var labeledLines = new HashSet<string>();
+
+        
+        // 4. Dessin des lignes avec numéros dans des cercles
+    using (var linePaint = new SKPaint { IsAntialias = true, StrokeWidth = 8 })
+    using (var textPaint = new SKPaint 
+    { 
+        Color = SKColors.White,  // Texte en blanc pour meilleur contraste
+        TextSize = 24,
+        IsAntialias = true,
+        Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright),
+        TextAlign = SKTextAlign.Center  // Centrage du texte
+    })
+    {
+        
+        var lineSegments = new Dictionary<string, List<SKPoint>>();
+
+        // D'abord collecter tous les segments de ligne
+        foreach (var kvp in _dicoNoeuds)
         {
-            var voisin = lien.NoeudArrive == _dicoNoeuds[sommet] ? lien.NoeudDepart : lien.NoeudArrive;
-            int idVoisin = _dicoNoeuds.First(x => x.Value == voisin).Key;
-
-            if (couleurParSommet.ContainsKey(idVoisin))
+            foreach (Lien<T> lien in kvp.Value.Liens)
             {
-                couleursUtiliséesParVoisins.Add(couleurParSommet[idVoisin]);
+                int idFrom = kvp.Key;
+                int idTo = _dicoNoeuds.First(x => x.Value == lien.NoeudArrive).Key;
+
+                if (!positions.ContainsKey(idFrom) || !positions.ContainsKey(idTo)) 
+                    continue;
+
+                var stationFrom = _stations[idFrom];
+                var stationTo = _stations[idTo];
+                var commonLine = stationFrom.Lignes.Intersect(stationTo.Lignes).FirstOrDefault();
+
+                if (commonLine != null)
+                {
+                    if (!lineSegments.ContainsKey(commonLine))
+                        lineSegments[commonLine] = new List<SKPoint>();
+
+                    lineSegments[commonLine].Add(positions[idFrom]);
+                    lineSegments[commonLine].Add(positions[idTo]);
+                }
             }
         }
 
-        // Cherche la plus petite couleur disponible
-        int couleur = 0;
-        while (couleursUtiliséesParVoisins.Contains(couleur))
+        // Ensuite dessiner les lignes et leurs numéros
+        foreach (var ligne in lineSegments)
         {
-            couleur++;
+            string lineNumber = ligne.Key;
+            var segments = ligne.Value;
+
+            // Dessiner la ligne
+            linePaint.Color = lineColors.GetValueOrDefault(lineNumber, SKColors.Gray);
+            for (int i = 0; i < segments.Count; i += 2)
+            {
+                if (i + 1 < segments.Count)
+                    canvas.DrawLine(segments[i], segments[i+1], linePaint);
+            }
+
+            // Calculer le point médian de la première section
+            if (segments.Count >= 2)
+            {
+                SKPoint debut = segments[0];
+                SKPoint fin = segments[1];
+                SKPoint milieu = new SKPoint((debut.X + fin.X) / 2, (debut.Y + fin.Y) / 2);
+
+                // Dessiner le cercle avec la couleur de la ligne
+                using (var circlePaint = new SKPaint 
+                { 
+                    Color = linePaint.Color, 
+                    Style = SKPaintStyle.Fill,
+                    IsAntialias = true 
+                })
+                {
+                    canvas.DrawCircle(milieu, 20, circlePaint);
+                }
+
+                // Contour noir
+                using (var borderPaint = new SKPaint 
+                { 
+                    Color = SKColors.Black, 
+                    Style = SKPaintStyle.Stroke,
+                    StrokeWidth = 2,
+                    IsAntialias = true 
+                })
+                {
+                    canvas.DrawCircle(milieu, 20, borderPaint);
+                }
+
+                // Texte du numéro centré dans le cercle
+                canvas.DrawText(lineNumber, milieu.X, milieu.Y + 8, textPaint);
+            }
+        }
+    }
+        
+
+        // 5. Dessin des stations
+        using (var stationPaint = new SKPaint { Color = SKColors.White, IsAntialias = true })
+        using (var borderPaint = new SKPaint { Color = SKColors.Black, StrokeWidth = 3, IsAntialias = true, Style = SKPaintStyle.Stroke })
+        {
+            foreach (var pos in positions)
+            {
+                canvas.DrawCircle(pos.Value, 10, stationPaint);
+                canvas.DrawCircle(pos.Value, 10, borderPaint);
+            }
         }
 
-        couleurParSommet[sommet] = couleur;
-    }
+        // 6. Dessin des noms des stations principales
+        var mainStations = new List<string> { "Châtelet", "Gare du Nord", "Montparnasse", "Saint-Lazare", 
+                                            "La Défense", "Bastille", "République", "Charles de Gaulle - Étoile" };
+        using (var textPaint = new SKPaint 
+        { 
+            Color = SKColors.Black, 
+            TextSize = 14, 
+            IsAntialias = true,
+            Typeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Normal, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright)
+        })
+        {
+            foreach (var station in _stations.Values.Where(s => mainStations.Contains(s.Nom)))
+            {
+                if (positions.TryGetValue(station.Id, out var pos))
+                {
+                    canvas.DrawText(station.Nom, pos.X + 15, pos.Y, textPaint);
+                }
+            }
+        }
 
-    Console.WriteLine($"Nombre de couleurs utilisées : {couleurParSommet.Values.Max() + 1}");
-    return couleurParSommet;
+        // 7. Sauvegarde du fichier
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string filePath = Path.Combine(desktopPath, "plan_metro_parisien.png");
+
+        using (var image = SKImage.FromBitmap(bitmap))
+        using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+        using (var stream = File.OpenWrite(filePath))
+        {
+            data.SaveTo(stream);
+            Console.WriteLine($"Plan généré : {filePath}");
+        }
+    }
 }
+    public void AfficherStations()
+    {
+        foreach (var station in _stations.Values)
+        {
+            Console.WriteLine(
+                $"Station {station.Nom} (ID: {station.Id}) | Lignes: {string.Join(", ", station.Lignes)}");
+        }
+    }
+    
     public static List<Station> ChargerStations()
     {
         var stations = new List<Station>();
@@ -736,10 +889,3 @@ private Dictionary<int, int> WelshPowellColoration()
 
     }
 }
-
- 
-
-
-
-
-

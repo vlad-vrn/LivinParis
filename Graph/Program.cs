@@ -146,9 +146,30 @@ Console.WriteLine("Chargement des stations...");
         {
             Console.WriteLine($"{resultat.idsStations[i]}");
         }
+        var coloration = new Coloration<string>(g1);
+        coloration.AppliquerWelshPowell();
 
-        g1.DessinerGraphe();
-        
+// Analyse des résultats
+        coloration.AfficherResultats();
+
+// Accès aux propriétés
+        Console.WriteLine($"\nNombre de couleurs utilisées: {coloration.NombreMinimalCouleurs}");
+        Console.WriteLine($"Est biparti: {coloration.EstBiparti()}");
+        Console.WriteLine($"Est planaire: {coloration.EstPlanaire()}");
+
+// Utilisation des groupes indépendants
+        var groupes = coloration.GetGroupesIndependants();
+        foreach (var groupe in groupes)
+        {
+            Console.WriteLine($"\nGroupe {groupe.Key} (couleur):");
+            foreach (var idStation in groupe.Value)
+            {
+                var station = g1.Stations[idStation];
+                Console.WriteLine($"- {station.Nom} (Lignes: {string.Join(", ", station.Lignes)})");
+            }
+
+            g1.DessinerGraphe();
+
 
             void AfficherMatriceAdjacence(int[,] mat)
             {
@@ -162,6 +183,7 @@ Console.WriteLine("Chargement des stations...");
                     {
                         Console.Write(mat[i, j] + " ");
                     }
+
                     Console.WriteLine();
                 }
             }
@@ -171,8 +193,8 @@ Console.WriteLine("Chargement des stations...");
             Console.WriteLine("\n\n");
             */
             Console.ReadKey();
-        
-    
+        }
+
 
         //  g1.DessinerGraphe();
         
