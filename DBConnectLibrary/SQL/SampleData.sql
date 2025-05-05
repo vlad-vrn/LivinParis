@@ -7,7 +7,8 @@ INSERT INTO Utilisateur (ID, Nom, Prénom, Téléphone, Mail, Rue, Numero_Rue, V
 (6, 'Belloc', 'Arthur', 600000006, 'abelloc@gmail.com', 'PH', '6', 'Paris', 75007, 187),
 (7, 'Bellegarde', 'Gaspar', 600000007, 'gbellegarde@gmail.com', 'PH', '33', 'Paris', 75018, 73),
 (8, 'Bossuet', 'Felix', 600000008, 'fbossuet@gmail.com', 'PH', '42', 'Paris', 75004, 13),
-(9, 'Dougui', 'Malik', 600000009, 'mdougui@gmail.com', 'PH', '9', 'Paris', 75018, 320);
+(9, 'Dougui', 'Malik', 600000009, 'mdougui@gmail.com', 'PH', '9', 'Paris', 75018, 320),
+(10, 'Vrolant', 'Abel', 600000010, 'avrolant@gmail.com', 'PH', '10', 'Paris', 75015, 1);
 
 INSERT INTO Cuisinier (ID_cuisinier, ID) VALUES
 (1, 1),
