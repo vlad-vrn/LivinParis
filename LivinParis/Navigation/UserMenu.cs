@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using LivinParis.Application;
 using LivinParis.CommandeManagement;
+using LivinParis.LivraisonManagement;
 using LivinParis.PlatManagement;
 using LivinParis.RecetteManagement;
 
@@ -149,6 +150,7 @@ public class UserMenu : GlobalDataAccess
     public void espaceClient(Utilisateur thisUser)
     {
         CreateCommande createCommande = new CreateCommande();
+        CreateLivraison createLivraison = new CreateLivraison();
         string rep;
         Console.Clear();
         AnsiConsole.Markup("Bienvenue sur votre espace client, " + thisUser.Prenom + ".\n");
@@ -158,7 +160,7 @@ public class UserMenu : GlobalDataAccess
                 .PageSize(10)
                 .AddChoices(new[]
                 {
-                    "Commander un plat", "Voir mes commandes", "Historique des commandes", "Retour"
+                    "Commander un plat", "Voir mes commandes", "Voir mes livraisons en cours", "Retour"
                 }));    
         switch (rep)
         {
@@ -168,7 +170,8 @@ public class UserMenu : GlobalDataAccess
             case "Voir mes commandes":
                 createCommande.voirCommandes(thisUser.Id);
                 break;
-            case "Historique des commandes":
+            case "Voir mes livraisons en cours":
+                createLivraison.voirLivraisons(thisUser.Id);
                 break;
             case "Retour":
                 Console.WriteLine("Vous voulez partir");

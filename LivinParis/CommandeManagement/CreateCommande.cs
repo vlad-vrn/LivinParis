@@ -1,4 +1,6 @@
 using DBConnectLibrary;
+using LivinParis.LivraisonManagement;
+using Org.BouncyCastle.Math.EC;
 using Spectre.Console;
 
 namespace LivinParis.CommandeManagement;
@@ -7,10 +9,23 @@ public class CreateCommande : GlobalDataAccess
 {
     public void choisirPlat(int idUser)
     {
+        CreateLivraison createLivraison = new CreateLivraison();
+        Dictionary<string, Cuisinier> listCuisinier = new Dictionary<string, Cuisinier>();
+        foreach (Cuisinier cuisto in cuisinierDataAccess.getAllCuisiniers())
+        {
+            listCuisinier.Add(utilisateurDataAccess.getUtilisateur(cuisto.ID_Utilisateur).Nom, cuisto);
+        }
         Commande newCommande = new Commande();
         Dictionary<string, Plat> infosPlats = new Dictionary<string, Plat>();
         List<Plat> platsCommandes = new List<Plat>();
-        foreach (Plat registeredPlat in platDataAccess.getAllPlats())
+        
+        var cuisinier  = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("Chez quel cuisinier voulez vous commander ?\n")
+                .PageSize(10)
+                .AddChoices(listCuisinier.Keys));
+        
+        foreach (Plat registeredPlat in platDataAccess.getAllPlatFromCuisi(listCuisinier[cuisinier].ID_Cuisinier))
         {
             string s = registeredPlat.Nom + " : " + registeredPlat.Prix + "e";
             infosPlats.Add(s, registeredPlat);
@@ -58,8 +73,15 @@ public class CreateCommande : GlobalDataAccess
             newCommande.Nombre_Portion = platsCommandes.Count;
             newCommande.ID_Client = clientDataAccess.getClientIDFromUserID(idUser);
             newCommande.Date_Heure_Livraison = DateTime.Now;
+            newCommande.ID_Cuisinier = listCuisinier[cuisinier].ID_Cuisinier;
             
-            commandeDataAccess.addCommande(newCommande);
+            int newCommandeID = commandeDataAccess.addCommandeAndReturnID(newCommande);
+
+            Console.WriteLine("hmm");
+            Console.ReadKey();
+            createLivraison.initLivraison(listCuisinier[cuisinier].ID_Cuisinier, clientDataAccess.getClientIDFromUserID(idUser), newCommandeID);
+
+
         }
         //Dictionnaire 1 1 avec string en key et Plat en value pour pouvoir target le plat en particulier et le réduire
         //Console.WriteLine("Vous avez commandé le plat suivant : " + infosPlats[choix].Nom);
@@ -68,7 +90,6 @@ public class CreateCommande : GlobalDataAccess
 
     public void voirCommandes(int idUser)
     {
-        Console.WriteLine(clientDataAccess.getClientIDFromUserID(idUser));
         Dictionary<string, Commande> titreCommandes = new Dictionary<string, Commande>();
         foreach (Commande commande in commandeDataAccess.getAllCommandeFromClient(clientDataAccess.getClientIDFromUserID(idUser)))
         {

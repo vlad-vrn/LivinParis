@@ -64,39 +64,39 @@ INSERT INTO Client_ (ID_client, Entreprise, ID) VALUES
 (14, TRUE, 29),
 (15, FALSE, 30);
 
-INSERT INTO Commande (ID_Commande, Prix_Commande, Nombre_Portions, Date_Heure_Livraison, ID_client) VALUES
-(1, 45.50, 2, '2025-03-05 12:00:00', 1),
-(2, 32.00, 1, '2025-03-06 13:00:00', 2),
-(3, 58.75, 3, '2025-03-07 18:30:00', 3),
-(4, 27.90, 2, '2025-03-08 12:45:00', 4),
-(5, 64.20, 4, '2025-03-09 19:15:00', 5),
-(6, 38.00, 1, '2025-03-10 11:30:00', 6),
-(7, 49.99, 2, '2025-03-11 12:00:00', 7),
-(8, 55.50, 3, '2025-03-12 18:00:00', 8),
-(9, 42.30, 2, '2025-03-13 12:15:00', 9),
-(10, 70.00, 4, '2025-03-14 19:00:00', 10),
-(11, 36.45, 1, '2025-03-15 11:00:00', 11),
-(12, 59.99, 3, '2025-03-16 18:45:00', 12),
-(13, 48.80, 2, '2025-03-17 12:30:00', 13),
-(14, 65.00, 4, '2025-03-18 19:30:00', 14),
-(15, 52.25, 2, '2025-03-19 12:00:00', 15);
+INSERT INTO Commande (ID_Commande, Prix_Commande, Nombre_Portions, Date_Heure_Livraison, ID_client, ID_cuisinier) VALUES
+(1, 45.50, 2, '2025-03-05 12:00:00', 1, 1),
+(2, 32.00, 1, '2025-03-06 13:00:00', 2, 2),
+(3, 58.75, 3, '2025-03-07 18:30:00', 3, 3),
+(4, 27.90, 2, '2025-03-08 12:45:00', 4, 4),
+(5, 64.20, 4, '2025-03-09 19:15:00', 5, 5),
+(6, 38.00, 1, '2025-03-10 11:30:00', 6, 6),
+(7, 49.99, 2, '2025-03-11 12:00:00', 7, 7),
+(8, 55.50, 3, '2025-03-12 18:00:00', 8, 8),
+(9, 42.30, 2, '2025-03-13 12:15:00', 9, 9),
+(10, 70.00, 4, '2025-03-14 19:00:00', 10, 10),
+(11, 36.45, 1, '2025-03-15 11:00:00', 11, 11),
+(12, 59.99, 3, '2025-03-16 18:45:00', 12, 12),
+(13, 48.80, 2, '2025-03-17 12:30:00', 13, 13),
+(14, 65.00, 4, '2025-03-18 19:30:00', 14, 14),
+(15, 52.25, 2, '2025-03-19 12:00:00', 15, 15);
 
-INSERT INTO Livraison (ID_Livraison, adresse_client, adresse_cuisinier, Date_Livraison, ID_Commande) VALUES
-(1, '16, Rue du Moulin, Paris', '1, Rue de la Paix, Paris', '2025-03-05 13:00:00', 1),
-(2, '17, Boulevard des Fêtes, Lille', '2, Avenue des Champs, Paris', '2025-03-06 14:00:00', 2),
-(3, '18, Allée des Roses, Strasbourg', '3, Boulevard Saint-Germain, Paris', '2025-03-07 19:00:00', 3),
-(4, '19, Impasse du Soleil, Nantes', '4, Rue Victor Hugo, Lyon', '2025-03-08 13:00:00', 4),
-(5, '20, Place des Fleurs, Marseille', '5, Rue de Rivoli, Marseille', '2025-03-09 20:00:00', 5),
-(6, '21, Rue de l''Église, Bordeaux', '6, Rue des Fleurs, Lille', '2025-03-10 12:00:00', 6),
-(7, '22, Avenue de la Liberté, Lyon', '7, Avenue du Général, Toulouse', '2025-03-11 13:00:00', 7),
-(8, '23, Chemin des Peupliers, Nice', '8, Rue du Commerce, Nice', '2025-03-12 19:00:00', 8),
-(9, '24, Rue du Port, Toulouse', '9, Allée des Acacias, Nantes', '2025-03-13 13:00:00', 9),
-(10, '25, Impasse des Marronniers, Grenoble', '10, Rue de l''Industrie, Strasbourg', '2025-03-14 20:00:00', 10),
-(11, '26, Place des Érables, Rennes', '11, Impasse des Lilas, Bordeaux', '2025-03-15 12:00:00', 11),
-(12, '27, Rue du Marché, Montpellier', '12, Place de la République, Lyon', '2025-03-16 19:00:00', 12),
-(13, '28, Boulevard des Peupliers, Strasbourg', '13, Rue du Parc, Montpellier', '2025-03-17 13:00:00', 13),
-(14, '29, Avenue des Oliviers, Paris', '14, Chemin des Vignes, Rennes', '2025-03-18 20:00:00', 14),
-(15, '30, Chemin des Cerisiers, Lyon', '15, Avenue des Tilleuls, Grenoble', '2025-03-19 13:00:00', 15);
+INSERT INTO Livraison (ID_Livraison, station_client, station_cuisinier, Date_Livraison, est_livre, ID_Commande, ID_Client) VALUES
+(1, '16, Rue du Moulin, Paris', '1, Rue de la Paix, Paris', '2025-03-05 13:00:00', false, 1, 1),
+(2, '17, Boulevard des Fêtes, Lille', '2, Avenue des Champs, Paris', '2025-03-06 14:00:00', false,2, 1),
+(3, '18, Allée des Roses, Strasbourg', '3, Boulevard Saint-Germain, Paris', '2025-03-07 19:00:00', false,3, 1),
+(4, '19, Impasse du Soleil, Nantes', '4, Rue Victor Hugo, Lyon', '2025-03-08 13:00:00', false,4, 1),
+(5, '20, Place des Fleurs, Marseille', '5, Rue de Rivoli, Marseille', '2025-03-09 20:00:00', false,5, 1),
+(6, '21, Rue de l''Église, Bordeaux', '6, Rue des Fleurs, Lille', '2025-03-10 12:00:00', false,6, 1),
+(7, '22, Avenue de la Liberté, Lyon', '7, Avenue du Général, Toulouse', '2025-03-11 13:00:00', false,7, 1),
+(8, '23, Chemin des Peupliers, Nice', '8, Rue du Commerce, Nice', '2025-03-12 19:00:00', false,8, 1),
+(9, '24, Rue du Port, Toulouse', '9, Allée des Acacias, Nantes', '2025-03-13 13:00:00', false,9, 1),
+(10, '25, Impasse des Marronniers, Grenoble', '10, Rue de l''Industrie, Strasbourg', '2025-03-14 20:00:00', false,10, 1),
+(11, '26, Place des Érables, Rennes', '11, Impasse des Lilas, Bordeaux', '2025-03-15 12:00:00', false,11, 1),
+(12, '27, Rue du Marché, Montpellier', '12, Place de la République, Lyon', '2025-03-16 19:00:00', false,12, 1),
+(13, '28, Boulevard des Peupliers, Strasbourg', '13, Rue du Parc, Montpellier', '2025-03-17 13:00:00', false,13, 1),
+(14, '29, Avenue des Oliviers, Paris', '14, Chemin des Vignes, Rennes', '2025-03-18 20:00:00', false,14, 1),
+(15, '30, Chemin des Cerisiers, Lyon', '15, Avenue des Tilleuls, Grenoble', '2025-03-19 13:00:00', false,15, 1);
 
 INSERT INTO Recette (ID_Recette, Nom, Régime_alimentaire) VALUES
 (1, 'Recette 1', 'Omnivore'),

@@ -40,18 +40,23 @@ CREATE TABLE Commande(
    Nombre_Portions INT,
    Date_Heure_Livraison DATETIME,
    ID_client INT NOT NULL,
+   ID_cuisinier INT NOT NULL,
    PRIMARY KEY(ID_Commande),
-   FOREIGN KEY(ID_client) REFERENCES Client_(ID_client)
+   FOREIGN KEY(ID_client) REFERENCES Client_(ID_client),
+   FOREIGN KEY(ID_cuisinier) REFERENCES Cuisinier(ID_cuisinier)       
 );
 
 CREATE TABLE Livraison(
-   ID_Livraison INT,
-   adresse_client TEXT,
-   adresse_cuisinier TEXT,
+   ID_Livraison INT AUTO_INCREMENT,
+   station_client TEXT,
+   station_cuisinier TEXT,
    Date_Livraison DATETIME,
+   est_livre BOOL,
    ID_Commande INT NOT NULL,
+   ID_Client INT NOT NULL, 
    PRIMARY KEY(ID_Livraison),
-   FOREIGN KEY(ID_Commande) REFERENCES Commande(ID_Commande)
+   FOREIGN KEY(ID_Commande) REFERENCES Commande(ID_Commande),
+   FOREIGN KEY(ID_Client) REFERENCES Client_(ID_Client) 
 );
 
 CREATE TABLE Recette(

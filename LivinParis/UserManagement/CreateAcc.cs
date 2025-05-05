@@ -32,7 +32,7 @@ public static class CreateAcc
         
         Console.WriteLine("\nEntrez votre adresse mail : ");
         string mail = Console.ReadLine();
-        ///Liste de getall check
+        
         while (emailUtilisés.Contains(mail.ToUpper()) == true)
         {
             Console.WriteLine("\nCette adresse email est déjà utilisée : veuillez entrer une nouvelle adresse mail : ");
