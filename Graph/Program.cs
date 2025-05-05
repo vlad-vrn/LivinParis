@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using Graph;
-
 /*
 Console.WriteLine("*************************************************************\n                    Etape 1\n*************************************************************");
 ///List<Point> points = new List<Point>();
@@ -47,9 +46,6 @@ static void AfficherFichier()
 //AfficherFichier();
 
 Graphe<string> g1 = new Graphe<string>("g1") { Titre = "Karate" };
-
-g1.RemplirGraphe();
-g1.LiensGraphe();
 Console.WriteLine("*************************************************************\n                 Liste d'adjacence\n*************************************************************");
 g1.AfficherListeAdjacence();
 Console.WriteLine("\n\n");
@@ -80,25 +76,15 @@ g1.DessinerGraphe();
  
 */
 
-
 Console.WriteLine("Chargement des stations...");
 
-        // Charger les stations en appelant la méthode ChargerStations
         List<Station> stations = Graphe<string>.ChargerStations();
-/*
-        // Afficher les stations chargées
+
         Console.WriteLine("Stations chargées :");
         foreach (var station in stations)
         {
             Console.WriteLine($"ID: {station.Id}, Nom: {station.Nom}, Lignes: {string.Join(", ", station.Lignes)}");
         }
-*/
-        // Attente d'une touche pour fermer la console
-      //  Console.WriteLine("Appuyez sur une touche pour quitter...");
-       // Console.ReadKey();
-
-
-//AfficherFichier();
 
         Graphe<string> g1 = new Graphe<string>("g1") { Titre = "MetroParis" };
 
@@ -109,7 +95,23 @@ Console.WriteLine("Chargement des stations...");
         g1.AfficherListeAdjacence();
         Console.WriteLine("COLORATION DU GRAPHE (Algorithme Welsh-Powell)");
 
-        
+        var coloration = new Coloration<string>(g1);
+        coloration.AppliquerWelshPowell();
+        coloration.AfficherResultats();
+        Console.WriteLine($"\nNombre de couleurs utilisées: {coloration.NombreMinimalCouleurs}");
+        Console.WriteLine($"Est biparti: {coloration.EstBiparti()}");
+        Console.WriteLine($"Est planaire: {coloration.EstPlanaire()}");
+        var groupes = coloration.GetGroupesIndependants();
+        foreach (var groupe in groupes)
+        {
+            Console.WriteLine($"\nGroupe {groupe.Key} (couleur):");
+            foreach (var idStation in groupe.Value)
+            {
+                var station = g1.Stations[idStation];
+                Console.WriteLine($"- {station.Nom} (Lignes: {string.Join(", ", station.Lignes)})");
+            }
+            
+        }
 
         Console.Write("Entrez l'ID de la station de départ : ");
         if (!int.TryParse(Console.ReadLine(), out int startId))
@@ -124,77 +126,42 @@ Console.WriteLine("Chargement des stations...");
             Console.WriteLine("ID d'arrivée invalide.");
             return;
         }
-        /// <summary>
-        /// Vérification si les stations existent dans le graphe
-        /// <summary>
         if (!g1.Noeuds.ContainsKey(startId) || !g1.Noeuds.ContainsKey(endId))
         {
             Console.WriteLine("Une ou plusieurs stations n'existent pas.");
             return;
         }
-        /// <summary>
-        /// Exécution de l'algorithme de Dijkstra
-        /// <summary>
         DijkstraAlgorithm<string> dijkstra = new DijkstraAlgorithm<string>(g1);
         var resultat = dijkstra.TrouverChemin(startId, endId);
-        /// <summary>
-        /// Affichage du résultat
-        /// <summary>
         Console.WriteLine($"Distance totale: {resultat.distanceTotale} minutes");
         Console.WriteLine("Itinéraire:");
         for (int i = 0; i < resultat.idsStations.Count; i++)
         {
             Console.WriteLine($"{resultat.idsStations[i]}");
         }
-        var coloration = new Coloration<string>(g1);
-        coloration.AppliquerWelshPowell();
-
-// Analyse des résultats
-        coloration.AfficherResultats();
-
-// Accès aux propriétés
-        Console.WriteLine($"\nNombre de couleurs utilisées: {coloration.NombreMinimalCouleurs}");
-        Console.WriteLine($"Est biparti: {coloration.EstBiparti()}");
-        Console.WriteLine($"Est planaire: {coloration.EstPlanaire()}");
-
-// Utilisation des groupes indépendants
-        var groupes = coloration.GetGroupesIndependants();
-        foreach (var groupe in groupes)
+      
+        void AfficherMatriceAdjacence(int[,] mat)
         {
-            Console.WriteLine($"\nGroupe {groupe.Key} (couleur):");
-            foreach (var idStation in groupe.Value)
+            int taille = mat.GetLength(0);
+
+            Console.WriteLine("Matrice d'adjacence du graphe :\n");
+
+            for (int i = 0; i < taille; i++)
             {
-                var station = g1.Stations[idStation];
-                Console.WriteLine($"- {station.Nom} (Lignes: {string.Join(", ", station.Lignes)})");
-            }
-
-            g1.DessinerGraphe();
-
-
-            void AfficherMatriceAdjacence(int[,] mat)
-            {
-                int taille = mat.GetLength(0);
-
-                Console.WriteLine("Matrice d'adjacence du graphe :\n");
-
-                for (int i = 0; i < taille; i++)
+                for (int j = 0; j < taille; j++)
                 {
-                    for (int j = 0; j < taille; j++)
-                    {
-                        Console.Write(mat[i, j] + " ");
-                    }
-
-                    Console.WriteLine();
+                    Console.Write(mat[i, j] + " ");
                 }
-            }
 
-            /*AfficherMatriceAdjacence(g1.CreerMatriceAdjacence());
-            Console.ReadKey();
-            Console.WriteLine("\n\n");
-            */
-            Console.ReadKey();
+                Console.WriteLine();
+            }
         }
 
+        AfficherMatriceAdjacence(g1.CreerMatriceAdjacenceMetro());
+        Console.ReadKey();
+        Console.WriteLine("\n\n");
+            
+        Console.ReadKey();
 
-        //  g1.DessinerGraphe();
+g1.DessinerGraphe();
         

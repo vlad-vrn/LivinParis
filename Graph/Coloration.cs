@@ -7,9 +7,9 @@ using System.Linq;
 public class Coloration<T>
 {
     private Graphe<T> _graphe;
-    private Dictionary<int, int> _colorationNoeuds; // ID noeud -> couleur
+    private Dictionary<int, int> _colorationNoeuds; 
     private int _nombreCouleurs;
-    private Dictionary<int, List<int>> _groupesParCouleur; // Couleur -> liste d'IDs de noeuds
+    private Dictionary<int, List<int>> _groupesParCouleur; 
 
     public Coloration(Graphe<T> graphe)
     {
@@ -24,35 +24,22 @@ public class Coloration<T>
     /// </summary>
     public void AppliquerWelshPowell()
     {
-        // 1. Trier les noeuds par degré décroissant
         var noeudsTries = _graphe.Noeuds
             .OrderByDescending(n => n.Value.Liens.Count)
             .Select(n => n.Key)
             .ToList();
-
-        // 2. Initialisation
         _colorationNoeuds.Clear();
         _groupesParCouleur.Clear();
         _nombreCouleurs = 0;
-
-        // 3. Coloration
         foreach (var idNoeud in noeudsTries)
         {
             if (_colorationNoeuds.ContainsKey(idNoeud)) continue;
-
-            // Trouver la plus petite couleur disponible
             int couleurDisponible = TrouverCouleurDisponible(idNoeud);
-
-            // Assigner la couleur
             _colorationNoeuds[idNoeud] = couleurDisponible;
-            
-            // Mettre à jour les groupes
             if (!_groupesParCouleur.ContainsKey(couleurDisponible))
                 _groupesParCouleur[couleurDisponible] = new List<int>();
             
             _groupesParCouleur[couleurDisponible].Add(idNoeud);
-
-            // Mettre à jour le nombre de couleurs si nécessaire
             if (couleurDisponible + 1 > _nombreCouleurs)
                 _nombreCouleurs = couleurDisponible + 1;
         }
@@ -62,23 +49,19 @@ public class Coloration<T>
     {
         var noeud = _graphe.Noeuds[idNoeud];
         var couleursVoisins = new HashSet<int>();
-
-        // Récupérer les couleurs des voisins
         foreach (var lien in noeud.Liens)
         {
             var idVoisin = _graphe.Noeuds.First(n => n.Value == lien.NoeudArrive).Key;
             if (_colorationNoeuds.TryGetValue(idVoisin, out int couleur))
                 couleursVoisins.Add(couleur);
         }
-
-        // Trouver la plus petite couleur non utilisée par les voisins
         for (int couleur = 0; couleur <= _nombreCouleurs; couleur++)
         {
             if (!couleursVoisins.Contains(couleur))
                 return couleur;
         }
 
-        return _nombreCouleurs; // Nouvelle couleur
+        return _nombreCouleurs; 
     }
 
     /// <summary>
