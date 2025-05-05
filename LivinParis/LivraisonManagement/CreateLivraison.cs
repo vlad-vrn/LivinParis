@@ -7,7 +7,7 @@ namespace LivinParis.LivraisonManagement;
 
 public class CreateLivraison : GlobalDataAccess
 {
-    public void initLivraison(int cuisiIDFromCuisi, int userIDFromClient, int idCommande) //yserUDFrilCkuebt est l'id client
+    public void initLivraison(int cuisiIDFromCuisi, int userIDFromClient, int idCommande)
     {
         Livraison newLivraison = new Livraison();
         Utilisateur thisCuisinier = utilisateurDataAccess.getUtilisateur(cuisinierDataAccess.getUserIDFromCuisiID(cuisiIDFromCuisi));
@@ -60,6 +60,7 @@ public class CreateLivraison : GlobalDataAccess
                     }));
             if (arrive == "Oui")
             {
+                Console.ReadKey();
                 livraisonDataAccess.marquerLivraisonCommeLivree(titreLivraisons[choix].ID_Livraison);
             }
         }

@@ -81,11 +81,12 @@ public class StationManager : GlobalDataAccess
         
         var resultat = dijkstra.TrouverChemin(startId, endId);
         string s = "Voici le chemin que le cuisinier va emprunter : \n";
-        foreach (string station in resultat.nomsStations)
+        foreach (int idsStation in resultat.idsStations)
         {
-            s += selector.nomStationFromID(Convert.ToInt32(station)) + "\n";
+            s += selector.nomStationFromID(Convert.ToInt32(idsStation)) + "\n";
         }
-        
+
+        s += "et prendra " + resultat.distanceTotale + "mn à s'effectuer.";
         return s;
     }
 }

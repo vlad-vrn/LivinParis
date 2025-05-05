@@ -80,30 +80,6 @@ public class Graphe<T>
     /// <summary>
     /// Initialise les liens du graphe.
     /// </summary>
-    /*
-    public void LiensGraphe()
-    {
-        string[] lines = File.ReadAllLines("..\\..\\..\\soc-karate.mtx").Skip(24).ToArray();
-        foreach (string line in lines)
-        {
-            string[] tokens = line.Split(" ");
-            int numDepart = Int32.Parse(tokens[0]);
-            int numArrive = Int32.Parse(tokens[1]);
-            Noeud<T> noeudDepart = this._dicoNoeuds[numDepart];
-            Noeud<T> noeudArrive = this._dicoNoeuds[numArrive];
-            Lien<T> newLien = new Lien<T>(noeudDepart, noeudArrive);
-            if (_b == false)
-            {
-                noeudDepart.Liens.Add(newLien);
-                noeudArrive.Liens.Add(newLien);
-            }
-            else
-            {
-                noeudDepart.Liens.Add(newLien);
-            }
-        }
-    }
-    */
      
     
     public void LiensMetro()
@@ -513,7 +489,6 @@ public void DessinerGraphe(int width = 1500, int height = 1200)
             if (!double.TryParse(tokens[9], NumberStyles.Float, CultureInfo.InvariantCulture, out double longitude) ||
                 !double.TryParse(tokens[10], NumberStyles.Float, CultureInfo.InvariantCulture, out double latitude))
             {
-                Console.WriteLine($"Erreur : coordonnées invalides pour la station {nom}");
                 continue;
             }
 
@@ -524,8 +499,7 @@ public void DessinerGraphe(int width = 1500, int height = 1200)
             stations.Add(new Station(id, nom, longitude, latitude, lignesMetro));
 
         }
-
-        Console.WriteLine($"Chargement terminé : {stations.Count} stations ajoutées.");
+        
         return stations;
 
 
