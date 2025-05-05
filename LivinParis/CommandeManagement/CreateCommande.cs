@@ -84,9 +84,6 @@ public class CreateCommande : GlobalDataAccess
 
 
         }
-        //Dictionnaire 1 1 avec string en key et Plat en value pour pouvoir target le plat en particulier et le réduire
-        //Console.WriteLine("Vous avez commandé le plat suivant : " + infosPlats[choix].Nom);
-        //Console.ReadKey(); 10XXXXXXXXXXXXXXXXX
     }
 
     public void voirCommandes(int idUser)
