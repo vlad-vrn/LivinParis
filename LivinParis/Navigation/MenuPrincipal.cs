@@ -4,6 +4,7 @@ using DBConnectLibrary;
 using LivinParis.Application;
 using LivinParis.Modules;
 using Spectre.Console;
+using Graph;
 
 namespace LivinParis.Navigation;
 
@@ -26,11 +27,66 @@ public class MenuPrincipal
                 .PageSize(10)
                 .AddChoices(new[]
                 {
-                    "Rendu 1", "Modélisation du métro", "Liv'In Paris", "Quitter l'application"
+                    "Modélisation du métro", "Liv'In Paris", "Quitter l'application"
                 }));
         this.output = rep;
     }
 
+    public void menuMetro()
+    {
+        Fonctions fonction = new Fonctions();
+        Console.WriteLine("Chargement des stations...");
+
+        List<Station> stations = Graphe<string>.ChargerStations();
+
+        Graphe<string> g1 = new Graphe<string>("g1") { Titre = "MetroParis" };
+
+        g1.RemplirMetro();
+        g1.LiensMetro();
+        while (this.output != "Retour")
+        {
+            var rep = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Que voulez-vous faire ?")
+                    .PageSize(10)
+                    .AddChoices(new[]
+                    {
+                        "Voir les stations", "Voir un itinéraire", "Voir la coloration", "Afficher liste d'adjacence", "Afficher matrice d'adjacence", "Dessiner graphe", "Retour"
+                    }));
+            switch (rep)
+            {
+                case "Voir les stations":
+                    fonction.voirStations(g1, stations);
+                    Console.ReadKey();
+                    break;
+                case "Voir un itinéraire":
+                    fonction.voirItineraire(g1, stations);
+                    Console.ReadKey();
+                    break;
+                case "Voir la coloration":
+                    fonction.voirColoration(g1, stations);
+                    Console.ReadKey();
+                    break;
+                case "Afficher liste d'adjacence":
+                    fonction.afficherListeAdjacence(g1, stations);
+                    Console.ReadKey();
+                    break;
+                case "Afficher matrice d'adjacence":
+                    fonction.voirMatriceAdjacence(g1, stations);
+                    Console.ReadKey();
+                    break;
+                case "Dessiner graphe":
+                    fonction.dessinerGraphe(g1, stations);
+                    Console.ReadKey();
+                    break;
+                case "Retour":
+                    this.output = "Retour";
+                    break;
+            }
+
+            Console.Clear();
+        }
+    }
     public void menuLivinParis()
     {
         List<int> cuisinierUserID = new List<int>();

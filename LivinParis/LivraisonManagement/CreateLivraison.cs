@@ -11,9 +11,7 @@ public class CreateLivraison : GlobalDataAccess
     {
         Livraison newLivraison = new Livraison();
         Utilisateur thisCuisinier = utilisateurDataAccess.getUtilisateur(cuisinierDataAccess.getUserIDFromCuisiID(cuisiIDFromCuisi));
-        Console.WriteLine("Votre cuisinier est il bien " + thisCuisinier.Nom);
         Utilisateur thisClient = utilisateurDataAccess.getUtilisateur(userIDFromClient);
-        Console.WriteLine("Votre ID user est bien " + thisClient.Id);
         bool status = false;
 
 
@@ -23,10 +21,8 @@ public class CreateLivraison : GlobalDataAccess
         newLivraison.Date_Livraison = DateTime.Now;
         newLivraison.ID_Commande = idCommande;
         newLivraison.ID_Client = clientDataAccess.getClientIDFromUserID(thisClient.Id);
-        Console.WriteLine("L'id de station est elle bien " + thisClient.StationProche);
-        Console.ReadKey();
+
         livraisonDataAccess.addLivraison(newLivraison);
-        Console.WriteLine("Livraison ajoutée ?");
         Console.ReadKey();
     }
 

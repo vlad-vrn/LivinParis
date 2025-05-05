@@ -74,11 +74,8 @@ public class CreateCommande : GlobalDataAccess
             newCommande.ID_Client = clientDataAccess.getClientIDFromUserID(idUser);
             newCommande.Date_Heure_Livraison = DateTime.Now;
             newCommande.ID_Cuisinier = listCuisinier[cuisinier].ID_Cuisinier;
-            Console.WriteLine("VOter cuisinier est il bien ");
-            
             int newCommandeID = commandeDataAccess.addCommandeAndReturnID(newCommande);
 
-            Console.WriteLine("hmm");
             Console.ReadKey();
             createLivraison.initLivraison(listCuisinier[cuisinier].ID_Cuisinier, idUser, newCommandeID);
 
@@ -96,6 +93,7 @@ public class CreateCommande : GlobalDataAccess
         }
         
         Console.ReadKey();
+        
         var choix  = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("Sur quelle commande souhaitez vous avoir des informations ? :\n")

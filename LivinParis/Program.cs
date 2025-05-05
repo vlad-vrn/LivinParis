@@ -25,7 +25,7 @@ while (mainMenu.output != "Quitter l'application")
 
     while (mainMenu.output == "Modélisation du métro")
     {
-        mainMenu.output = "Retour";
+        mainMenu.menuMetro();
         Console.ReadKey();
     }
     
