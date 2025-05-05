@@ -73,7 +73,7 @@ public class CreateCommande : GlobalDataAccess
             newCommande.Nombre_Portion = platsCommandes.Count;
             newCommande.ID_Client = clientDataAccess.getClientIDFromUserID(idUser);
             newCommande.Date_Heure_Livraison = DateTime.Now;
-            newCommande.ID_Cuisinier = listCuisinier[cuisinier].ID_Cuisinier; //C'est le cuisinierID du cuisinier
+            newCommande.ID_Cuisinier = listCuisinier[cuisinier].ID_Cuisinier;
             Console.WriteLine("VOter cuisinier est il bien ");
             
             int newCommandeID = commandeDataAccess.addCommandeAndReturnID(newCommande);
